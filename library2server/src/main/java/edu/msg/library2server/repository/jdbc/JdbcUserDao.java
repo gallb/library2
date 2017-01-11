@@ -7,15 +7,20 @@ import edu.msg.library2server.repository.UserDao;
 
 public class JdbcUserDao implements UserDao {
 //	private static final Logger LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
+//	private ConnectionManager conMan;
+//
+//	public JdbcUserDao() {
+//		conMan = ConnectionManager.getInstance();
+//	}
 
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean verifyUser(String user, String psw) {
+	public User getUserByName(String user_name) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	public User insertUser(User user) {
