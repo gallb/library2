@@ -29,6 +29,7 @@ public class SqlHandler {
 	public static synchronized SqlHandler getInstance() {
 		if (instance == null) {
 			instance = new SqlHandler();
+			System.out.println("server satrt");
 		}
 		return instance;
 	}
