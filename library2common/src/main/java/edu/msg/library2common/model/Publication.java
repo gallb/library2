@@ -23,7 +23,6 @@ public class Publication extends BaseEntity {
 	private int onStock;
 
 	public Publication(String title, Date date, Publisher publisher, int nrOfCopies, int onStock) {
-		super();
 		this.title = title;
 		this.date = date;
 		this.publisher = publisher;
