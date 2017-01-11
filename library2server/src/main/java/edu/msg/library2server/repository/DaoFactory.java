@@ -8,4 +8,6 @@ public abstract class DaoFactory {
 	}
 	
 public abstract UserDao getUserDao();
+
+public abstract PublicationDao getPublicationDao();
 }
