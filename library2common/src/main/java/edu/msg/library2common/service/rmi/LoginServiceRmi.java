@@ -5,6 +5,12 @@ import java.rmi.RemoteException;
 
 import edu.msg.library2common.service.ServiceException;
 
+/**
+ * Verifies login credentials
+ * @param userName, password
+ * @author gallb
+ *
+ */
 public interface LoginServiceRmi extends Remote{
 	
 	public static final String RMI_NAME = "Login";
