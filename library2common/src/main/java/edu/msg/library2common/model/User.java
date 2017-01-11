@@ -27,6 +27,9 @@ public class User extends BaseEntity {
 		this.userType = userType;
 	}
 
+	public User() {
+	}
+
 	public String getName() {
 		return name;
 	}
