@@ -3,9 +3,9 @@ package edu.msg.library2common.model;
 import java.io.Serializable;
 import java.util.UUID;
 /**
+ * Every class of the model extends this class.
  * 
  * @author gallb
- * Every class of the model extends this class
  * 
  */
 public abstract class BaseEntity implements Serializable{
