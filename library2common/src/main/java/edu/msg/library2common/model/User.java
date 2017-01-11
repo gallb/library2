@@ -20,7 +20,6 @@ public class User extends BaseEntity {
 	private UserType userType;
 
 	public User(String name, String userName, int loyalityIndex, String password, UserType userType) {
-		super();
 		this.name = name;
 		this.userName = userName;
 		this.loyalityIndex = loyalityIndex;
