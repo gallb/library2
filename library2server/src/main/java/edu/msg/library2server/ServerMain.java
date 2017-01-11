@@ -15,17 +15,13 @@ public class ServerMain {
 			Registry registry = LocateRegistry.createRegistry(LoginServiceRmi.RMI_PORT);
 			BasicLoginService basicLoginService = new BasicLoginService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
-		SqlHandler cHandler;
-		
-		while(true){
-		cHandler = SqlHandler.getInstance();
-		}
 
 	}
 

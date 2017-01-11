@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.model.UserType;
 import edu.msg.library2server.repository.UserDao;
 
 public class JdbcUserDao implements UserDao {
@@ -16,27 +17,32 @@ public class JdbcUserDao implements UserDao {
 	private SqlHandler conMan;
 
 	public JdbcUserDao() {
-	//	conMan = SqlHandler.getInstance();
+		conMan = SqlHandler.getInstance();
 	}
 
 	public List<User> getAllUsers() {
 		List<User> list = new ArrayList<User>();
 		Connection con = null;
 		try {
-			con=(Connection) conMan.getInstance();
+			System.out.println("belepet");
+			con= conMan.getConnection();
+			System.out.println("konektelt");
 			Statement statemanet = con.createStatement();
 			ResultSet users = statemanet.executeQuery("select * from users");
 			while (users.next()) {
 				User u = new User();
+				u.setUuid(users.getString("uuid"));
 				u.setName(users.getString("name"));
 				u.setUserName(users.getString("user_name"));
-				u.setLoyalityIndex(users.getInt("loyalty_index"));
+				u.setUserType(UserType.valueOf(users.getString("user_type")));
+				u.setLoyalityIndex(users.getInt("layalty_index"));
 				u.setPassword(users.getString("password"));
-				u.setUuid(users.getString("uuid"));
 				list.add(u);				
 			}			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SqlHandlerException("Could not query Users",e);
+			
 		}
 		return list;
 	}
