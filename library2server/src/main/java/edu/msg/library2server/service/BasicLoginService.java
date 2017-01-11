@@ -27,7 +27,7 @@ public class BasicLoginService implements LoginServiceRmi{
 	}
 	
 	public String login(String userName, String pwd) throws RemoteException {
-		userDAO.verifyUser(userName, pwd);
+		
 		return null;
 	}
 }
