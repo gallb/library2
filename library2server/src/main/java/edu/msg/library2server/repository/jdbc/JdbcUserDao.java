@@ -63,8 +63,9 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.setString(1, user.getUuid());
 			preparedStatement.setString(2, user.getName());
 			preparedStatement.setString(3, user.getUserName());
-			preparedStatement.setInt(4, user.getLoyalityIndex());
-			preparedStatement.setString(5, user.getPassword());
+//			preparedStatement.setString(4, user.getUserType()); //itt valami baj van
+			preparedStatement.setInt(5, user.getLoyalityIndex());
+			preparedStatement.setString(6, user.getPassword());
 			preparedStatement.execute();
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			resultSet.next();			
@@ -75,7 +76,29 @@ public class JdbcUserDao implements UserDao {
 	}
 
 	public void updateUser(User user) {
-		// TODO Auto-generated method stub
+//		Connection con = null;
+//		try {
+//			con = (Connection)conMan.getInstance();
+//			PreparedStatement preparedStatement = con.prepareStatement("UPDATE users "
+//					+ " SET uuid = ?, name = ?, user_name = ?,user_type = ?, loyalty_index = ?, password = ? "
+//					+ " WHERE id = ?"
+//					);
+//			preparedStatement.setString(1, user.getUuid());
+//			preparedStatement.setString(2, user.getFirsName());
+//			preparedStatement.setString(3, user.getLastName());
+//			preparedStatement.setString(4, user.getEmail());
+//			preparedStatement.setString(5, user.getPassword());
+//			preparedStatement.setLong(6, user.getId());
+//			preparedStatement.execute();
+//			LOGGER.info("User Update successful.");
+//		} catch (SQLException e) {
+//			LOGGER.error("Could not update user",e);
+//			throw new RepositoryException("Could not update user. ",e);
+//		} finally {
+//			if (con != null) {
+//				conMan.returnConnection(con);
+//			}
+//		}
 		
 	}
 
