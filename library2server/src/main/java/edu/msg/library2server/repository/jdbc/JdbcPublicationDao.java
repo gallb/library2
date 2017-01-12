@@ -1,60 +1,53 @@
 package edu.msg.library2server.repository.jdbc;
 
-import java.awt.print.Book;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library2common.model.Book;
 import edu.msg.library2common.model.Publication;
-import edu.msg.library2common.model.User;
+import edu.msg.library2common.model.PublicationType;
+import edu.msg.library2common.model.Publisher;
 import edu.msg.library2server.repository.PublicationDao;
 
 public class JdbcPublicationDao implements PublicationDao {
 	private SqlHandler conMan;
 	public JdbcPublicationDao() {
-		// TODO Auto-generated constructor stub
+		conMan = SqlHandler.getInstance();
 	}
 
-	public List<Publication> getAllPublications() { //egyelore csak book-ra
-	return null;
+	public List<Publication> getAllPublications() {							 //egyelore csak book-ra
+		List<Publication> list = new ArrayList();
+		Connection con = null;
+		try {
+			con=conMan.getConnection();
+			Statement statemanet = con.createStatement();
+			ResultSet publications = statemanet.executeQuery("select * from publications");
+			while (publications.next()) {			
+				String title=publications.getString("title");
+				Date date=publications.getDate("publication_date");
+				Publisher publisher =new Publisher( publications.getString("publisher_id"));
+				int nrOfCopies= publications.getInt("nr_of_copys");
+				int onStock=publications.getInt("on_stock");
+				Book b =new Book( title,  date,  publisher,  nrOfCopies,  onStock);
+				list.add(b);				
+			}			
+		} catch (SQLException e) {
+			throw new SqlHandlerException("Could not query Books",e);
+		}
+		return list;
 	}
-//		List<Publication> list = new ArrayList();
-//		Connection con = null;
-//		try {
-//			con=conMan.getConnection();
-//			Statement statemanet = con.createStatement();
-//			ResultSet publications = statemanet.executeQuery("select * from books");
-//			while (publications.next()) {
-//				Book b =new Book();
-//				
-//				b.setUuid(publications.getString("uuid"));
-//				u.set(publications.getString("title"));
-//				
-//				b.s
-//				u.setUserName(publications.getString("user_name"));
-//				u.setLoyalityIndex(publications.getInt("loyalty_index"));
-//				u.setPassword(publications.getString("password"));
-//				u.setUuid(publications.getString("uuid"));
-//				list.add(u);				
-//			}			
-//		} catch (SQLException e) {
-//			throw new SqlHandlerException("Could not query Users",e);
-//		}
-//		return list;
-//	}
 
 	public Publication getPublicationByName(String publication_name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public User insertPublication(Publication pub) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	public void updatePublication(Publication pub) {
 		// TODO Auto-generated method stub
@@ -64,6 +57,26 @@ public class JdbcPublicationDao implements PublicationDao {
 	public void deletePublication(Publication pub) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Publication getPublicationByTitle(String publication_title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Publication getPublicationByTitleAndType(String publication_title, PublicationType pub_type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Publication insertPublication(Publication pub) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Publication getPublicationByTitleAndType(String publication_title, Publication pub_type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

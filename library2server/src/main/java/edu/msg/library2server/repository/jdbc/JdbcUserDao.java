@@ -47,11 +47,11 @@ public class JdbcUserDao implements UserDao {
 		return list;
 	}
 
-	public User getUserByName(String user_name) {
+	public User getUserByUserName(String user_name) {
 		User user=new User();
 		List<User> list=getAllUsers();
 		for(User u:list){
-			if (u.getName().equals(user_name)) {
+			if (u.getUserName().equals(user_name)) {
 				user=u;
 				break;
 			}
@@ -112,6 +112,8 @@ public class JdbcUserDao implements UserDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 	
 	
