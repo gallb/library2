@@ -35,7 +35,7 @@ public class JdbcUserDao implements UserDao {
 				u.setName(users.getString("name"));
 				u.setUserName(users.getString("user_name"));
 				u.setUserType(UserType.valueOf(users.getString("user_type")));
-				u.setLoyalityIndex(users.getInt("layalty_index"));
+				u.setLoyalityIndex(users.getInt("loyalty_index"));
 				u.setPassword(users.getString("password"));
 				list.add(u);				
 			}			
