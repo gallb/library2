@@ -26,6 +26,7 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	 */
 	private static final long serialVersionUID = 1L;
 	private UserDao userDAO;
+	private static final Logger LOGGER = LoggerFactory.getLogger(BasicLoginService.class);
 
 	public BasicLoginService() throws RemoteException {
 		super();
@@ -39,11 +40,9 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 
 	public String login(String userName, String pwd) throws RemoteException {
 		User user = userDAO.getUserByUserName(userName);
-		if (user.getUserName().equals(userName)&& (user.getPassword().equals(pwd))) {
-		User user = userDAO.getUserByName(userName);
 		LOGGER.error("User retrieved from database");
 		LOGGER.info("Hello world");
-		if (user.getName() == userName) {
+		if ((user.getUserName().equals(userName) && (user.getPassword().equals(pwd)))){
 			if (user.getUserType() == UserType.Reader) {
 				return "1";
 			}
