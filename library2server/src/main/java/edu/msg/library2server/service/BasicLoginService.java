@@ -3,6 +3,9 @@
  */
 package edu.msg.library2server.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -37,6 +40,10 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	public String login(String userName, String pwd) throws RemoteException {
 		User user = userDAO.getUserByUserName(userName);
 		if (user.getUserName().equals(userName)&& (user.getPassword().equals(pwd))) {
+		User user = userDAO.getUserByName(userName);
+		LOGGER.error("User retrieved from database");
+		LOGGER.info("Hello world");
+		if (user.getName() == userName) {
 			if (user.getUserType() == UserType.Reader) {
 				return "1";
 			}
