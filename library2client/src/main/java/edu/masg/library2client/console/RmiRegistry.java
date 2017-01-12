@@ -40,6 +40,7 @@ public class RmiRegistry {
 		try{
 			return loginServiceRmi.login(userName, pwd);
 		}catch (Exception e) {
+			e.printStackTrace();
 			return "0";
 		}
 

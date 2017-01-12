@@ -20,7 +20,7 @@ public class JdbcUserDao implements UserDao {
 		conMan = SqlHandler.getInstance();
 	}
 
-	public List<User> getAllUsers() {
+	public List<User> getAllUsers()  {
 		List<User> list = new ArrayList<User>();
 		Connection con = null;
 		try {
