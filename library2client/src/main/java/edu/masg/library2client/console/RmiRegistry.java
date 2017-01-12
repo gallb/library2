@@ -38,7 +38,6 @@ public class RmiRegistry {
 
 	public String login(String userName,String pwd) {
 		try{
-			connect();
 			return loginServiceRmi.login(userName, pwd);
 		}catch (Exception e) {
 			return "0";
