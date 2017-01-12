@@ -1,5 +1,6 @@
 package edu.msg.library2client.console;
 
+import java.io.Console;
 import java.util.Scanner;
 
 import edu.msg.library2client.RmiRegistry;
@@ -17,6 +18,7 @@ public class ClientConsole {
 		System.out.println("Welcom to .msg library!");
 		login();
 	}
+
 	private String getLine() {
 		String str = "";
 		while (str.isEmpty()) {
@@ -38,12 +40,18 @@ public class ClientConsole {
 			login();
 		} else if (loginString.equals("1")) {
 			System.out.println("Logged in as reder...");
+			while (true) {
+
+			}
 		} else {
 			System.out.println("logged in as admin...");
+			while (true) {
+
+			}
 		}
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		new ClientConsole().startConsole();
 	}
 
