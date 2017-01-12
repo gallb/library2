@@ -1,8 +1,8 @@
-package edu.masg.library2client.console.console;
+package edu.msg.library2client.console;
 
 import java.util.Scanner;
 
-import edu.masg.library2client.console.RmiRegistry;
+import edu.msg.library2client.RmiRegistry;
 import edu.msg.library2common.model.UserType;
 
 public class ClientConsole {
@@ -39,7 +39,7 @@ public class ClientConsole {
 		} else if (loginString.equals("1")) {
 			System.out.println("Logged in as reder...");
 		} else {
-			System.out.println("logged in as user...");
+			System.out.println("logged in as admin...");
 		}
 	}
 	
