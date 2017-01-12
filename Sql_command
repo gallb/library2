@@ -85,13 +85,13 @@ INSERT INTO `library2`.`publication_authors` (`publication_id`, `author_id`) VAL
   `name` VARCHAR(80) NOT NULL,
   `user_name` VARCHAR(50) NOT NULL,
   `user_type` ENUM('Admin', 'Reader') NOT NULL,
-  `layalty_index` INT NOT NULL,
+  `loyalty_index` INT NOT NULL,
   `password` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`uuid`));
   
-  INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `layalty_index`, `password`) VALUES ('112', 'Zoli', 'zoli', 'Admin', '10', 'zoli');
-INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `layalty_index`, `password`) VALUES ('23', 'Barni', 'barni', 'Reader', '10', 'barni');
-INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `layalty_index`, `password`) VALUES ('24', 'Szili', 'szili', 'Reader', '10', 'szili');
+  INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('112', 'Zoli', 'zoli', 'Admin', '10', 'zoli');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('23', 'Barni', 'barni', 'Reader', '10', 'barni');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('24', 'Szili', 'szili', 'Reader', '10', 'szili');
 
   
     Drop table if exists  `library2`.`borrows`;

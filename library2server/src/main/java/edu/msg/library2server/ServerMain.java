@@ -7,7 +7,7 @@ public class ServerMain {
 	public static void main(String[] args) {
 		SqlHandler cHandler;
 		while(true){
-		cHandler = SqlHandler.getInstance();
+//		cHandler = SqlHandler.getInstance();
 		}
 
 	}

@@ -26,12 +26,12 @@ public class SqlHandler {
 		}
 	}
 
-	public static synchronized SqlHandler getInstance() {
+
+	public synchronized Connection getConnection() {
 		if (instance == null) {
 			instance = new SqlHandler();
 			System.out.println("server satrt");
 		}
-		return instance;
+		return connection;
 	}
-
 }
