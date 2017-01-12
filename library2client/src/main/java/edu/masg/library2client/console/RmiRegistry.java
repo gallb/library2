@@ -4,17 +4,20 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
 
 public class RmiRegistry {
-
-	public static void main(String[] arg) {
+	static LoginServiceRmi loginServiceRmi;
+	static Registry registry;
+	 {
+		connect();
 		try {
-			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
-			LoginServiceRmi loginServiceRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
-			System.out.println("ez issss megy");
-			System.out.println(loginServiceRmi.login("zoli", "zoli"));
+			
+			loginServiceRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -22,6 +25,25 @@ public class RmiRegistry {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	 void connect(){
+		try {
+			 registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public String login(String userName,String pwd) {
+		try{
+			connect();
+			return loginServiceRmi.login(userName, pwd);
+		}catch (Exception e) {
+			return "0";
+		}
 
 	}
+
 }
