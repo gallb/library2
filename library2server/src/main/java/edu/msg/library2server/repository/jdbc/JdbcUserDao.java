@@ -9,57 +9,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.model.UserType;
 import edu.msg.library2server.repository.UserDao;
 
 public class JdbcUserDao implements UserDao {
 //	private static final Logger LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
-	private Connection conMan;
+	private SqlHandler conMan;
 
 	public JdbcUserDao() {
-	//	conMan = SqlHandler.getInstance();
+		conMan = SqlHandler.getInstance();
 	}
 
-	public List<User> getAllUsers() {		
+	public List<User> getAllUsers() {
 		List<User> list = new ArrayList<User>();
 		Connection con = null;
 		try {
-//			con=conMan.getConnection();
+			System.out.println("belepet");
+			con= conMan.getConnection();
+			System.out.println("konektelt");
 			Statement statemanet = con.createStatement();
 			ResultSet users = statemanet.executeQuery("select * from users");
 			while (users.next()) {
 				User u = new User();
+				u.setUuid(users.getString("uuid"));
 				u.setName(users.getString("name"));
 				u.setUserName(users.getString("user_name"));
-				u.setLoyalityIndex(users.getInt("loyalty_index"));
+				u.setUserType(UserType.valueOf(users.getString("user_type")));
+				u.setLoyalityIndex(users.getInt("layalty_index"));
 				u.setPassword(users.getString("password"));
-				u.setUuid(users.getString("uuid"));
 				list.add(u);				
 			}			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SqlHandlerException("Could not query Users",e);
+			
 		}
 		return list;
 	}
 
 	public User getUserByName(String user_name) {
-//		ResultSet users = statemanet.executeQuery("select * from users where user_name like user_name");
-//		con=(Connection) conMan.getInstance();
-//		Statement statemanet = con.createStatement();
-//		ResultSet users = statemanet.executeQuery("select * from users");
-//		while (users.next()) {
-//			User u = new User();
-//			u.setName(users.getString("name"));
-//			u.setUserName(users.getString("user_name"));
-//			u.setLoyalityIndex(users.getInt("loyalty_index"));
-//			u.setPassword(users.getString("password"));
-//			u.setUuid(users.getString("uuid"));
-//			list.add(u);				
-//		}			
-//	} catch (SQLException e) {
-//		throw new SqlHandlerException("Could not query Users",e);
-//	}
-//	return list;
-//}
 		User user=new User();
 		List<User> list=getAllUsers();
 		for(User u:list){
@@ -74,7 +62,7 @@ public class JdbcUserDao implements UserDao {
 	public User insertUser(User user) {
 		Connection con = null;
 		try {
-//			con = (Connection)conMan.getInstance();
+			con = (Connection)conMan.getInstance();
 			PreparedStatement preparedStatement = con.prepareStatement("insert into users "
 					+ "(uuid, name, user_name, user_type,loyalty_index, pasword) " + "values (?, ?, ?, ?, ?,?)",
 					Statement.RETURN_GENERATED_KEYS);

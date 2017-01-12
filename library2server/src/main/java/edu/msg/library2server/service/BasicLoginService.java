@@ -4,6 +4,7 @@
 package edu.msg.library2server.service;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
@@ -15,11 +16,16 @@ import edu.msg.library2server.repository.UserDao;
  * @author gallb
  *
  */
-public class BasicLoginService implements LoginServiceRmi{
+public class BasicLoginService extends UnicastRemoteObject implements LoginServiceRmi {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private UserDao userDAO;
-	
-	public BasicLoginService() {
+
+	public BasicLoginService() throws RemoteException {
+		super();
 		try {
 			userDAO = DaoFactory.getDaoFactory().getUserDao();
 		} catch (Exception e) {
@@ -27,14 +33,14 @@ public class BasicLoginService implements LoginServiceRmi{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String login(String userName, String pwd) throws RemoteException {
 		User user = userDAO.getUserByName(userName);
 		if (user.getName() == userName) {
-			if (user.getUserType() == UserType.USER) {
+			if (user.getUserType() == UserType.Reader) {
 				return "1";
 			}
-			if (user.getUserType() == UserType.ADMIN) {
+			if (user.getUserType() == UserType.Admin) {
 				return "2";
 			}
 		}

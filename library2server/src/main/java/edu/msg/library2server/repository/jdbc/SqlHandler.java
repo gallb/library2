@@ -11,7 +11,7 @@ import java.sql.SQLException;
  */
 
 public class SqlHandler {
-	private static final String DBURL = "jdbc:mysql://localhost:3306/library?useSSL=false";
+	private static final String DBURL = "jdbc:mysql://localhost:3306/library2?useSSL=false";
 	private static final String USER = "library_admin";
 	private static final String PASSWORD = "library_admin_pass";
 	private Connection connection;
@@ -20,18 +20,26 @@ public class SqlHandler {
 	private SqlHandler() {
 		try {
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
+			System.out.println("connected");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SqlHandlerException("Connection failed", e);
 		}
 	}
 
-
-	public synchronized Connection getConnection() {
+	public static synchronized SqlHandler getInstance() {
 		if (instance == null) {
 			instance = new SqlHandler();
 			System.out.println("server satrt");
 		}
-		return connection;
+		return instance;
 	}
+
+	public Connection getConnection() {
+		Connection con = null;
+		con = connection;
+
+		return con;
+	}
+
 }
