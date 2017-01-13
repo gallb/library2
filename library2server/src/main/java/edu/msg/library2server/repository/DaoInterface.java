@@ -28,18 +28,18 @@ public interface DaoInterface {
 	 * @param e - the element to be inserted (it is an object which extends the BaseEntity class)
 	 * @return - an actual object that extends the BaseEntity
 	 */
-	<X extends BaseEntity> void insert(X e);
+	<X extends BaseEntity> boolean insert(X e);
 	
 	/**
 	 * Updates the element given by {@link e}}
 	 * @param e - the element to be updated (it is an object which extends the BaseEntity class)
 	 */
-	<X extends BaseEntity> void update(X e);
+	<X extends BaseEntity> boolean update(X e);
 	
 	/**
 	 * Deletes the element given by {@link e}}
 	 * @param e - the element to be deleted (it is an object which extends the BaseEntity class)
 	 */
-	void delete(String id);
+	boolean delete(String id);
 	
 }
