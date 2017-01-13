@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
+import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
 	static LoginServiceRmi loginServiceRmi;
@@ -29,18 +30,18 @@ public class RmiRegistry {
 
 	void connect() {
 		try {
-			registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+			registry = LocateRegistry.getRegistry((PropertyProvider.INSTANCE.getProperty("host")), Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public String login(String userName, String pwd) {
+	public UserType login(String userName, String pwd) {
 		try {
 			return loginServiceRmi.login(userName, pwd);
 		} catch (Exception e) {
-			return "0";
+			return UserType.Invalid;
 		}
 
 	}

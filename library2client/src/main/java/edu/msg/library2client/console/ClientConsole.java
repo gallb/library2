@@ -35,11 +35,11 @@ public class ClientConsole {
 		System.out.println("Enter your password");
 		String password = getLine();
 
-		String loginString = registry.login(userName, password);
-		if (loginString.equals("0")) {
+		UserType loginString = registry.login(userName, password);
+		if (loginString.equals(UserType.Admin)) {
 			System.out.println("Invalid user name and password,try again!");
 			login();
-		} else if (loginString.equals("1")) {
+		} else if (loginString.equals(UserType.Reader)) {
 			System.out.println("Logged in as reder...");
 			while (true) {
 
