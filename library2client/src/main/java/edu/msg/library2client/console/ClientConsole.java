@@ -2,7 +2,7 @@ package edu.msg.library2client.console;
 
 import java.util.Scanner;
 
-import edu.masg.library2client.console.RmiRegistry;
+import edu.msg.library2client.RmiRegistry;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 
