@@ -8,28 +8,39 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2server.repository.UserDao;
+import edu.msg.library2server.service.BasicLoginService;
 
 public class JdbcUserDao implements UserDao {
-//	private static final Logger LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
+	// private static final Logger
+	// LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
 	private SqlHandler conMan;
+	private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUserDao.class);
+	private PreparedStatement preparedStatement;
+	private Connection con = null;
 
 	public JdbcUserDao() {
 		conMan = SqlHandler.getInstance();
 	}
 
-	public List<User> getAll()  {
+	public List<User> getAll() {
 		List<User> list = new ArrayList<User>();
-		Connection con = null;
+
 		try {
-			System.out.println("belepet");
-			con= conMan.getConnection();
-			System.out.println("konektelt");
-			Statement statemanet = con.createStatement();
-			ResultSet users = statemanet.executeQuery("select * from users");
+			System.out.println("User logged in.");
+			con = conMan.getConnection();
+			System.out.println("Connection established!");
+
+			String selectSQL = "select * from users";
+			preparedStatement = con.prepareStatement(selectSQL);
+
+			ResultSet users = preparedStatement.executeQuery(selectSQL);
 			while (users.next()) {
 				User u = new User();
 				u.setUuid(users.getString("uuid"));
@@ -38,96 +49,165 @@ public class JdbcUserDao implements UserDao {
 				u.setUserType(UserType.valueOf(users.getString("user_type")));
 				u.setLoyalityIndex(users.getInt("loyalty_index"));
 				u.setPassword(users.getString("password"));
-				list.add(u);				
-			}			
+				list.add(u);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new SqlHandlerException("Could not query Users",e);
-			
+			throw new SqlHandlerException("Could not query Users!", e);
+
+		} finally {
+			//closeConnection(con, preparedStatement);
 		}
 		return list;
 	}
 
 	public User getOne(String name) {
-		User user=new User();
-		List<User> list=getAll();
-		for(User u:list){
-			if (u.getName().equals(name)) {
-				user=u;
-				break;
-			}
-		}
-		return user;
-	}	
-
-	public User insert(BaseEntity ent) {
-		User user = (User)ent;
-		Connection con = null;
+		User user = null;
 		try {
-			con = (Connection)conMan.getInstance();
-			PreparedStatement preparedStatement = con.prepareStatement("insert into users "
-					+ "(uuid, name, user_name, user_type,loyalty_index, pasword) " + "values (?, ?, ?, ?, ?,?)",
-					Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, user.getUuid());
-			preparedStatement.setString(2, user.getName());
-			preparedStatement.setString(3, user.getUserName());
-//			preparedStatement.setString(4, user.getUserType()); //itt valami baj van
-			preparedStatement.setInt(5, user.getLoyalityIndex());
-			preparedStatement.setString(6, user.getPassword());
+			con = conMan.getConnection();
+			String selectSQL = "select * from users where name=?";
+			preparedStatement = con.prepareStatement(selectSQL);
+			preparedStatement.setString(1, name);
 			preparedStatement.execute();
-			ResultSet resultSet = preparedStatement.getGeneratedKeys();
-			resultSet.next();			
+			ResultSet users = preparedStatement.executeQuery(selectSQL);
+			while (users.next()) {
+				user = new User();
+				user.setUuid(users.getString("uuid"));
+				user.setName(users.getString("name"));
+				user.setUserName(users.getString("user_name"));
+				user.setUserType(UserType.valueOf(users.getString("user_type")));
+				user.setLoyalityIndex(users.getInt("loyalty_index"));
+				user.setPassword(users.getString("password"));
+			}
+
 		} catch (SQLException e) {
-			throw new SqlHandlerException("Could not insert user. ",e);
+			LOGGER.error("Could not delete user", e);
+			// throw new RepositoryException("Could not update user. ", e);
+		} finally {
+			//closeConnection(con, preparedStatement);
 		}
 		return user;
+	}
+
+	public void insert(BaseEntity ent) {
+		User user = (User) ent;
+		User us = new User();
+		System.out.println("inside insert");
+		try {
+			con = conMan.getConnection();
+			System.out.println(con.isClosed());
+			String sqlCommand = "insert into users (uuid, name, user_name, user_type, loyalty_index, password) " 
+													+ "values (?, ?, ?, ?, ?, ?)";
+			System.out.println(sqlCommand + " " + user.getName());
+			preparedStatement = con.prepareStatement(sqlCommand);
+			System.out.println(sqlCommand + " " + preparedStatement.toString());
+			preparedStatement.setString(1, user.getUuid());
+			System.out.println("id");
+			preparedStatement.setString(2, user.getName());
+			System.out.println("name");
+			preparedStatement.setString(3, user.getUserName());
+			System.out.println("uname");
+			preparedStatement.setString(4, user.getUserType().name());
+			System.out.println("type");
+			preparedStatement.setInt(5, user.getLoyalityIndex());
+			System.out.println("loyalty");
+			preparedStatement.setString(6, user.getPassword());
+	
+			System.out.println("sql " + preparedStatement.toString() + " " + user.getName());
+			preparedStatement.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			LOGGER.error("Could not insert user. ", e);
+			throw new SqlHandlerException("Could not insert user. ", e);
+		} finally {
+			//closeConnection(con, preparedStatement);
+		}		
 	}
 
 	public <X extends BaseEntity> void update(X ent) {
-		// TODO Auto-generated method stub
-	//	Connection con = null;
-//		try {
-//			con = (Connection)conMan.getInstance();
-//			PreparedStatement preparedStatement = con.prepareStatement("UPDATE users "
-//					+ " SET uuid = ?, name = ?, user_name = ?,user_type = ?, loyalty_index = ?, password = ? "
-//					+ " WHERE id = ?"
-//					);
-//			preparedStatement.setString(1, user.getUuid());
-//			preparedStatement.setString(2, user.getFirsName());
-//			preparedStatement.setString(3, user.getLastName());
-//			preparedStatement.setString(4, user.getEmail());
-//			preparedStatement.setString(5, user.getPassword());
-//			preparedStatement.setLong(6, user.getId());
-//			preparedStatement.execute();
-//			LOGGER.info("User Update successful.");
-//		} catch (SQLException e) {
-//			LOGGER.error("Could not update user",e);
-//			throw new RepositoryException("Could not update user. ",e);
-//		} finally {
-//			if (con != null) {
-//				conMan.returnConnection(con);
-//			}
-//		}
-		
+		User user = (User) ent;
+
+		try {
+			con = conMan.getConnection();
+			String sqlCommand = "UPDATE users " + " SET name = ?, user_name = ?,user_type = ?,"
+					+ " loyalty_index = ?, password = ? " + " WHERE uuid = ?";
+			preparedStatement = con.prepareStatement(sqlCommand);
+
+			preparedStatement.setString(1, user.getName());
+			preparedStatement.setString(2, user.getUserName());
+			preparedStatement.setObject(3, user.getUserType());
+			preparedStatement.setInt(4, user.getLoyalityIndex());
+			preparedStatement.setString(5, user.getPassword());
+			preparedStatement.setString(6, "'" + user.getUuid() + "'");
+			preparedStatement.executeUpdate();
+System.out.println("User Update successful");
+			LOGGER.info("User Update successful.");
+		} catch (SQLException e) {
+			LOGGER.error("Could not update user", e);
+			System.out.println("User Update NOT successful");
+			// throw new RepositoryException("Could not update user. ", e);
+		} finally {
+			//closeConnection(con, preparedStatement);
+		}
+
 	}
 
-	public <X extends BaseEntity> void delete(X ent) {
-		// TODO Auto-generated method stub
+	public void delete(String id) {
 		
+		try {
+			con = conMan.getConnection();
+			String sqlCommand = "delete * from users WHERE uuid = ?";
+			preparedStatement = con.prepareStatement(sqlCommand);
+			preparedStatement.setString(1, id);
+			preparedStatement.execute();
+
+			LOGGER.info("User deletion successful.");
+		} catch (SQLException e) {
+			LOGGER.error("Could not delete user", e);
+			// throw new RepositoryException("Could not update user. ", e);
+		} finally {
+			//closeConnection(con, preparedStatement);
+		}
+
 	}
 
 	public User getUserByUserName(String user_name) {
-		User user=new User();
-		List<User> list=getAll();
-		for(User u:list){
-			if (u.getUserName().equals(user_name)) {
-				user=u;
-				break;
+		User user = null;
+		try {
+			con = conMan.getConnection();
+			String selectSQL = "select * from users where user_name=?";
+			preparedStatement = con.prepareStatement(selectSQL);
+			preparedStatement.setString(1, user_name);
+
+			ResultSet users = preparedStatement.executeQuery();
+			while (users.next()) {
+				user = new User();
+				user.setUuid(users.getString("uuid"));
+				user.setName(users.getString("name"));
+				user.setUserName(users.getString("user_name"));
+				user.setUserType(UserType.valueOf(users.getString("user_type")));
+				user.setLoyalityIndex(users.getInt("loyalty_index"));
+				user.setPassword(users.getString("password"));
 			}
+		} catch (SQLException e) {
+			LOGGER.error("Could not retrieve user", e);
+			// throw new RepositoryException("Could not update user. ", e);
+		} finally {
+			//closeConnection(con, preparedStatement);
 		}
 		return user;
+
 	}
 
+	private void closeConnection(Connection con, PreparedStatement preparedStatement) {
+		try {
+			preparedStatement.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
-

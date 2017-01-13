@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.Book;
 import edu.msg.library2common.model.Publication;
@@ -15,9 +18,11 @@ import edu.msg.library2common.model.PublicationType;
 import edu.msg.library2common.model.Publisher;
 import edu.msg.library2server.repository.DaoInterface;
 import edu.msg.library2server.repository.PublicationDao;
+import edu.msg.library2server.service.BasicLoginService;
 
 public class JdbcPublicationDao implements PublicationDao {
 	private SqlHandler conMan;
+	private static final Logger LOGGER = LoggerFactory.getLogger(BasicLoginService.class);
 	public JdbcPublicationDao() {
 		conMan = SqlHandler.getInstance();
 	}
@@ -64,12 +69,12 @@ public class JdbcPublicationDao implements PublicationDao {
 		return null;
 	}
 
-	public <X extends BaseEntity> X insert(X e) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
-	public <X extends BaseEntity> void delete(X e) {
+	public <X extends BaseEntity> void insert(X e) {
 		// TODO Auto-generated method stub
 		
 	}
