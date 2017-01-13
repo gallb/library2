@@ -4,6 +4,7 @@ import java.io.Console;
 import java.util.Scanner;
 
 import edu.msg.library2client.RmiRegistry;
+import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 
 public class ClientConsole {
@@ -34,11 +35,11 @@ public class ClientConsole {
 		System.out.println("Enter your password");
 		String password = getLine();
 
-		String loginString = registry.login(userName, password);
-		if (loginString.equals("0")) {
+		UserType loginString = registry.login(userName, password);
+		if (loginString.equals(UserType.Admin)) {
 			System.out.println("Invalid user name and password,try again!");
 			login();
-		} else if (loginString.equals("1")) {
+		} else if (loginString.equals(UserType.Reader)) {
 			System.out.println("Logged in as reder...");
 			while (true) {
 
@@ -55,6 +56,9 @@ public class ClientConsole {
 
 	public static void main(String[] args) {
 		new ClientConsole().startConsole();
+		User user=new User("Proba", "praba_user", 10, "pass", UserType.Admin);
+		
+		
 	}
 
 }
