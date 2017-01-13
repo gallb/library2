@@ -4,6 +4,7 @@ import java.io.Console;
 import java.util.Scanner;
 
 import edu.msg.library2client.RmiRegistry;
+import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 
 public class ClientConsole {
@@ -55,6 +56,9 @@ public class ClientConsole {
 
 	public static void main(String[] args) {
 		new ClientConsole().startConsole();
+		User user=new User("Proba", "praba_user", 10, "pass", UserType.Admin);
+		
+		
 	}
 
 }
