@@ -29,7 +29,7 @@ public class RmiRegistry {
 	
 	 void connect(){
 		try {
-			 registry = LocateRegistry.getRegistry("192.168.0.105", LoginServiceRmi.RMI_PORT);
+			 registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

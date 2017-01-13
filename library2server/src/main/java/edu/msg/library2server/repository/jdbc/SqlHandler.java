@@ -22,6 +22,9 @@ public class SqlHandler {
 
 	private SqlHandler() {
 		try {
+			System.out.println(DBURL);
+			System.out.println(USER);
+			System.out.println(PASSWORD);
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
 			System.out.println("connected");
 		} catch (SQLException e) {
