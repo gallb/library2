@@ -82,7 +82,8 @@ public class JdbcUserDao implements UserDao {
 		return user;
 	}
 
-	public void insert(BaseEntity ent) {
+	public boolean insert(BaseEntity ent) {
+		boolean returnStatus = false;
 		User user = (User) ent;
 		User us = new User();
 		try {
@@ -102,15 +103,17 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.executeUpdate();
 
 			LOGGER.info("User inserted!");
+			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error("Unable to insert user!", e);
 			throw new ServiceException("Internal server error!");
 		}
+		return returnStatus;
 	}
 
-	public <X extends BaseEntity> void update(X ent) {
+	public <X extends BaseEntity> boolean update(X ent) {
 		User user = (User) ent;
-
+		boolean returnStatus = false;
 		try {
 			con = conMan.getConnection();
 			String sqlCommand = "UPDATE users " + " SET name = ?, user_name = ?,user_type = ?,"
@@ -125,14 +128,16 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.setString(6, user.getUuid());
 
 			preparedStatement.executeUpdate();
+			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error("Unable to update user!", e);
 			throw new ServiceException("Internal server error!");
 		}
+		return returnStatus;
 	}
 
-	public void delete(String id) {
-
+	public boolean delete(String id) {
+		boolean returnStatus = false;
 		try {
 			con = conMan.getConnection();
 			String sqlCommand = "delete from users WHERE uuid = ?";
@@ -141,10 +146,12 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.execute();
 
 			LOGGER.info("User deleted!");
+			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error("Unable to delete user!", e);
 			throw new ServiceException("Internal server error!");
 		}
+		return returnStatus;
 	}
 
 	public User getUserByUserName(String user_name) {
