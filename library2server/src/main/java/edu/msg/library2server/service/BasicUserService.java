@@ -25,7 +25,8 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	
 	private UserDao userDao;
 	
-	protected BasicUserService() throws RemoteException {
+	public BasicUserService() throws RemoteException {
+		super();
 	}
 	
 	public boolean addNewUser(User user) throws RemoteException {
@@ -44,8 +45,8 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	}
 
 	public User getByUserID(String userID) throws RemoteException {
-		//userDao = DaoFactory.getDaoFactory().getUserDao();
-		return null;
+		userDao = DaoFactory.getDaoFactory().getUserDao();
+		return userDao.getById(userID);
 	}
 
 	public boolean deleteUser(String userID) throws RemoteException {
@@ -54,8 +55,7 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	}
 
 	public List<User> searchForUser(String name) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return searchForUser(name);
 	}
 	
 }
