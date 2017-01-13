@@ -39,26 +39,9 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 			throw new ServiceException("Data access error.");
 		}
 	}
-<<<<<<< HEAD
 	public UserType login(String userName, String pwd) throws RemoteException, ServiceException {
-=======
-
-	public String login(String userName, String pwd) throws RemoteException, LoginException {
-		User user = userDAO.getUserByUserName(userName);		
->>>>>>> branch 'backend' of https://github.com/gallb/library2.git
 		try {
-<<<<<<< HEAD
 			User user = userDAO.getUserByUserName(userName);
-=======
-			User user2 = new User("test", "test", 10, "trsd", UserType.Admin);
-//			userDAO.insert(user2);//working
-			user2.setName("testttttttttttt");
-			System.out.println(user2.getName());
-			userDAO.update(user2);
-//			userDAO.delete(user2);
-		
-			LOGGER.info("Hello world");
->>>>>>> branch 'backend' of https://github.com/gallb/library2.git
 			if (user.getName() != null) {
 				return UserType.Invalid;
 			} else {
@@ -70,11 +53,6 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 			LOGGER.error("Faild to retrieve user from db.",e);
 			throw new ServiceException("Faild to verify user.");
 		}
-<<<<<<< HEAD
 		return UserType.Invalid;
 	}
-=======
-		return "0";
-	}	
->>>>>>> branch 'backend' of https://github.com/gallb/library2.git
 }
