@@ -1,5 +1,6 @@
 package edu.masg.library2client.console;
 
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,12 +8,16 @@ import java.rmi.registry.Registry;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
+import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
 	static LoginServiceRmi loginServiceRmi;
+	static UserServiceRmi userServiceRmi;
 	static Registry registry;
 	 {
 		connect();
@@ -45,6 +50,27 @@ public class RmiRegistry {
 			return UserType.Invalid;
 		}
 
+	}
+	
+	
+	public boolean addNewUser(User user){
+
+			try {
+				userServiceRmi=(UserServiceRmi)registry.lookup(UserServiceRmi.RMI_NAME);
+
+			} catch (AccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	
+		return false;
 	}
 
 }

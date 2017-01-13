@@ -7,8 +7,11 @@ import java.rmi.registry.Registry;
 //import org.apache.log4j.PropertyConfigurator;
 
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
+import edu.msg.library2common.service.rmi.UserServiceRmi;
+import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.jdbc.SqlHandler;
 import edu.msg.library2server.service.BasicLoginService;
+import edu.msg.library2server.service.BasicUserService;
 
 public class ServerMain {
 
@@ -17,9 +20,12 @@ public class ServerMain {
 		//PropertyConfigurator.configure(log4jConfPath);
 		try {
 			//Registry registry = LocateRegistry.createRegistry(LoginServiceRmi.RMI_PORT);
-			Registry registry = LocateRegistry.createRegistry(1099);
+			Registry registry = LocateRegistry.createRegistry(Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			BasicLoginService basicLoginService = new BasicLoginService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
+			
+//			BasicUserService basicLoginService2 = new BasicU();
+//			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
 			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
