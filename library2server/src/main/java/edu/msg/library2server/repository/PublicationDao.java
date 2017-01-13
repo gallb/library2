@@ -4,14 +4,12 @@ import java.util.List;
 
 import edu.msg.library2common.model.Publication;
 
-public interface PublicationDao {
-	List<Publication> getAllPublications();
-	Publication getPublicationByTitle(String publication_title);
-	Publication getPublicationByTitleAndType(String publication_title,Publication pub_type);		
-	Publication insertPublication(Publication pub);
-	void updatePublication(Publication pub);
-	void deletePublication(Publication pub);
+public interface PublicationDao extends DaoInterface {
+	/**
+	 * 
+	 * @param publication_title  - the title of the publication
+	 * @param pub_type - the type of the publication
+	 * @return - a publication element
+	 */
+	Publication getPublicationByTitleAndType(String publication_title, Publication pub_type);
 }
-
-
-

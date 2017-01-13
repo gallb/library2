@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2server.repository.UserDao;
@@ -20,7 +21,7 @@ public class JdbcUserDao implements UserDao {
 		conMan = SqlHandler.getInstance();
 	}
 
-	public List<User> getAllUsers()  {
+	public List<User> getAll()  {
 		List<User> list = new ArrayList<User>();
 		Connection con = null;
 		try {
@@ -47,19 +48,20 @@ public class JdbcUserDao implements UserDao {
 		return list;
 	}
 
-	public User getUserByUserName(String user_name) {
+	public User getOne(String name) {
 		User user=new User();
-		List<User> list=getAllUsers();
+		List<User> list=getAll();
 		for(User u:list){
-			if (u.getUserName().equals(user_name)) {
+			if (u.getName().equals(name)) {
 				user=u;
 				break;
 			}
 		}
 		return user;
-	}
+	}	
 
-	public User insertUser(User user) {
+	public User insert(BaseEntity ent) {
+		User user = (User)ent;
 		Connection con = null;
 		try {
 			con = (Connection)conMan.getInstance();
@@ -81,8 +83,9 @@ public class JdbcUserDao implements UserDao {
 		return user;
 	}
 
-	public void updateUser(User user) {
-//		Connection con = null;
+	public <X extends BaseEntity> void update(X ent) {
+		// TODO Auto-generated method stub
+	//	Connection con = null;
 //		try {
 //			con = (Connection)conMan.getInstance();
 //			PreparedStatement preparedStatement = con.prepareStatement("UPDATE users "
@@ -108,15 +111,22 @@ public class JdbcUserDao implements UserDao {
 		
 	}
 
-	public void deleteUser(User user) {
+	public <X extends BaseEntity> void delete(X ent) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
-
-	
-	
+	public User getUserByUserName(String user_name) {
+		User user=new User();
+		List<User> list=getAll();
+		for(User u:list){
+			if (u.getUserName().equals(user_name)) {
+				user=u;
+				break;
+			}
+		}
+		return user;
+	}
 
 
 }

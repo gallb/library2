@@ -4,10 +4,12 @@ import java.util.List;
 
 import edu.msg.library2common.model.User;
 
-public interface UserDao {
-	List<User> getAllUsers();
+public interface UserDao extends DaoInterface{
+	/**
+	 * Returns a User that was searched by the user_name
+	 * Can return null if no match was found
+	 * @param user_name - the user_name to search for
+	 * @return - the user requested by the {@link user_name}}
+	 */
 	User getUserByUserName(String user_name);
-	User insertUser(User user);	
-	void updateUser(User user);
-	void deleteUser(User user);
 }
