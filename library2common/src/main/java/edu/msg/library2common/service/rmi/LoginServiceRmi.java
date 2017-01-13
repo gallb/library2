@@ -8,7 +8,9 @@ import edu.msg.library2common.util.PropertyProvider;
 
 /**
  * Verifies login credentials
- * @param userName, password
+ * 
+ * @param userName,
+ *            password
  * @author gallb
  *
  */

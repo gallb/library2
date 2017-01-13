@@ -40,9 +40,15 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	}
 
 	public String login(String userName, String pwd) throws RemoteException, LoginException {
+		User user = userDAO.getUserByUserName(userName);		
 		try {
-			User user = userDAO.getUserByUserName(userName);
-			
+			User user2 = new User("test", "test", 10, "trsd", UserType.Admin);
+//			userDAO.insert(user2);//working
+			user2.setName("testttttttttttt");
+			System.out.println(user2.getName());
+			userDAO.update(user2);
+//			userDAO.delete(user2);
+		
 			LOGGER.info("Hello world");
 			if (user.getName() != null) {
 
@@ -62,5 +68,5 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 			throw new LoginException("Faild to retrieve user from db.", e);
 		}
 		return "0";
-	}
+	}	
 }

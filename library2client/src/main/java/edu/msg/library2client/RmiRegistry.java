@@ -13,10 +13,10 @@ import edu.msg.library2common.service.rmi.LoginServiceRmi;
 public class RmiRegistry {
 	static LoginServiceRmi loginServiceRmi;
 	static Registry registry;
-	 {
+	{
 		connect();
 		try {
-			
+
 			loginServiceRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -26,23 +26,26 @@ public class RmiRegistry {
 			e.printStackTrace();
 		}
 	}
-	
-	 void connect(){
+
+	void connect() {
 		try {
+<<<<<<< HEAD
 			 registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+=======
+			registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+>>>>>>> branch 'backend' of https://github.com/gallb/library2.git
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public String login(String userName,String pwd) {
-		try{
+	public String login(String userName, String pwd) {
+		try {
 			return loginServiceRmi.login(userName, pwd);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return "0";
 		}
 
 	}
-
 }
