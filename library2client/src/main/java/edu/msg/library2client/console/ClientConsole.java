@@ -50,6 +50,8 @@ public class ClientConsole {
 			}
 		}
 	}
+	
+	
 
 	public static void main(String[] args) {
 		new ClientConsole().startConsole();
