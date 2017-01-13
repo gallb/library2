@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.Book;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.PublicationType;
 import edu.msg.library2common.model.Publisher;
+import edu.msg.library2server.repository.DaoInterface;
 import edu.msg.library2server.repository.PublicationDao;
 
 public class JdbcPublicationDao implements PublicationDao {
@@ -20,7 +22,7 @@ public class JdbcPublicationDao implements PublicationDao {
 		conMan = SqlHandler.getInstance();
 	}
 
-	public List<Publication> getAllPublications() {							 //egyelore csak book-ra
+	public List<Publication> getAll() {							 //egyelore csak book-ra
 		List<Publication> list = new ArrayList();
 		Connection con = null;
 		try {
@@ -42,41 +44,34 @@ public class JdbcPublicationDao implements PublicationDao {
 		return list;
 	}
 
-	public Publication getPublicationByName(String publication_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
-	public void updatePublication(Publication pub) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void deletePublication(Publication pub) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Publication getPublicationByTitle(String publication_title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Publication getPublicationByTitleAndType(String publication_title, PublicationType pub_type) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public Publication getPublicationByTitleAndType(String publication_title, Publication pub_type) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
 
-	public Publication insertPublication(Publication pub) {
+	public <X extends BaseEntity> void update(X e) {
+		// TODO Auto-generated method stub
+	//String title = ((Publication)e).getTitle();
+		
+	}
+
+	public <X extends BaseEntity> X getOne(String publication_title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Publication getPublicationByTitleAndType(String publication_title, Publication pub_type) {
+	public <X extends BaseEntity> X insert(X e) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public <X extends BaseEntity> void delete(X e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
