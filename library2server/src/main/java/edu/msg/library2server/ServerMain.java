@@ -16,7 +16,8 @@ public class ServerMain {
 		//String log4jConfPath = "C:\\Users\\gallb\\git\\library2\\library2server\\src\\main\\java\\log4j.properties";
 		//PropertyConfigurator.configure(log4jConfPath);
 		try {
-			Registry registry = LocateRegistry.createRegistry(LoginServiceRmi.RMI_PORT);
+			//Registry registry = LocateRegistry.createRegistry(LoginServiceRmi.RMI_PORT);
+			Registry registry = LocateRegistry.createRegistry(1099);
 			BasicLoginService basicLoginService = new BasicLoginService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
 			
@@ -24,9 +25,6 @@ public class ServerMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-
 	}
 
 }

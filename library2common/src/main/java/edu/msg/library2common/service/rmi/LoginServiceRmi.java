@@ -16,7 +16,7 @@ import edu.msg.library2common.util.PropertyProvider;
 public interface LoginServiceRmi extends Remote{
 	
 	public static final String RMI_NAME = PropertyProvider.INSTANCE.getProperty("login.rmi_name");
-	public static final int RMI_PORT =Integer.parseInt(PropertyProvider.INSTANCE.getProperty("rmi_port"));
+	//public static final int RMI_PORT =Integer.parseInt(PropertyProvider.INSTANCE.getProperty("rmi_port"));
 
 	/**
 	 * Returns 'Reader' if the user type is reader, 'Admin' if the user type is administrator.

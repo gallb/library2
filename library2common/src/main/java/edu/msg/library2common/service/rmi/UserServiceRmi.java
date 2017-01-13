@@ -16,8 +16,8 @@ import edu.msg.library2common.model.User;
  *
  */
 public interface UserServiceRmi extends Remote{
-	public static final String RMI_NAME = "Login";
-	public static final int RMI_PORT = 1099;
+	public static final String RMI_NAME = "User";
+	//public static final int RMI_PORT = 1099;
 
 	/**
 	 * Saves a new user.
@@ -59,6 +59,15 @@ public interface UserServiceRmi extends Remote{
 	 * @throws RemoteException
 	 */
 	public User getByUserID (String userID) throws RemoteException;
+	
+	/**
+	 * Delete user object.
+	 * 
+	 * @param userID
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean deleteUser(String userID) throws RemoteException;
 	
 	/**
 	 * Searches for users by person names
