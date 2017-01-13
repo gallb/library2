@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import edu.msg.library2server.util.PropertyProvider;
+
 /**
  * 
  * @author nagys
@@ -11,9 +13,10 @@ import java.sql.SQLException;
  */
 
 public class SqlHandler {
-	private static final String DBURL = "jdbc:mysql://localhost:3306/library2?useSSL=false";
-	private static final String USER = "library_admin";
-	private static final String PASSWORD = "library_admin_pass";
+	private static final String DBURL = PropertyProvider.INSTANCE.getProperty("mysql.url");
+	private static final String USER = PropertyProvider.INSTANCE.getProperty("mysql.user");
+	private static final String PASSWORD = PropertyProvider.INSTANCE.getProperty("mysql.password");	
+	
 	private Connection connection;
 	private static SqlHandler instance;
 
@@ -30,7 +33,7 @@ public class SqlHandler {
 	public static synchronized SqlHandler getInstance() {
 		if (instance == null) {
 			instance = new SqlHandler();
-			System.out.println("server satrt");
+			System.out.println("server start");
 		}
 		return instance;
 	}
