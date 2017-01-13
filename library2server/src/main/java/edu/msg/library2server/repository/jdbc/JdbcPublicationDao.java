@@ -62,12 +62,7 @@ public class JdbcPublicationDao implements PublicationDao {
 		// TODO Auto-generated method stub
 	//String title = ((Publication)e).getTitle();
 		return false;
-	}
-
-	public <X extends BaseEntity> X getOne(String publication_title) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 	public boolean delete(String id) {
 		// TODO Auto-generated method stub
@@ -77,6 +72,16 @@ public class JdbcPublicationDao implements PublicationDao {
 	public <X extends BaseEntity> boolean insert(X e) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public <X extends BaseEntity> List<X> getByName(String param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public <X extends BaseEntity> X getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

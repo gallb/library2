@@ -56,7 +56,8 @@ public class JdbcUserDao implements UserDao {
 		return list;
 	}
 
-	public User getOne(String name) {
+	public List<User> getByName(String name) {
+		List<User> list = new ArrayList<User>();
 		User user = null;
 		try {
 			con = conMan.getConnection();
@@ -73,13 +74,14 @@ public class JdbcUserDao implements UserDao {
 				user.setUserType(UserType.valueOf(users.getString("user_type")));
 				user.setLoyalityIndex(users.getInt("loyalty_index"));
 				user.setPassword(users.getString("password"));
+				list.add(user);
 			}
 
 		} catch (SQLException e) {
 			LOGGER.error("Unable to query user!", e);
 			throw new ServiceException("Internal server error!");
 		}
-		return user;
+		return list;
 	}
 
 	public boolean insert(BaseEntity ent) {
@@ -178,6 +180,33 @@ public class JdbcUserDao implements UserDao {
 		}
 		return user;
 
+	}
+	
+	
+
+	public User getById(String id) {
+		User user = null;
+		try {
+			con = conMan.getConnection();
+			String selectSQL = "select * from users where uuid=?";
+			preparedStatement = con.prepareStatement(selectSQL);
+			preparedStatement.setString(1, id);
+
+			ResultSet users = preparedStatement.executeQuery();
+			while (users.next()) {
+				user = new User();
+				user.setUuid(users.getString("uuid"));
+				user.setName(users.getString("name"));
+				user.setUserName(users.getString("user_name"));
+				user.setUserType(UserType.valueOf(users.getString("user_type")));
+				user.setLoyalityIndex(users.getInt("loyalty_index"));
+				user.setPassword(users.getString("password"));
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Unable to query user!", e);
+			throw new ServiceException("Internal server error!");
+		}
+		return user;		
 	}
 
 	private void closeConnection(Connection con, PreparedStatement preparedStatement) {
