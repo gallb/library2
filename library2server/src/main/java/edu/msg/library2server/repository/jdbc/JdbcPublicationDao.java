@@ -58,25 +58,30 @@ public class JdbcPublicationDao implements PublicationDao {
 		return null;
 	}	
 
-	public <X extends BaseEntity> void update(X e) {
+	public <X extends BaseEntity> boolean update(X e) {
 		// TODO Auto-generated method stub
 	//String title = ((Publication)e).getTitle();
-		
+		return false;
+	}	
+
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public <X extends BaseEntity> X getOne(String publication_title) {
+	public <X extends BaseEntity> boolean insert(X e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public <X extends BaseEntity> List<X> getByName(String param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void delete(String id) {
+	public <X extends BaseEntity> X getById(String id) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	public <X extends BaseEntity> void insert(X e) {
-		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
