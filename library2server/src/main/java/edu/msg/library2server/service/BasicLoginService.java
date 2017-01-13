@@ -11,10 +11,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2server.repository.DaoFactory;
 import edu.msg.library2server.repository.UserDao;
-import edu.msg.library2server.service.exceptions.LoginException;
+
 
 /**
  * @author gallb
@@ -29,38 +30,29 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	private UserDao userDAO;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicLoginService.class);
 
-	public BasicLoginService() throws RemoteException {
+	public BasicLoginService() throws RemoteException, ServiceException {
 		super();
 		try {
 			userDAO = DaoFactory.getDaoFactory().getUserDao();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Data access object error.",e);
+			throw new ServiceException("Data access error.");
 		}
 	}
-
-	public String login(String userName, String pwd) throws RemoteException, LoginException {
+	public UserType login(String userName, String pwd) throws RemoteException, ServiceException {
 		try {
 			User user = userDAO.getUserByUserName(userName);
-			
-			LOGGER.info("Hello world");
 			if (user.getName() != null) {
-
-				if ((user.getUserName().equals(userName) && (user.getPassword().equals(pwd)))) {
-					if (user.getUserType() == UserType.Reader) {
-						return "1";
-					}
-					if (user.getUserType() == UserType.Admin) {
-						return "2";
-					}
-				}
+				return UserType.Invalid;
 			} else {
-				throw new LoginException("hahah");
-			}
-		} catch (LoginException e) {
-			LOGGER.error("Faild to retrieve user from db.");
-			throw new LoginException("Faild to retrieve user from db.", e);
+				if ((user.getUserName().equals(userName) && (user.getPassword().equals(pwd)))) {
+					return user.getUserType();
+				}
+			} 
+		} catch (Exception e) {
+			LOGGER.error("Faild to retrieve user from db.",e);
+			throw new ServiceException("Faild to verify user.");
 		}
-		return "0";
+		return UserType.Invalid;
 	}
 }
