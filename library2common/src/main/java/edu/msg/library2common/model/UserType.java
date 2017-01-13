@@ -8,6 +8,6 @@ package edu.msg.library2common.model;
  */
 
 public enum UserType {
-	Admin, Reader
+	Admin, Reader, Invalid
 
 }
