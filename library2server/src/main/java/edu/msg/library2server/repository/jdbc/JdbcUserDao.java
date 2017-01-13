@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2server.repository.UserDao;
 import edu.msg.library2server.service.BasicLoginService;
 
@@ -33,10 +34,7 @@ public class JdbcUserDao implements UserDao {
 		List<User> list = new ArrayList<User>();
 
 		try {
-			System.out.println("User logged in.");
 			con = conMan.getConnection();
-			System.out.println("Connection established!");
-
 			String selectSQL = "select * from users";
 			preparedStatement = con.prepareStatement(selectSQL);
 
@@ -52,11 +50,8 @@ public class JdbcUserDao implements UserDao {
 				list.add(u);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SqlHandlerException("Could not query Users!", e);
-
-		} finally {
-			//closeConnection(con, preparedStatement);
+			LOGGER.error("Unable to query users!", e);
+			throw new ServiceException("Internal server error!");
 		}
 		return list;
 	}
@@ -81,10 +76,8 @@ public class JdbcUserDao implements UserDao {
 			}
 
 		} catch (SQLException e) {
-			LOGGER.error("Could not delete user", e);
-			// throw new RepositoryException("Could not update user. ", e);
-		} finally {
-			//closeConnection(con, preparedStatement);
+			LOGGER.error("Unable to query user!", e);
+			throw new ServiceException("Internal server error!");
 		}
 		return user;
 	}
@@ -92,37 +85,27 @@ public class JdbcUserDao implements UserDao {
 	public void insert(BaseEntity ent) {
 		User user = (User) ent;
 		User us = new User();
-		System.out.println("inside insert");
 		try {
 			con = conMan.getConnection();
 			System.out.println(con.isClosed());
-			String sqlCommand = "insert into users (uuid, name, user_name, user_type, loyalty_index, password) " 
-													+ "values (?, ?, ?, ?, ?, ?)";
-			System.out.println(sqlCommand + " " + user.getName());
+			String sqlCommand = "insert into users (uuid, name, user_name, user_type, loyalty_index, password) "
+					+ "values (?, ?, ?, ?, ?, ?)";
+
 			preparedStatement = con.prepareStatement(sqlCommand);
-			System.out.println(sqlCommand + " " + preparedStatement.toString());
 			preparedStatement.setString(1, user.getUuid());
-			System.out.println("id");
 			preparedStatement.setString(2, user.getName());
-			System.out.println("name");
 			preparedStatement.setString(3, user.getUserName());
-			System.out.println("uname");
 			preparedStatement.setString(4, user.getUserType().name());
-			System.out.println("type");
 			preparedStatement.setInt(5, user.getLoyalityIndex());
-			System.out.println("loyalty");
 			preparedStatement.setString(6, user.getPassword());
-	
-			System.out.println("sql " + preparedStatement.toString() + " " + user.getName());
+
 			preparedStatement.executeUpdate();
-			
-			
+
+			LOGGER.info("User inserted!");
 		} catch (SQLException e) {
-			LOGGER.error("Could not insert user. ", e);
-			throw new SqlHandlerException("Could not insert user. ", e);
-		} finally {
-			//closeConnection(con, preparedStatement);
-		}		
+			LOGGER.error("Unable to insert user!", e);
+			throw new ServiceException("Internal server error!");
+		}
 	}
 
 	public <X extends BaseEntity> void update(X ent) {
@@ -136,40 +119,32 @@ public class JdbcUserDao implements UserDao {
 
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getUserName());
-			preparedStatement.setObject(3, user.getUserType());
+			preparedStatement.setString(3, user.getUserType().name());
 			preparedStatement.setInt(4, user.getLoyalityIndex());
 			preparedStatement.setString(5, user.getPassword());
-			preparedStatement.setString(6, "'" + user.getUuid() + "'");
-			preparedStatement.executeUpdate();
-System.out.println("User Update successful");
-			LOGGER.info("User Update successful.");
-		} catch (SQLException e) {
-			LOGGER.error("Could not update user", e);
-			System.out.println("User Update NOT successful");
-			// throw new RepositoryException("Could not update user. ", e);
-		} finally {
-			//closeConnection(con, preparedStatement);
-		}
+			preparedStatement.setString(6, user.getUuid());
 
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.error("Unable to update user!", e);
+			throw new ServiceException("Internal server error!");
+		}
 	}
 
 	public void delete(String id) {
-		
+
 		try {
 			con = conMan.getConnection();
-			String sqlCommand = "delete * from users WHERE uuid = ?";
+			String sqlCommand = "delete from users WHERE uuid = ?";
 			preparedStatement = con.prepareStatement(sqlCommand);
 			preparedStatement.setString(1, id);
 			preparedStatement.execute();
 
-			LOGGER.info("User deletion successful.");
+			LOGGER.info("User deleted!");
 		} catch (SQLException e) {
-			LOGGER.error("Could not delete user", e);
-			// throw new RepositoryException("Could not update user. ", e);
-		} finally {
-			//closeConnection(con, preparedStatement);
+			LOGGER.error("Unable to delete user!", e);
+			throw new ServiceException("Internal server error!");
 		}
-
 	}
 
 	public User getUserByUserName(String user_name) {
@@ -191,10 +166,8 @@ System.out.println("User Update successful");
 				user.setPassword(users.getString("password"));
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Could not retrieve user", e);
-			// throw new RepositoryException("Could not update user. ", e);
-		} finally {
-			//closeConnection(con, preparedStatement);
+			LOGGER.error("Unable to query user!", e);
+			throw new ServiceException("Internal server error!");
 		}
 		return user;
 
