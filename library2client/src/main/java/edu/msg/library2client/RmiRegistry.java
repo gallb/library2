@@ -29,11 +29,7 @@ public class RmiRegistry {
 
 	void connect() {
 		try {
-<<<<<<< HEAD
-			 registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
-=======
 			registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
->>>>>>> branch 'backend' of https://github.com/gallb/library2.git
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
