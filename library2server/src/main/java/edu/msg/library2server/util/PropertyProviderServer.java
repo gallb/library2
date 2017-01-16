@@ -6,16 +6,18 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.util.PropertyProvider;
+
 /**
  * Makes the connection to the property file.
  * 
  * @author nagyz
  * 
  */
-public enum PropertyProvider {
+public enum PropertyProviderServer {
 
 	INSTANCE;
-	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyProvider.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyProviderServer.class);
 	private final ResourceBundle RESURCEBOUNDLE = ResourceBundle.getBundle("edu.msg.library2server.res.library2");
 
 	/**
@@ -31,7 +33,7 @@ public enum PropertyProvider {
 		try {
 			return RESURCEBOUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			LOGGER.error("Resource is missing", e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.property_provider_server"), e);
 			return "!" + key + "!";
 		}
 	}

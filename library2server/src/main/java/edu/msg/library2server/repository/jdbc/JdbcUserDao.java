@@ -15,8 +15,10 @@ import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.UserDao;
 import edu.msg.library2server.service.BasicLoginService;
+import edu.msg.library2server.util.PasswordEncrypter;
 
 public class JdbcUserDao implements UserDao {
 	// private static final Logger
@@ -50,8 +52,8 @@ public class JdbcUserDao implements UserDao {
 				list.add(u);
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Unable to query users!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return list;
 	}
@@ -78,8 +80,8 @@ public class JdbcUserDao implements UserDao {
 			}
 
 		} catch (SQLException e) {
-			LOGGER.error("Unable to query user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return list;
 	}
@@ -100,15 +102,15 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.setString(3, user.getUserName());
 			preparedStatement.setString(4, user.getUserType().name());
 			preparedStatement.setInt(5, user.getLoyalityIndex());
+			user.setPassword(PasswordEncrypter.encypted(user.getPassword()," "));
 			preparedStatement.setString(6, user.getPassword());
-
 			preparedStatement.executeUpdate();
 
 			LOGGER.info("User inserted!");
 			returnStatus = true;
 		} catch (SQLException e) {
-			LOGGER.error("Unable to insert user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return returnStatus;
 	}
@@ -126,14 +128,15 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.setString(2, user.getUserName());
 			preparedStatement.setString(3, user.getUserType().name());
 			preparedStatement.setInt(4, user.getLoyalityIndex());
+			user.setPassword(PasswordEncrypter.encypted(user.getPassword()," "));
 			preparedStatement.setString(5, user.getPassword());
 			preparedStatement.setString(6, user.getUuid());
 
 			preparedStatement.executeUpdate();
 			returnStatus = true;
 		} catch (SQLException e) {
-			LOGGER.error("Unable to update user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_update"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return returnStatus;
 	}
@@ -150,8 +153,8 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.info("User deleted!");
 			returnStatus = true;
 		} catch (SQLException e) {
-			LOGGER.error("Unable to delete user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_delete"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return returnStatus;
 	}
@@ -175,8 +178,8 @@ public class JdbcUserDao implements UserDao {
 				user.setPassword(users.getString("password"));
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Unable to query user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return user;
 
@@ -203,8 +206,8 @@ public class JdbcUserDao implements UserDao {
 				user.setPassword(users.getString("password"));
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Unable to query user!", e);
-			throw new ServiceException("Internal server error!");
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
 		return user;		
 	}
