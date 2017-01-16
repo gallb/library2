@@ -66,8 +66,8 @@ public class JdbcUserDao implements UserDao {
 			String selectSQL = "select * from users where name=?";
 			preparedStatement = con.prepareStatement(selectSQL);
 			preparedStatement.setString(1, name);
-			preparedStatement.execute();
-			ResultSet users = preparedStatement.executeQuery(selectSQL);
+		//	preparedStatement.execute();
+			ResultSet users = preparedStatement.executeQuery();
 			while (users.next()) {
 				user = new User();
 				user.setUuid(users.getString("uuid"));

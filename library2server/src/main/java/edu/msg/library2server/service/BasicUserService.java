@@ -55,7 +55,8 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	}
 
 	public List<User> searchForUser(String name) throws RemoteException {
-		return searchForUser(name);
+		userDao = DaoFactory.getDaoFactory().getUserDao();
+		return userDao.getByName(name);
 	}
 	
 }
