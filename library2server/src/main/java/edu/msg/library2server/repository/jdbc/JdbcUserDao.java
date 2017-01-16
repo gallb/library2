@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +15,10 @@ import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
-import edu.msg.library2server.repository.UserDao;
-import edu.msg.library2server.service.BasicLoginService;
+import edu.msg.library2server.repository.DaoInterface;
 import edu.msg.library2server.util.PasswordEncrypter;
 
-public class JdbcUserDao implements UserDao {
+public class JdbcUserDao implements DaoInterface {
 	// private static final Logger
 	// LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
 	private SqlHandler conMan;

@@ -17,6 +17,7 @@ import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.DaoFactory;
+import edu.msg.library2server.repository.DaoInterface;
 import edu.msg.library2server.repository.UserDao;
 import edu.msg.library2server.util.PasswordEncrypter;
 
@@ -30,7 +31,7 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private UserDao userDAO;
+	private DaoInterface userDAO;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicLoginService.class);
 
 	public BasicLoginService() throws RemoteException, ServiceException {
@@ -45,7 +46,7 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 
 	public UserType login(String userName, String pwd) throws RemoteException, ServiceException {
 		try {
-			User user = userDAO.getUserByUserName(userName);
+			User user = (User) userDAO.getByName(userName);
 			if (user.getName() == null) {
 				return UserType.Invalid;
 			} else {

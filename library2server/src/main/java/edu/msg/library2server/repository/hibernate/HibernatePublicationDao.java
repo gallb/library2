@@ -6,9 +6,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.Publication;
+import edu.msg.library2server.repository.DaoInterface;
 
-public class PublicationDAO {
+public class HibernatePublicationDao implements DaoInterface{
 	 public List<Publication> listPublications() {
 	        Session session = null;
 	        try {
@@ -36,4 +38,34 @@ public class PublicationDAO {
 	            session.close();
 	        }
 	    }
+
+	public <X extends BaseEntity> List<X> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public <X extends BaseEntity> List<X> getByName(String param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public <X extends BaseEntity> boolean insert(X e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public <X extends BaseEntity> boolean update(X e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public <X extends BaseEntity> X getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

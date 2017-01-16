@@ -18,8 +18,8 @@ import edu.msg.library2common.model.Publisher;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
-import edu.msg.library2server.repository.hibernate.AuthorDAO;
-import edu.msg.library2server.repository.hibernate.PublicationDAO;
+import edu.msg.library2server.repository.hibernate.HibernateAuthorDAO;
+import edu.msg.library2server.repository.hibernate.HibernatePublicationDao;
 import edu.msg.library2server.repository.jdbc.SqlHandler;
 import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.service.BasicUserService;
@@ -36,14 +36,14 @@ public class ServerMain {
 			System.out.println(testPub.getTitle());
 			testPub.setTitle("modified");
 			System.out.println(testPub.getTitle());*/
-			PublicationDAO pubDAO = new PublicationDAO();
+			HibernatePublicationDao pubDAO = new HibernatePublicationDao();
 		//	pubDAO.listPublications().forEach(p -> System.out.println(p.getTitle()));
 			List<Publication> pubList = pubDAO.listPublications();
 			for (int i = 0; i < pubList.size(); i++) {
 				System.out.println(pubList.get(i).getTitle());
 			}
 			
-			AuthorDAO autDAO = new AuthorDAO();
+			HibernateAuthorDAO autDAO = new HibernateAuthorDAO();
 			List<Author> autthors = autDAO.listAuthors();
 			for (int i = 0; i < autthors.size(); i++) {
 				System.out.println(autthors.get(i).getName());

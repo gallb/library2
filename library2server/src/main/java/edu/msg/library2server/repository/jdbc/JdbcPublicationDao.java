@@ -1,5 +1,6 @@
 package edu.msg.library2server.repository.jdbc;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -16,11 +17,11 @@ import edu.msg.library2common.model.Book;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.PublicationType;
 import edu.msg.library2common.model.Publisher;
+import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2server.repository.DaoInterface;
-import edu.msg.library2server.repository.PublicationDao;
 import edu.msg.library2server.service.BasicLoginService;
 
-public class JdbcPublicationDao implements PublicationDao {
+public class JdbcPublicationDao implements DaoInterface {
 	private SqlHandler conMan;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicLoginService.class);
 	public JdbcPublicationDao() {
@@ -49,14 +50,11 @@ public class JdbcPublicationDao implements PublicationDao {
 		return list;
 	}
 
-	public Publication getPublicationByTitleAndType(String publication_title, PublicationType pub_type) {
+	public Publication getPublicationByTitleAndType(PublicationType pub_type,String publication_title) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public Publication getPublicationByTitleAndType(String publication_title, Publication pub_type) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+
 
 	public <X extends BaseEntity> boolean update(X e) {
 		// TODO Auto-generated method stub
@@ -83,5 +81,36 @@ public class JdbcPublicationDao implements PublicationDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public boolean addNewPublication(Publication pub) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean deletePublication(Publication pub) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean updatePublication(Publication pub) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Publication getPublicationByTitle(PublicationType type, String title) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Publication getPublicationById(String id) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Publication> getall() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
