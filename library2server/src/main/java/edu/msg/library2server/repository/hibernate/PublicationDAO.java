@@ -17,7 +17,7 @@ public class PublicationDAO {
 	 
 	          //  System.out.println(query.toString());
 	          //  System.out.println(query.getQueryString() + " " + query.getFetchSize());
-	            System.out.println(query.list().size());
+	         //   System.out.println(query.list().size());
 	            List queryList = query.list();
 	            /*List <Publication> queryList = new ArrayList();
 	            for (Object oneObject : query.getResultList()) {
