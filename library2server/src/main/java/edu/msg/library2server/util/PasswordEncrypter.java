@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.jdbc.JdbcUserDao;
 
 /**
@@ -30,19 +31,19 @@ public class PasswordEncrypter {
 	public static String encypted(String password, String salt) {
 		try {
 			byte[] initialBytes;
-			initialBytes = (password + salt).getBytes(PropertyProvider.INSTANCE.getProperty("encrypt.encoding"));
+			initialBytes = (password + salt).getBytes(PropertyProviderServer.INSTANCE.getProperty("encrypt.encoding"));
 			MessageDigest algorithm = MessageDigest
-					.getInstance(PropertyProvider.INSTANCE.getProperty("encrypt.algorithm"));
+					.getInstance(PropertyProviderServer.INSTANCE.getProperty("encrypt.algorithm"));
 			algorithm.reset();
 			algorithm.update(initialBytes);
 			byte[] hashBytes = algorithm.digest();
 			return new String(hashBytes);
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.error("Unsuported encoding");
-			throw new ServiceException("Unsuported encoding", e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.password_encrypted1"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.password_encrypted1"), e);
 		} catch (NoSuchAlgorithmException e) {
-			LOGGER.error("No Such Algorithm Exception");
-			throw new ServiceException("No Such Algorithm Exception", e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.password_encrypted2"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.password_encrypted2"), e);
 		}
 	}
 }
