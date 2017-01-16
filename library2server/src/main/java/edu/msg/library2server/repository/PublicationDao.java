@@ -11,5 +11,5 @@ public interface PublicationDao extends DaoInterface {
 	 * @param pub_type - the type of the publication
 	 * @return - a publication element
 	 */
-	Publication getPublicationByTitleAndType(String publication_title, Publication pub_type);
+	 public List<Publication> searchPublications(String regularExpression);
 }

@@ -1,5 +1,13 @@
 package edu.msg.library2common.model;
 
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.ForeignKey;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+
 /**
  * represents user
  * 
@@ -18,6 +26,7 @@ public class User extends BaseEntity {
 	private int loyalityIndex;
 	private String password;
 	private UserType userType;
+	private String uuid;
 
 	public User(String name, String userName, int loyalityIndex, String password, UserType userType) {
 		this.name = name;
@@ -29,7 +38,26 @@ public class User extends BaseEntity {
 
 	public User() {
 	}
+	
+	@Override
+	@Id
+	@ManyToMany
+    @JoinColumn(name = "uuid",
+            foreignKey = @ForeignKey(name = "user_id"))	
+	@Column(name = "uuid", length = 45, unique = true, nullable = false)
+	public String getUuid() {
+		if (uuid == null) {
+			uuid = UUID.randomUUID().toString();
+		}
+		return uuid;
+	}
+	
+	@Override
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -38,6 +66,7 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
+	@Column(name = "user_name")
 	public String getUserName() {
 		return userName;
 	}
@@ -46,6 +75,7 @@ public class User extends BaseEntity {
 		this.userName = userName;
 	}
 
+	@Column(name = "loyalty_index")
 	public int getLoyalityIndex() {
 		return loyalityIndex;
 	}
@@ -54,6 +84,7 @@ public class User extends BaseEntity {
 		this.loyalityIndex = loyalityIndex;
 	}
 
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -62,6 +93,7 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
+	@Column(name = "user_type")
 	public UserType getUserType() {
 		return userType;
 	}

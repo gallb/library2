@@ -84,4 +84,9 @@ public class JdbcPublicationDao implements PublicationDao {
 		return null;
 	}
 
+	public List<Publication> searchPublications(String regularExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
