@@ -8,7 +8,6 @@ import edu.msg.library2client.common.Clienthandler;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.util.PropertyProvider;
-
 public class ClientConsole implements Clienthandler {
 
 	private Scanner scanner = new Scanner(System.in);
@@ -33,7 +32,12 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	public void mennuForAdmin() {
-		printMessage("1-Search for user");
+		printMessage("(U)User management" + " " + "(B)Book manegement");
+
+	}
+
+	public void menuForUserManagement() {
+		printMessage("(S)Serach user by name" + " " + "(I)Insert user" + " " + "(M)Main menu");
 	}
 
 	public void start() {
@@ -42,7 +46,7 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	public void login() {
-	//	Connection registry = new Connection();
+		// Connection registry = new Connection();
 		printMessage(PropertyProvider.INSTANCE.getProperty("usename.message"));
 		String userName = userInput();
 		printMessage(PropertyProvider.INSTANCE.getProperty("password.message"));
@@ -59,31 +63,72 @@ public class ClientConsole implements Clienthandler {
 			}
 		} else if (loginString.equals(UserType.Admin)) {
 			printMessage(PropertyProvider.INSTANCE.getProperty("admin.log"));
-			mennuForAdmin();
-		//	while (true) {
+
+			while (true) {
 				execute();
-			//}
+			}
 		}
 	}
 
-//	private void getUserByName() {
-//		List<User> users = registry.getUserByName(userInput());
-//		for (User user : users) {
-//			printMessage(user.getName());
-//		}
-//
-//	}
+	private void getUserByName() {
+		registry.getUserByName(userInput());
+
+	}
+	
+	private void createNewUser(){
+		String name = userInput();
+		String userName = userInput();
+		String type = userInput();
+		String password = userInput();
+		
+		UserType userType = null;
+		if (type.equals("Admin")) {
+			userType = UserType.Admin;
+		} else if (type.equals("Reader")) {
+			userType = UserType.Reader;
+		}
+		if (userType == null) {
+			System.out.println("Invalid login access!");
+		} else {
+			if (registry.insertUser(name, userName, userType, 10, password)) {
+				System.out.println("Create successful!");
+			} else {
+				System.out.println("Create not successful!");
+			}
+		}
+	}
 
 	public void execute() {
-		int admincmd = scanner.nextInt();
+		mennuForAdmin();
+		String admincmd = scanner.nextLine();
 		switch (admincmd) {
-		case 1:
-			String userName = userInput();
-			registry.getUserByName(userName);
+		case "U":
+			userManagment();
 			break;
+		case "B":
 
-		default:
-			break;
+		}
+	}
+
+	public void userManagment() {
+		boolean field = true;
+		while (field) {
+
+			menuForUserManagement();
+			String admincmd = scanner.nextLine();
+			switch (admincmd) {
+			case "S":
+				printMessage("Please enter the name of user who serach");
+				getUserByName();
+				break;
+			case "I":
+				printMessage("Please enter:Name userName usertype password");
+				createNewUser();
+				break;
+			case "M":
+				field = false;
+
+			}
 		}
 	}
 
