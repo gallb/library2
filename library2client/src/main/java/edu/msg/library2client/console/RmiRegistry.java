@@ -32,15 +32,17 @@ public class RmiRegistry {
 			if (user.isEmpty()) {
 				System.out.println("nincs");
 			}
-			user.forEach(u -> System.out.println(u.getName()));
+			for (int i = 1; i < user.size(); ++i) {
+				System.out.println(i + " " + user.get(i).getName());
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean insertUser(String name,String userName,UserType userType,int index, String password){
+
+	public boolean insertUser(String name, String userName, UserType userType, int index, String password) {
 		User user = new User();
-		
+
 		user.setName(name);
 		user.setUserName(userName);
 		user.setLoyalityIndex(index);
@@ -53,5 +55,6 @@ public class RmiRegistry {
 		}
 		return false;
 	}
+
 
 }
