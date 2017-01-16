@@ -45,6 +45,8 @@ public class ClientConsole {
 			}
 		} else {
 			System.out.println("logged in as admin...");
+			User user = new User("crude", "crude", 10, "crude", UserType.Admin);
+			registry.userCrude(user);
 			while (true) {
 
 			}

@@ -118,7 +118,7 @@ public class JdbcUserDao implements UserDao {
 		boolean returnStatus = false;
 		try {
 			con = conMan.getConnection();
-			String sqlCommand = "UPDATE users " + " SET name = ?, user_name = ?,user_type = ?,"
+			String sqlCommand = "UPDATE users " + " SET name = ?, user_name = ?, user_type = ?,"
 					+ " loyalty_index = ?, password = ? " + " WHERE uuid = ?";
 			preparedStatement = con.prepareStatement(sqlCommand);
 

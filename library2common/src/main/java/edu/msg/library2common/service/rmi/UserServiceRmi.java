@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.util.PropertyProvider;
 
 /**
  * Provides user related services
@@ -16,7 +17,7 @@ import edu.msg.library2common.model.User;
  *
  */
 public interface UserServiceRmi extends Remote{
-	public static final String RMI_NAME = "User";
+	public static final String RMI_NAME = PropertyProvider.INSTANCE.getProperty("user.rmi_name");
 	//public static final int RMI_PORT = 1099;
 
 	/**
