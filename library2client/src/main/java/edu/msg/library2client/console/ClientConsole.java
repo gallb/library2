@@ -1,8 +1,9 @@
 package edu.msg.library2client.console;
 
+import java.util.List;
 import java.util.Scanner;
 
-import edu.msg.library2client.RmiRegistry;
+import edu.msg.library2client.Connection;
 import edu.msg.library2client.common.Clienthandler;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
@@ -11,21 +12,10 @@ import edu.msg.library2common.util.PropertyProvider;
 public class ClientConsole implements Clienthandler {
 
 	private Scanner scanner = new Scanner(System.in);
+	Connection connection = new Connection();
+	RmiRegistry registry = new RmiRegistry();
 
 	public ClientConsole() {
-
-	}
-
-	public void startConsole() {
-		// System.out.println(PropertyProvider.INSTANCE.getProperty("welcome.message"));
-		printMessage(PropertyProvider.INSTANCE.getProperty("welcome.message"));
-		login();
-	}
-
-	public static void main(String[] args) {
-		new ClientConsole().startConsole();
-		User user = new User("Proba", "praba_user", 10, "pass", UserType.Admin);
-		RmiRegistry registry = new RmiRegistry();
 
 	}
 
@@ -42,41 +32,66 @@ public class ClientConsole implements Clienthandler {
 		return str;
 	}
 
-	public void start() {
-		// TODO Auto-generated method stub
+	public void mennuForAdmin() {
+		printMessage("1-Search for user");
+	}
 
+	public void start() {
+		printMessage(PropertyProvider.INSTANCE.getProperty("welcome.message"));
+		login();
 	}
 
 	public void login() {
-		RmiRegistry registry = new RmiRegistry();
-		// System.out.println(PropertyProvider.INSTANCE.getProperty("usename.message"));
+	//	Connection registry = new Connection();
 		printMessage(PropertyProvider.INSTANCE.getProperty("usename.message"));
 		String userName = userInput();
-		// System.out.println(PropertyProvider.INSTANCE.getProperty("password.message"));
 		printMessage(PropertyProvider.INSTANCE.getProperty("password.message"));
 		String password = userInput();
 
-		UserType loginString = registry.login(userName, password);
+		UserType loginString = connection.login(userName, password);
 		if (loginString.equals(UserType.Invalid)) {
-			// System.out.println(PropertyProvider.INSTANCE.getProperty("uname_pass_try"));
 			printMessage(PropertyProvider.INSTANCE.getProperty("uname_pass_try"));
 			login();
 		} else if (loginString.equals(UserType.Reader)) {
-			// System.out.println(PropertyProvider.INSTANCE.getProperty("reader.log"));
 			printMessage(PropertyProvider.INSTANCE.getProperty("reader.log"));
 			while (true) {
 
 			}
 		} else if (loginString.equals(UserType.Admin)) {
-			// System.out.println(PropertyProvider.INSTANCE.getProperty("admin.log"));
 			printMessage(PropertyProvider.INSTANCE.getProperty("admin.log"));
-			while (true) {
-			}
+			mennuForAdmin();
+		//	while (true) {
+				execute();
+			//}
 		}
 	}
 
+//	private void getUserByName() {
+//		List<User> users = registry.getUserByName(userInput());
+//		for (User user : users) {
+//			printMessage(user.getName());
+//		}
+//
+//	}
+
 	public void execute() {
-		// TODO Auto-generated method stub
+		int admincmd = scanner.nextInt();
+		switch (admincmd) {
+		case 1:
+			String userName = userInput();
+			registry.getUserByName(userName);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	public static void main(String[] args) {
+		new ClientConsole().start();
+		// User user = new User("Proba", "praba_user", 10, "pass",
+		// UserType.Admin);
+		Connection registry = new Connection();
 
 	}
 

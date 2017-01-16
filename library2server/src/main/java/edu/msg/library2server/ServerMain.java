@@ -51,7 +51,9 @@ public class ServerMain {
 			//Registry registry = LocateRegistry.createRegistry(LoginServiceRmi.RMI_PORT);
 			Registry registry = LocateRegistry.createRegistry(Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			BasicLoginService basicLoginService = new BasicLoginService();
+			BasicUserService basicUserService = new BasicUserService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
+			registry.rebind(UserServiceRmi.RMI_NAME, basicUserService);
 			
 //			BasicUserService basicLoginService2 = new BasicU();
 //			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
