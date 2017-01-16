@@ -29,13 +29,16 @@ public class Publisher extends BaseEntity {
 	private String name;
 	private String uuid;
 
+	public Publisher() {
+	}
+	
 	public Publisher(String name) {
 		this.name = name;
 	}
 	
 	@Override
 	@Id
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publishers")
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "publishers")*/
 	@Column(name = "uuid", length = 45, unique = true, nullable = false)
 	public String getUuid() {
 		if (uuid == null) {
