@@ -5,6 +5,7 @@ import java.util.Scanner;
 import edu.msg.library2client.RmiRegistry;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.util.PropertyProvider;
 
 public class ClientConsole {
 
@@ -15,7 +16,7 @@ public class ClientConsole {
 	}
 
 	public void startConsole() {
-		System.out.println("Welcom to .msg library!");
+		System.out.println(PropertyProvider.INSTANCE.getProperty("welcome.message"));
 		login();
 	}
 
@@ -29,20 +30,23 @@ public class ClientConsole {
 
 	private void login() {
 		RmiRegistry registry = new RmiRegistry();
-		System.out.println("Enter your user name");
+		System.out.println(PropertyProvider.INSTANCE.getProperty("usename.message"));
 		String userName = getLine();
-		System.out.println("Enter your password");
+		System.out.println(PropertyProvider.INSTANCE.getProperty("password.message"));
 		String password = getLine();
 
 		UserType loginString = registry.login(userName, password);
 		if (loginString.equals(UserType.Invalid)) {
-			System.out.println("Invalid user name and password,try again!");
+			System.out.println(PropertyProvider.INSTANCE.getProperty("uname_pass_try"));
 			login();
-		} else {
-			if (loginString.equals(UserType.Admin)) {
-				System.out.println("logged in as admin...");
-			} else if (loginString.equals(UserType.Reader)) {
-			System.out.println("Logged in as reder...");
+		} else if (loginString.equals(UserType.Reader)) {
+			System.out.println(PropertyProvider.INSTANCE.getProperty("reader.log"));
+			while (true) {
+
+			}
+		} else if (loginString.equals(UserType.Admin)){
+			System.out.println(PropertyProvider.INSTANCE.getProperty("admin.log"));
+			while (true) {
 			}
 		}
 	}
