@@ -1,6 +1,20 @@
 package edu.msg.library2common.model;
 
 import java.sql.Date;
+import java.util.UUID;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+ 
 
 /**
  * represents publication
@@ -8,20 +22,26 @@ import java.sql.Date;
  * @author nagys
  *
  */
-
-public class Publication extends BaseEntity {
+@Entity
+@Table (name = "publications", catalog = "library2")
+public class Publication extends BaseEntity  implements java.io.Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	private String uuid;
 	private String title;
 	private Date date;
 	private Publisher publisher;
 	private int nrOfCopies;
 	private int onStock;
 
+	public Publication() {
+		
+	}
+	
 	public Publication(String title, Date date, Publisher publisher, int nrOfCopies, int onStock) {
 		this.title = title;
 		this.date = date;
@@ -29,7 +49,23 @@ public class Publication extends BaseEntity {
 		this.nrOfCopies = nrOfCopies;
 		this.onStock = onStock;
 	}
-
+	
+	@Override
+	@Id
+	@Column(name = "uuid", length = 45, unique = true, nullable = false)
+	public String getUuid() {
+		if (uuid == null) {
+			uuid = UUID.randomUUID().toString();
+		}
+		return uuid;
+	}
+	
+	@Override
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
+	@Column(name = "title", length = 45)
 	public String getTitle() {
 		return title;
 	}
@@ -38,6 +74,7 @@ public class Publication extends BaseEntity {
 		this.title = title;
 	}
 
+	@Column(name = "publication_date", length = 10)
 	public Date getDate() {
 		return date;
 	}
@@ -46,6 +83,8 @@ public class Publication extends BaseEntity {
 		this.date = date;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "publisher_id", nullable = false)
 	public Publisher getPublisher() {
 		return publisher;
 	}
@@ -53,7 +92,7 @@ public class Publication extends BaseEntity {
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
-
+	@Column(name = "nr_of_copys")
 	public int getNrOfCopies() {
 		return nrOfCopies;
 	}
@@ -61,7 +100,7 @@ public class Publication extends BaseEntity {
 	public void setNrOfCopies(int nrOfCopies) {
 		this.nrOfCopies = nrOfCopies;
 	}
-
+	@Column(name = "on_stock")
 	public int getOnStock() {
 		return onStock;
 	}

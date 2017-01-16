@@ -14,7 +14,7 @@ public enum PropertyProvider {
 
 	INSTANCE;
 //	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyProvider.class);
-	private final ResourceBundle RESURCEBOUNDLE = ResourceBundle.getBundle("edu.msg.library2common.res.library2");
+	private final ResourceBundle RESURCEBOUNDLE = ResourceBundle.getBundle("edu.msg.library2common.res.LibraryBundle_en_US");
 
 	/**
 	 * Makes the connection to the property file.

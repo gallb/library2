@@ -5,5 +5,12 @@
     <artifactId>library2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  <dependencies>
+	<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.2.6.Final</version>
+</dependency>
+	</dependencies>
   <artifactId>library2common</artifactId>
 </project>

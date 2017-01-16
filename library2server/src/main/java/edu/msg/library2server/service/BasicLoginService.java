@@ -42,7 +42,7 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 	public UserType login(String userName, String pwd) throws RemoteException, ServiceException {
 		try {
 			User user = userDAO.getUserByUserName(userName);
-			if (user.getName() != null) {
+			if (user.getName() == null) {
 				return UserType.Invalid;
 			} else {
 				if ((user.getUserName().equals(userName) && (user.getPassword().equals(pwd)))) {
