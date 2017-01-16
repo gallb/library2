@@ -13,7 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.persistence.ForeignKey;
  
 
 /**
@@ -34,6 +34,9 @@ public class Publication extends BaseEntity  implements java.io.Serializable{
 	private String uuid;
 	private String title;
 	private Date date;
+	@ManyToOne
+    @JoinColumn(name = "publisher_id",
+            foreignKey = @ForeignKey(name = "publisher_id"))
 	private Publisher publisher;
 	private int nrOfCopies;
 	private int onStock;
