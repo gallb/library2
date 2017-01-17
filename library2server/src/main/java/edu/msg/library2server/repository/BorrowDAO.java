@@ -5,5 +5,5 @@ import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 
 public interface BorrowDAO extends DaoInterface{
-	Borrow insertBorrow(User user, Publication pub);
+	boolean insertBorrow(User user, Publication pub);
 }
