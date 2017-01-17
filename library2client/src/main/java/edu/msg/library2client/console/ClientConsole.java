@@ -92,22 +92,24 @@ public class ClientConsole implements Clienthandler {
 		}
 	}
 
-	private void getUserByName() {
+	private boolean getUserByName() {
 		users = registry.getUserByName(userInput());
 		if (users.isEmpty()) {
 			System.out.println("Didn't find any result for your serch.");
-
+			return false;
 		} else {
 			for (int i = 0; i < users.size(); ++i) {
 				printMessage("\t" + "Name" + "\t" + "Username");
 				printMessage((i + 1) + " \t" + users.get(i).getName() + "\t" + users.get(i).getUserName());
+
 			}
+			return true;
 		}
 
 	}
 
 	private void getPublicationByName() {
-		publications = registry.getPublicationByName("%"+userInput() + "%");
+		publications = registry.getPublicationByName("%" + userInput() + "%");
 		if (!publications.isEmpty()) {
 			for (int i = 0; i < publications.size(); ++i) {
 				printMessage((i + 1) + "-" + publications.get(i).getTitle());
@@ -156,64 +158,68 @@ public class ClientConsole implements Clienthandler {
 
 	private void addNewBorrow(int book) {
 		printMessage("Enter reader name to search for");
-		getUserByName();
-		printMessage("Enter user number");
-		User user = users.get(Integer.parseInt(userInput()) - 1);
-		Publication publication = publications.get(book - 1);
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate localDate = LocalDate.now();
-		printMessage("Borrow from");
-		printMessage(dtf.format(localDate));
-		boolean flag = true;
-		Date from = new Date(0, 0, 0);
-		while (flag) {
-			printMessage("(1)Accept date" + " " + "(2)Enter other date");
-			String aceptreject = userInput();
-			if (aceptreject.equals("1")) {
-				flag = false;
-				from = Date.valueOf(localDate);
-			} else if (aceptreject.equals("2")) {
-				flag = false;
-				printMessage("Year:");
-				int year = Integer.parseInt(userInput());
-				printMessage("Month:");
-				int month = Integer.parseInt(userInput());
-				printMessage("Day");
-				int day = Integer.parseInt(userInput());
-				from = Date.valueOf(LocalDate.of(year, month, day));
-			} else {
-				printMessage("Please try agian");
-			}
-		}
-		printMessage("Borroe until");
-		localDate = LocalDate.now().plusDays(20);
-		printMessage(dtf.format(localDate));
-		Date until = new Date(0, 0, 0);
-		flag = true;
-		while (flag) {
-			printMessage("(1)Accept date" + " " + "(2)Enter other date");
-			String aceptreject = userInput();
-			if (aceptreject.equals("1")) {
-				flag = false;
-				until = Date.valueOf(localDate);
-			} else if (aceptreject.equals("2")) {
-				flag = false;
-				printMessage("Year:");
-				int year = Integer.parseInt(userInput());
-				printMessage("Month:");
-				int month = Integer.parseInt(userInput());
-				printMessage("Day");
-				int day = Integer.parseInt(userInput());
-				until = Date.valueOf(LocalDate.of(year, month, day));
-			} else {
-				printMessage("Please try agian");
-			}
-		}
+		if (getUserByName()) {
 
-		if (registry.publicationBorrow(user, publication, from, until)) {
-			printMessage("Borrow success");
+			printMessage("Enter user number");
+			User user = users.get(Integer.parseInt(userInput()) - 1);
+			Publication publication = publications.get(book - 1);
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate localDate = LocalDate.now();
+			printMessage("Borrow from");
+			printMessage(dtf.format(localDate));
+			boolean flag = true;
+			Date from = new Date(0, 0, 0);
+			while (flag) {
+				printMessage("(1)Accept date" + " " + "(2)Enter other date");
+				String aceptreject = userInput();
+				if (aceptreject.equals("1")) {
+					flag = false;
+					from = Date.valueOf(localDate);
+				} else if (aceptreject.equals("2")) {
+					flag = false;
+					printMessage("Year:");
+					int year = Integer.parseInt(userInput());
+					printMessage("Month:");
+					int month = Integer.parseInt(userInput());
+					printMessage("Day");
+					int day = Integer.parseInt(userInput());
+					from = Date.valueOf(LocalDate.of(year, month, day));
+				} else {
+					printMessage("Please try agian");
+				}
+			}
+			printMessage("Borrow until");
+			localDate = LocalDate.now().plusDays(20);
+			printMessage(dtf.format(localDate));
+			Date until = new Date(0, 0, 0);
+			flag = true;
+			while (flag) {
+				printMessage("(1)Accept date" + " " + "(2)Enter other date");
+				String aceptreject = userInput();
+				if (aceptreject.equals("1")) {
+					flag = false;
+					until = Date.valueOf(localDate);
+				} else if (aceptreject.equals("2")) {
+					flag = false;
+					printMessage("Year:");
+					int year = Integer.parseInt(userInput());
+					printMessage("Month:");
+					int month = Integer.parseInt(userInput());
+					printMessage("Day");
+					int day = Integer.parseInt(userInput());
+					until = Date.valueOf(LocalDate.of(year, month, day));
+				} else {
+					printMessage("Please try agian");
+				}
+			}
+
+			if (registry.publicationBorrow(user, publication, from, until)) {
+				printMessage("Borrow success");
+			} else {
+				printMessage("Borrow fail");
+			}
 		} else {
-			printMessage("Borrow fail");
+			addNewBorrow(book);
 		}
 	}
 
@@ -250,6 +256,8 @@ public class ClientConsole implements Clienthandler {
 
 			case "M":
 				flag = false;
+			default:
+				printMessage("Invalid command");
 
 			}
 		}
@@ -277,6 +285,8 @@ public class ClientConsole implements Clienthandler {
 			case "M":
 				flag = false;
 				break;
+			default:
+				printMessage("Invalid command");
 
 			}
 
@@ -294,6 +304,8 @@ public class ClientConsole implements Clienthandler {
 		case "M":
 			flag = false;
 			break;
+		default:
+			printMessage("Invalid command");
 		}
 
 	}
