@@ -15,8 +15,7 @@ import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.jdbc.JdbcUserDao;
 
 public class HibernateAuthorDAO {
-	private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUserDao.class);
-	private PreparedStatement preparedStatement;
+	private static final Logger LOGGER = LoggerFactory.getLogger(HibernateAuthorDAO.class);
 	
 	public List<Author> listAuthors() {
         Session session = null;
@@ -27,14 +26,14 @@ public class HibernateAuthorDAO {
             System.out.println(query.list().size());
             List queryList = query.list();
             System.out.println("list utan " + query.list().size());
-            if (!(queryList == null && queryList.isEmpty())) {
+            if (!(queryList != null && queryList.isEmpty())) {
                 System.out.println("list " + queryList);
                 author=(List<Author>) queryList;               
             }     
             return author;
         } catch (Exception e) {
         	LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.hibernateAuthorDAO.getAll"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.hibernateAuthorDAO.getAll"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
         } finally {
             session.close();
         }
