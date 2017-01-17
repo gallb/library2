@@ -20,7 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "borrows", catalog = "library2")
-public class Borrow {
+public class Borrow extends BaseEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private User reader;
 	private Publication publication;
 	private Date borrowFrom;
