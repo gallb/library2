@@ -10,7 +10,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
@@ -50,6 +49,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return list;
 	}
 
@@ -77,12 +77,12 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return list;
 	}
 
-	public boolean insert(BaseEntity ent) {
+	public boolean insert(User user) {
 		boolean returnStatus = false;
-		User user = (User) ent;
 		User us = new User();
 		try {
 			con = conMan.getConnection();
@@ -104,11 +104,12 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
-	public <X extends BaseEntity> boolean update(X ent) {
-		User user = (User) ent;
+	public boolean update(User user) {
+
 		boolean returnStatus = false;
 		try {
 			con = conMan.getConnection();
@@ -128,6 +129,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_update"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
@@ -145,6 +147,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_delete"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
@@ -169,6 +172,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return user;
 
 	}
@@ -194,17 +198,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return user;
 	}
-
-	private void closeConnection(Connection con, PreparedStatement preparedStatement) {
-		try {
-			preparedStatement.close();
-			con.close();
-		} catch (SQLException e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_close"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
-		}
-	}
-
 }

@@ -4,12 +4,14 @@ import java.util.List;
 
 import edu.msg.library2common.model.Publication;
 
-public interface PublicationDao extends DaoInterface {
+public interface PublicationDao extends DaoInterface<Publication> {
 	/**
 	 * 
-	 * @param publication_title  - the title of the publication
-	 * @param pub_type - the type of the publication
+	 * @param publication_title
+	 *            - the title of the publication
+	 * @param pub_type
+	 *            - the type of the publication
 	 * @return - a publication element
 	 */
-	 public List<Publication> searchPublications(String regularExpression);
+	public List<Publication> searchPublications(String regularExpression);
 }

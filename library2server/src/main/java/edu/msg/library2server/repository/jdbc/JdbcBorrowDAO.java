@@ -9,7 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.msg.library2common.model.BaseEntity;
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.service.ServiceException;
@@ -27,22 +27,22 @@ public class JdbcBorrowDAO implements BorrowDAO {
 		conMan = SqlHandler.getInstance();
 	}
 
-	public <X extends BaseEntity> List<X> getAll() {
+	public List<Borrow> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public <X extends BaseEntity> List<X> getByName(String param) {
+	public List<Borrow> getByName(String param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public <X extends BaseEntity> boolean insert(X e) {
+	public boolean insert(Borrow e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public <X extends BaseEntity> boolean update(X e) {
+	public boolean update(Borrow e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -52,7 +52,7 @@ public class JdbcBorrowDAO implements BorrowDAO {
 		return false;
 	}
 
-	public <X extends BaseEntity> X getById(String id) {
+	public Borrow getById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
