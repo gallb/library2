@@ -107,7 +107,7 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	private void getPublicationByName() {
-		publications = registry.getPublicationByName(userInput() + "%");
+		publications = registry.getPublicationByName("%"+userInput() + "%");
 		if (!publications.isEmpty()) {
 			for (int i = 0; i < publications.size(); ++i) {
 				printMessage((i + 1) + "-" + publications.get(i).getTitle());
