@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +16,9 @@ import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.UserDao;
-import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.util.PasswordEncrypter;
 
 public class JdbcUserDao implements UserDao {
-	// private static final Logger
-	// LOGGER=LoggerFactory.getLogger(JdbcUserDao.class);
 	private SqlHandler conMan;
 	private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUserDao.class);
 	private PreparedStatement preparedStatement;
@@ -34,7 +30,6 @@ public class JdbcUserDao implements UserDao {
 
 	public List<User> getAll() {
 		List<User> list = new ArrayList<User>();
-
 		try {
 			con = conMan.getConnection();
 			String selectSQL = "select * from users";
@@ -53,7 +48,7 @@ public class JdbcUserDao implements UserDao {
 			}
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return list;
 	}
@@ -66,7 +61,6 @@ public class JdbcUserDao implements UserDao {
 			String selectSQL = "select * from users where name=?";
 			preparedStatement = con.prepareStatement(selectSQL);
 			preparedStatement.setString(1, name);
-		//	preparedStatement.execute();
 			ResultSet users = preparedStatement.executeQuery();
 			while (users.next()) {
 				user = new User();
@@ -81,7 +75,7 @@ public class JdbcUserDao implements UserDao {
 
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return list;
 	}
@@ -95,22 +89,20 @@ public class JdbcUserDao implements UserDao {
 			System.out.println(con.isClosed());
 			String sqlCommand = "insert into users (uuid, name, user_name, user_type, loyalty_index, password) "
 					+ "values (?, ?, ?, ?, ?, ?)";
-
 			preparedStatement = con.prepareStatement(sqlCommand);
 			preparedStatement.setString(1, user.getUuid());
 			preparedStatement.setString(2, user.getName());
 			preparedStatement.setString(3, user.getUserName());
 			preparedStatement.setString(4, user.getUserType().name());
 			preparedStatement.setInt(5, user.getLoyalityIndex());
-			user.setPassword(PasswordEncrypter.encypted(user.getPassword()," "));
+			user.setPassword(PasswordEncrypter.encypted(user.getPassword(), " "));
 			preparedStatement.setString(6, user.getPassword());
 			preparedStatement.executeUpdate();
-
 			LOGGER.info("User inserted!");
 			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return returnStatus;
 	}
@@ -123,20 +115,18 @@ public class JdbcUserDao implements UserDao {
 			String sqlCommand = "UPDATE users " + " SET name = ?, user_name = ?,user_type = ?,"
 					+ " loyalty_index = ?, password = ? " + " WHERE uuid = ?";
 			preparedStatement = con.prepareStatement(sqlCommand);
-
 			preparedStatement.setString(1, user.getName());
 			preparedStatement.setString(2, user.getUserName());
 			preparedStatement.setString(3, user.getUserType().name());
 			preparedStatement.setInt(4, user.getLoyalityIndex());
-			user.setPassword(PasswordEncrypter.encypted(user.getPassword()," "));
+			user.setPassword(PasswordEncrypter.encypted(user.getPassword(), " "));
 			preparedStatement.setString(5, user.getPassword());
 			preparedStatement.setString(6, user.getUuid());
-
 			preparedStatement.executeUpdate();
 			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_update"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return returnStatus;
 	}
@@ -149,12 +139,11 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement = con.prepareStatement(sqlCommand);
 			preparedStatement.setString(1, id);
 			preparedStatement.execute();
-
-			LOGGER.info("User deleted!");
+			LOGGER.info(PropertyProvider.INSTANCE.getProperty("info.logger.jdbc_user_dao"));
 			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_delete"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return returnStatus;
 	}
@@ -166,7 +155,6 @@ public class JdbcUserDao implements UserDao {
 			String selectSQL = "select * from users where user_name=?";
 			preparedStatement = con.prepareStatement(selectSQL);
 			preparedStatement.setString(1, user_name);
-
 			ResultSet users = preparedStatement.executeQuery();
 			while (users.next()) {
 				user = new User();
@@ -179,13 +167,11 @@ public class JdbcUserDao implements UserDao {
 			}
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return user;
 
 	}
-	
-	
 
 	public User getById(String id) {
 		User user = null;
@@ -194,7 +180,6 @@ public class JdbcUserDao implements UserDao {
 			String selectSQL = "select * from users where uuid=?";
 			preparedStatement = con.prepareStatement(selectSQL);
 			preparedStatement.setString(1, id);
-
 			ResultSet users = preparedStatement.executeQuery();
 			while (users.next()) {
 				user = new User();
@@ -207,9 +192,9 @@ public class JdbcUserDao implements UserDao {
 			}
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
-		return user;		
+		return user;
 	}
 
 	private void closeConnection(Connection con, PreparedStatement preparedStatement) {
@@ -217,8 +202,8 @@ public class JdbcUserDao implements UserDao {
 			preparedStatement.close();
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_close"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 	}
 

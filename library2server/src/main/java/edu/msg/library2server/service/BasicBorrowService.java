@@ -22,22 +22,15 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public boolean borrowPublication(User user, Publication pub, Date from, Date until) {
-		System.out.println("belepeett fugvenybe" + " " + pub.getOnStock());
+	public boolean borrowPublication(User user, Publication pub, Date from, Date until) {		
 		if ((pub.getOnStock() > 0) && (user.getLoyalityIndex() > 0))  {
-			System.out.println("stock & liyalty ok");
 			BorrowDAO borrowDao = DaoFactory.getDaoFactory().getBorrowDao();
-			System.out.println("borrow dao retrieved");
-			if (borrowDao.insertBorrow(user, pub)) {
-				System.out.println("borrow inserted");
+			if (borrowDao.insertBorrow(user, pub, from, until)) {
 				PublicationDao pubDao = DaoFactory.getHibernateDaoFactory().getPublicationDao();
-				System.out.println("publication dao retrieved");
 				pub.setOnStock(pub.getOnStock() -1);
 				if (pubDao.update(pub)) {
-					System.out.println("stock updated");
 					return true;
-				} else {
-					System.out.println("publication stock update FAILD");
+				} else {				
 					//ToDo deleteBorrow
 					return false;
 				}

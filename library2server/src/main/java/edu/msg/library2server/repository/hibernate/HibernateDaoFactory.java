@@ -8,9 +8,9 @@ import edu.msg.library2server.repository.jdbc.JdbcBorrowDAO;
 import edu.msg.library2server.repository.jdbc.JdbcUserDao;
 
 public class HibernateDaoFactory extends DaoFactory {
-	
+
 	@Override
-	public UserDao getUserDao(){	//should be hibernateUserDAO
+	public UserDao getUserDao() { // should be hibernateUserDAO
 		return new JdbcUserDao();
 	}
 
@@ -21,7 +21,7 @@ public class HibernateDaoFactory extends DaoFactory {
 
 	@Override
 	public BorrowDAO getBorrowDao() {
-		return new JdbcBorrowDAO(); //should be hibernateBorrowDAO
+		return new JdbcBorrowDAO(); // should be hibernateBorrowDAO
 	}
 
 }

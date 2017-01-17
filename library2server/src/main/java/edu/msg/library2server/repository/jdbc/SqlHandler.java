@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.util.PropertyProviderServer;
 
@@ -17,6 +21,7 @@ public class SqlHandler {
 	private static final String DBURL = PropertyProviderServer.INSTANCE.getProperty("mysql.url");
 	private static final String USER = PropertyProviderServer.INSTANCE.getProperty("mysql.user");
 	private static final String PASSWORD = PropertyProviderServer.INSTANCE.getProperty("mysql.password");	
+	private static final Logger LOGGER = LoggerFactory.getLogger(SqlHandler.class);
 	
 	private Connection connection;
 	private static SqlHandler instance;
@@ -29,8 +34,8 @@ public class SqlHandler {
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
 			System.out.println(PropertyProvider.INSTANCE.getProperty("server.message.connected"));
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SqlHandlerException(PropertyProvider.INSTANCE.getProperty("error.sql_handler"), e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.sql_handler"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"), e);
 		}
 	}
 
@@ -45,7 +50,6 @@ public class SqlHandler {
 	public Connection getConnection() {
 		Connection con = null;
 		con = connection;
-
 		return con;
 	}
 

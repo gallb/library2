@@ -50,7 +50,7 @@ public class BasicLoginService extends UnicastRemoteObject implements LoginServi
 				return UserType.Invalid;
 			} else {
 				User u = new User();
-				u.setPassword(PasswordEncrypter.encypted(pwd," "));
+				u.setPassword(PasswordEncrypter.encypted(pwd, " "));
 				if ((user.getUserName().equals(userName) && (user.getPassword().equals(u.getPassword())))) {
 					return user.getUserType();
 				}

@@ -11,7 +11,7 @@ import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 
 /**
- * Provides user related services
+ * Provides publication related services
  * 
  * @author gallb
  *
@@ -22,11 +22,11 @@ public interface PublicationServiceRmi extends Remote{
 
 	
 	/**
-	 * Searches for users by person names
-	 * Returns list of user object found or empty list if nothing found.
+	 * Searches for publications by title - regex
+	 * Returns list of publication objects found or empty list if nothing found.
 	 * 
-	 * @param name - name of the person to search for
-	 * @return List of user objects found by the given name
+	 * @param serchString - regex to search for 
+	 * @return List of publication objects found by the given regex
 	 * @throws RemoteException
 	 */
 	public List<Publication> searchForPublicationByTitle (String serchString) throws RemoteException;
