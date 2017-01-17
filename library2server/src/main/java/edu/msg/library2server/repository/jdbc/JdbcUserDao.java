@@ -49,6 +49,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return list;
 	}
 
@@ -76,6 +77,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return list;
 	}
 
@@ -102,6 +104,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
@@ -126,6 +129,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_update"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
@@ -143,6 +147,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_delete"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return returnStatus;
 	}
 
@@ -167,6 +172,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return user;
 
 	}
@@ -192,17 +198,7 @@ public class JdbcUserDao implements UserDao {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_query"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
+		conMan.closeConnection();
 		return user;
 	}
-
-	private void closeConnection(Connection con, PreparedStatement preparedStatement) {
-		try {
-			preparedStatement.close();
-			con.close();
-		} catch (SQLException e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_close"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
-		}
-	}
-
 }
