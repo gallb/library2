@@ -1,5 +1,7 @@
 package edu.msg.library2client.console;
 
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -16,30 +18,77 @@ import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
-	static LoginServiceRmi loginServiceRmi;
-	static Registry registry;
-	static UserServiceRmi userServiceRmi;
-	static PublicationServiceRmi publicationServiceRmi;
-	static BorrowServiceRmi borrowServiceRmi;
-	// List<User> user;
+	private static final Registry registry = createRegistry();
+	private static final UserServiceRmi userServiceRmi = createUserService();
+	private static final PublicationServiceRmi publicationServiceRmi = createPublicationService();
+	private static final BorrowServiceRmi borrowServiceRmi = createBorrowService();
 
-	static {
+	private static final Registry createRegistry() {
 		try {
-			Registry registry = LocateRegistry.getRegistry("localhost",
+			return LocateRegistry.getRegistry("localhost",
 					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
-			userServiceRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
-			publicationServiceRmi = (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
-			borrowServiceRmi = (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
-		} catch (Exception e) {
-
+		} catch (NumberFormatException e) {
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
+		} catch (RemoteException e) {
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
+			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	private static final UserServiceRmi createUserService() {
+		try {
+			return (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
+		} catch (AccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static final PublicationServiceRmi createPublicationService() {
+		try {
+			return (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
+		} catch (AccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static final BorrowServiceRmi createBorrowService() {
+		try {
+			return (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
+		} catch (AccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public List<User> getUserByName(String userName) {
 		try {
 			return userServiceRmi.searchForUser(userName);
 		} catch (Exception e) {
-
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
 		return null;
 	}
@@ -54,7 +103,7 @@ public class RmiRegistry {
 		try {
 			return userServiceRmi.addNewUser(user);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
 		return false;
 	}
@@ -63,21 +112,18 @@ public class RmiRegistry {
 		try {
 			return publicationServiceRmi.searchForPublicationByTitle(title);
 		} catch (Exception e) {
-			System.out.println("Error");
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
-
 		return null;
-
 	}
 
 	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {
 		try {
 			return borrowServiceRmi.borrowPublication(user, publication, from, until);
 		} catch (Exception e) {
-
+			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
 		return false;
-
 	}
 
 }
