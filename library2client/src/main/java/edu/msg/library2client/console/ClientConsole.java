@@ -14,11 +14,14 @@ import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
+
 public class ClientConsole implements Clienthandler {
 
 	private Scanner scanner = new Scanner(System.in);
 	Connection connection = new Connection();
 	RmiRegistry registry = new RmiRegistry();
+	List<Publication> publications;
+	List<User> users;
 
 	public ClientConsole() {
 
@@ -44,6 +47,14 @@ public class ClientConsole implements Clienthandler {
 
 	public void menuForUserManagement() {
 		printMessage("(S)Serach user by name" + " " + "(I)Insert user" + " " + "(M)Main menu");
+	}
+
+	public void menuForPublicationSearch() {
+		printMessage("(S)Serach book by title" + " " + "(M)Main menu");
+	}
+
+	public void menuForPublicationManagement() {
+		printMessage("(B)Borow book" + " " + "(M)Publication Menu");
 	}
 
 	public void start() {
@@ -77,16 +88,37 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	private void getUserByName() {
-		registry.getUserByName(userInput());
+		users = registry.getUserByName(userInput());
+		if (users.isEmpty()) {
+			System.out.println("List is empty");
+
+		} else {
+			for (int i = 0; i < users.size(); ++i) {
+				System.out.println((i + 1) + " " + users.get(i).getName());
+			}
+		}
 
 	}
-	
-	private void createNewUser(){
+
+	private void Proba() {
+		printMessage(users.get(Integer.parseInt(userInput()) - 1).getName());
+	}
+
+	private void getPublicationByName() {
+		publications = registry.getPublicationByName(userInput() + "%");
+
+		for (int i = 0; i < publications.size(); ++i) {
+			printMessage((i + 1) + "-" + publications.get(i).getTitle());
+		}
+		printMessage("For publication management please input the book number!");
+	}
+
+	private void createNewUser() {
 		String name = userInput();
 		String userName = userInput();
 		String type = userInput();
 		String password = userInput();
-		
+
 		UserType userType = null;
 		if (type.equals("Admin")) {
 			userType = UserType.Admin;
@@ -112,14 +144,15 @@ public class ClientConsole implements Clienthandler {
 			userManagment();
 			break;
 		case "B":
+			bookManagement();
+			break;
 
 		}
 	}
-	
 
 	public void userManagment() {
-		boolean field = true;
-		while (field) {
+		boolean flag = true;
+		while (flag) {
 
 			menuForUserManagement();
 			String admincmd = scanner.nextLine();
@@ -131,32 +164,79 @@ public class ClientConsole implements Clienthandler {
 			case "I":
 				printMessage("Please enter:Name userName usertype password");
 				createNewUser();
-				break;
+
 			case "M":
-				field = false;
+				flag = false;
 
 			}
 		}
 	}
 
+	public void bookManagement() {
+		boolean flag = true;
+		while (flag) {
+			menuForPublicationSearch();
+			String admincmd = scanner.nextLine();
+			try {
+				int convert = Integer.parseInt(admincmd);
+				admincmd = "B";
+			} catch (Exception e) {
+
+			}
+			switch (admincmd) {
+			case "S":
+				printMessage("Please enter the publication title");
+				getPublicationByName();
+				break;
+			case "B":
+				bookBorow();
+				break;
+			case "M":
+				flag = false;
+				break;
+
+			}
+
+		}
+	}
+
+	public void bookBorow() {
+		boolean flag = true;
+		while (flag) {
+			menuForPublicationManagement();
+			String admincmd = userInput();
+			switch (admincmd) {
+			case "B":
+
+				break;
+			case "M":
+				flag = false;
+				break;
+			}
+		}
+
+	}
+
 	public static void main(String[] args) throws RemoteException {
-		PublicationServiceRmi pubServiceRmi = null;
-		try {
-			Registry registry = LocateRegistry.getRegistry("localhost",
-		
-				Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
-			pubServiceRmi = (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		List<Publication> list = pubServiceRmi.searchForPublicationByTitle("Pal%");
-		for (Publication p : list){
-			System.out.println(p.getTitle());
-		}
+		// PublicationServiceRmi pubServiceRmi = null;
+		// try {
+		// Registry registry = LocateRegistry.getRegistry("localhost",
+		//
+		// Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
+		// pubServiceRmi = (PublicationServiceRmi)
+		// registry.lookup(PublicationServiceRmi.RMI_NAME);
+		// } catch (Exception e){
+		// e.printStackTrace();
+		// }
+		// List<Publication> list =
+		// pubServiceRmi.searchForPublicationByTitle("Pal%");
+		// for (Publication p : list){
+		// System.out.println(p.getTitle());
+		// }
 		new ClientConsole().start();
 		// User user = new User("Proba", "praba_user", 10, "pass",
 		// UserType.Admin);
-		//Connection registry = new Connection();
+		// Connection registry = new Connection();
 
 	}
 
