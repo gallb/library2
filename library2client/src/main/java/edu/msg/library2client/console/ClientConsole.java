@@ -1,12 +1,18 @@
 package edu.msg.library2client.console;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library2client.Connection;
 import edu.msg.library2client.common.Clienthandler;
+import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.rmi.PublicationServiceRmi;
+import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 public class ClientConsole implements Clienthandler {
 
@@ -133,11 +139,24 @@ public class ClientConsole implements Clienthandler {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RemoteException {
+		PublicationServiceRmi pubServiceRmi = null;
+		try {
+			Registry registry = LocateRegistry.getRegistry("localhost",
+		
+				Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
+			pubServiceRmi = (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		List<Publication> list = pubServiceRmi.searchForPublicationByTitle("Pal%");
+		for (Publication p : list){
+			System.out.println(p.getTitle());
+		}
 		new ClientConsole().start();
 		// User user = new User("Proba", "praba_user", 10, "pass",
 		// UserType.Admin);
-		Connection registry = new Connection();
+		//Connection registry = new Connection();
 
 	}
 

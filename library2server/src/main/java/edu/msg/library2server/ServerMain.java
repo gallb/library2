@@ -19,6 +19,7 @@ import edu.msg.library2common.model.UserType;
 //import org.apache.log4j.PropertyConfigurator;
 
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
+import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.hibernate.AuthorDAO;
@@ -26,6 +27,7 @@ import edu.msg.library2server.repository.hibernate.BorrowDAO;
 import edu.msg.library2server.repository.hibernate.HibernatePublicationDAO;
 import edu.msg.library2server.repository.jdbc.SqlHandler;
 import edu.msg.library2server.service.BasicLoginService;
+import edu.msg.library2server.service.BasicPublicationService;
 import edu.msg.library2server.service.BasicUserService;
 
 public class ServerMain {
@@ -40,7 +42,7 @@ public class ServerMain {
 			System.out.println(testPub.getTitle());
 			testPub.setTitle("modified");
 			System.out.println(testPub.getTitle());*/
-			HibernatePublicationDAO pubDAO = new HibernatePublicationDAO();
+			//HibernatePublicationDAO pubDAO = new HibernatePublicationDAO();
 		//	pubDAO.listPublications().forEach(p -> System.out.println(p.getTitle()));
 //			List<Publication> pubList = pubDAO.listPublications();
 //			for (int i = 0; i < pubList.size(); i++) {
@@ -52,7 +54,7 @@ public class ServerMain {
 			
 			/*List<Publication> pubList2 =pubDAO.searchPublications("%fiuk");
 			for (int i = 0; i < pubList2.size(); i++) {
-				System.out.println(pubList2.get(i).getTitle());
+				System.out.println("sesrver " + pubList2.get(i).getTitle());
 			}*/
 			
 		/*	BorrowDAO br = new BorrowDAO();
@@ -73,9 +75,10 @@ public class ServerMain {
 			Registry registry = LocateRegistry.createRegistry(Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			BasicLoginService basicLoginService = new BasicLoginService();
 			BasicUserService basicUserService = new BasicUserService();
+			BasicPublicationService basicPublicationService = new BasicPublicationService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
 			registry.rebind(UserServiceRmi.RMI_NAME, basicUserService);
-			
+			registry.rebind(PublicationServiceRmi.RMI_NAME, basicPublicationService);
 			
 			
 //			BasicUserService basicLoginService2 = new BasicU();

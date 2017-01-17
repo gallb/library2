@@ -10,10 +10,11 @@ import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2server.repository.DaoFactory;
 import edu.msg.library2server.repository.PublicationDao;
 import edu.msg.library2server.repository.UserDao;
+import edu.msg.library2server.repository.hibernate.HibernateDaoFactory;
 
 public class BasicPublicationService extends UnicastRemoteObject implements PublicationServiceRmi {
 
-	protected BasicPublicationService() throws RemoteException {
+	public BasicPublicationService() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -25,7 +26,7 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 
 	public List<Publication> searchForPublicationByTitle(String serchString) throws RemoteException {
 
-		PublicationDao pubDAO  = DaoFactory.getDaoFactory().getPublicationDao();
+		PublicationDao pubDAO  = DaoFactory.getHibernateDaoFactory().getPublicationDao();
 		return pubDAO.searchPublications(serchString);
 	}
 }
