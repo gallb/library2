@@ -294,7 +294,6 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	public void bookBorow() {
-		boolean flag = true;
 		menuForPublicationManagement();
 		String admincmd = userInput();
 		switch (admincmd) {
@@ -302,7 +301,6 @@ public class ClientConsole implements Clienthandler {
 			addNewBorrow(book);
 			break;
 		case "M":
-			flag = false;
 			break;
 		default:
 			printMessage("Invalid command");
