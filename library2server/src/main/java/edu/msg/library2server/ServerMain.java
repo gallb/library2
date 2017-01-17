@@ -15,6 +15,7 @@ import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.Publisher;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 
 //import org.apache.log4j.PropertyConfigurator;
 
@@ -22,10 +23,11 @@ import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
-import edu.msg.library2server.repository.hibernate.AuthorDAO;
-import edu.msg.library2server.repository.hibernate.BorrowDAO;
+import edu.msg.library2server.repository.hibernate.HibernateAuthorDAO;
+import edu.msg.library2server.repository.hibernate.HibernateBorrowDAO;
 import edu.msg.library2server.repository.hibernate.HibernatePublicationDAO;
 import edu.msg.library2server.repository.jdbc.SqlHandler;
+import edu.msg.library2server.service.BasicBorrowService;
 import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.service.BasicPublicationService;
 import edu.msg.library2server.service.BasicUserService;
@@ -76,10 +78,11 @@ public class ServerMain {
 			BasicLoginService basicLoginService = new BasicLoginService();
 			BasicUserService basicUserService = new BasicUserService();
 			BasicPublicationService basicPublicationService = new BasicPublicationService();
+			BasicBorrowService basicBorrowService = new BasicBorrowService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
 			registry.rebind(UserServiceRmi.RMI_NAME, basicUserService);
 			registry.rebind(PublicationServiceRmi.RMI_NAME, basicPublicationService);
-			
+			registry.rebind(BorrowServiceRmi.RMI_NAME, basicBorrowService);
 			
 //			BasicUserService basicLoginService2 = new BasicU();
 //			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);

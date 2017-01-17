@@ -67,23 +67,7 @@ public class HibernatePublicationDAO implements PublicationDao{
 	            session.close();
 	        }
 	    }
-	 public void updatePublication(Publication pub) {
-	        Session session = null;
-	        try {
-	            session = HibernateConnector.getInstance().getSession();
-	            System.out.println(pub.getTitle() + " " + pub.getOnStock());
-	            Transaction t = session.beginTransaction();
-	            session.saveOrUpdate(pub);
-	          //  session.update(pub);
-	            session.flush();
-	            t.commit();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            session.close();
-	        }
-	    }
-
+	
 	public <X extends BaseEntity> List<X> getAll() {
 		// TODO Auto-generated method stub
 		return null;
@@ -100,8 +84,24 @@ public class HibernatePublicationDAO implements PublicationDao{
 	}
 
 	public <X extends BaseEntity> boolean update(X e) {
-		// TODO Auto-generated method stub
-		return false;
+		Publication pub = (Publication) e;
+		boolean status = false;
+		 Session session = null;
+	        try {
+	            session = HibernateConnector.getInstance().getSession();
+	            System.out.println(pub.getTitle() + " " + pub.getOnStock());
+	            Transaction t = session.beginTransaction();
+	            session.saveOrUpdate(pub);
+	          //  session.update(pub);
+	            session.flush();
+	            t.commit();
+	            status = true;
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            session.close();
+	        }
+		return status;
 	}
 
 	public boolean delete(String id) {

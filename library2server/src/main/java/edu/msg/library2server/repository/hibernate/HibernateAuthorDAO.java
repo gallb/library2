@@ -7,7 +7,7 @@ import org.hibernate.Session;
 
 import edu.msg.library2common.model.Author;
 
-public class AuthorDAO {
+public class HibernateAuthorDAO {
 	public List<Author> listAuthors() {
         Session session = null;
         try {
