@@ -87,9 +87,8 @@ public class ClientConsole implements Clienthandler {
 		} else if (loginString.equals(UserType.Admin)) {
 			printMessage(PropertyProvider.INSTANCE.getProperty("admin.log"));
 
-			while (true) {
-				execute();
-			}
+			execute();
+
 		}
 	}
 
@@ -100,14 +99,11 @@ public class ClientConsole implements Clienthandler {
 
 		} else {
 			for (int i = 0; i < users.size(); ++i) {
-				System.out.println((i + 1) + " " + users.get(i).getName());
+				printMessage("\t" + "Name" + "\t" + "Username");
+				printMessage((i + 1) + " \t" + users.get(i).getName() + "\t" + users.get(i).getUserName());
 			}
 		}
 
-	}
-
-	private void Proba() {
-		printMessage(users.get(Integer.parseInt(userInput()) - 1).getName());
 	}
 
 	private void getPublicationByName() {
@@ -123,17 +119,30 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	private void createNewUser() {
+		printMessage("Enter Name:");
 		String name = userInput();
+		printMessage("Enter Username:");
 		String userName = userInput();
-		String type = userInput();
-		String password = userInput();
-
+		printMessage("Enter user type:(1)Admin (2)Reader");
+		boolean flag = true;
+		String type;
 		UserType userType = null;
-		if (type.equals("Admin")) {
-			userType = UserType.Admin;
-		} else if (type.equals("Reader")) {
-			userType = UserType.Reader;
+		while (flag) {
+			type = userInput();
+
+			if (type.equals("1")) {
+				flag = false;
+				userType = UserType.Admin;
+			} else if (type.equals("2")) {
+				flag = false;
+				userType = UserType.Reader;
+				type = "Reader";
+			} else {
+				printMessage("Invalid command");
+			}
 		}
+		printMessage("Enter password:");
+		String password = userInput();
 		if (userType == null) {
 			System.out.println("Invalid login access!");
 		} else {
@@ -209,16 +218,19 @@ public class ClientConsole implements Clienthandler {
 	}
 
 	public void execute() {
-		mennuForAdmin();
-		String admincmd = scanner.nextLine();
-		switch (admincmd) {
-		case "U":
-			userManagment();
-			break;
-		case "B":
-			bookManagement();
-			break;
-
+		while (true) {
+			mennuForAdmin();
+			String admincmd = scanner.nextLine();
+			switch (admincmd) {
+			case "U":
+				userManagment();
+				break;
+			case "B":
+				bookManagement();
+				break;
+			default:
+				printMessage("Invalid command");
+			}
 		}
 	}
 
@@ -234,7 +246,6 @@ public class ClientConsole implements Clienthandler {
 				getUserByName();
 				break;
 			case "I":
-				printMessage("Please enter:Name userName usertype password");
 				createNewUser();
 
 			case "M":
