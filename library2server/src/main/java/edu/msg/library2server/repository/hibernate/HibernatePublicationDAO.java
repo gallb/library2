@@ -10,7 +10,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
@@ -68,23 +67,22 @@ public class HibernatePublicationDAO implements PublicationDao {
 		}
 	}
 
-	public <X extends BaseEntity> List<X> getAll() {
+	public List<Publication> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public <X extends BaseEntity> List<X> getByName(String param) {
+	public List<Publication> getByName(String param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public <X extends BaseEntity> boolean insert(X e) {
+	public boolean insert(Publication e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public <X extends BaseEntity> boolean update(X e) {
-		Publication pub = (Publication) e;
+	public boolean update(Publication pub) {
 		boolean status = false;
 		Session session = null;
 		try {
@@ -109,7 +107,7 @@ public class HibernatePublicationDAO implements PublicationDao {
 		return false;
 	}
 
-	public <X extends BaseEntity> X getById(String id) {
+	public Publication getById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

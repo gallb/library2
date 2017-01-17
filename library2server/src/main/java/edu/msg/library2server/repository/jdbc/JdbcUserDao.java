@@ -10,7 +10,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
@@ -80,9 +79,8 @@ public class JdbcUserDao implements UserDao {
 		return list;
 	}
 
-	public boolean insert(BaseEntity ent) {
+	public boolean insert(User user) {
 		boolean returnStatus = false;
-		User user = (User) ent;
 		User us = new User();
 		try {
 			con = conMan.getConnection();
@@ -107,8 +105,8 @@ public class JdbcUserDao implements UserDao {
 		return returnStatus;
 	}
 
-	public <X extends BaseEntity> boolean update(X ent) {
-		User user = (User) ent;
+	public boolean update(User user) {
+
 		boolean returnStatus = false;
 		try {
 			con = conMan.getConnection();

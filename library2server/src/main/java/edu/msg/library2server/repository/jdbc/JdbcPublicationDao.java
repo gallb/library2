@@ -11,7 +11,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.Book;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.PublicationType;
@@ -61,7 +60,7 @@ public class JdbcPublicationDao implements PublicationDao {
 		return null;
 	}
 
-	public <X extends BaseEntity> boolean update(X e) {
+	public boolean update(Publication e) {
 		// TODO Auto-generated method stub
 		// String title = ((Publication)e).getTitle();
 		return false;
@@ -72,17 +71,17 @@ public class JdbcPublicationDao implements PublicationDao {
 		return false;
 	}
 
-	public <X extends BaseEntity> boolean insert(X e) {
+	public boolean insert(Publication e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public <X extends BaseEntity> List<X> getByName(String param) {
+	public List<Publication> getByName(String param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public <X extends BaseEntity> X getById(String id) {
+	public Publication getById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
