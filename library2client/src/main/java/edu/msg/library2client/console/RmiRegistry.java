@@ -3,11 +3,13 @@ package edu.msg.library2client.console;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Date;
 import java.util.List;
 
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
@@ -18,7 +20,8 @@ public class RmiRegistry {
 	static Registry registry;
 	static UserServiceRmi userServiceRmi;
 	static PublicationServiceRmi publicationServiceRmi;
-//	List<User> user;
+	static BorrowServiceRmi borrowServiceRmi;
+	// List<User> user;
 
 	static {
 		try {
@@ -26,23 +29,23 @@ public class RmiRegistry {
 					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			userServiceRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 			publicationServiceRmi = (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
+			borrowServiceRmi = (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
 		} catch (Exception e) {
 
 		}
 	}
 
 	public List<User> getUserByName(String userName) {
-		try{
+		try {
 			return userServiceRmi.searchForUser(userName);
-		}catch (Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 		return null;
 	}
 
 	public boolean insertUser(String name, String userName, UserType userType, int index, String password) {
 		User user = new User();
-
 		user.setName(name);
 		user.setUserName(userName);
 		user.setLoyalityIndex(index);
@@ -64,6 +67,16 @@ public class RmiRegistry {
 		}
 
 		return null;
+
+	}
+
+	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {
+		try {
+			return borrowServiceRmi.borrowPublication(user, publication, from, until);
+		} catch (Exception e) {
+
+		}
+		return false;
 
 	}
 
