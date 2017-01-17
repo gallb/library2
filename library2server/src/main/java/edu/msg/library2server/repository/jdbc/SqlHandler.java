@@ -48,9 +48,15 @@ public class SqlHandler {
 	}
 
 	public Connection getConnection() {
-		Connection con = null;
-		con = connection;
-		return con;
+		return this.connection;
 	}
 
+	public void closeConnection() {
+		try {
+			connection.close();		
+		} catch (SQLException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_close"), e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+		}
+	}
 }
