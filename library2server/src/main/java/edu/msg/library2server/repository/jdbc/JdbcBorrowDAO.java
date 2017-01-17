@@ -62,7 +62,7 @@ public class JdbcBorrowDAO implements BorrowDAO{
 		return null;
 	}
 
-	public Borrow insertBorrow(User user, Publication pub) {
+	public boolean insertBorrow(User user, Publication pub) {
 		boolean returnStatus = false;
 	
 		try {
@@ -86,7 +86,7 @@ public class JdbcBorrowDAO implements BorrowDAO{
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.jdbc_user_dao"));
 		}
-		return null;
+		return returnStatus;
 	}
 
 }
