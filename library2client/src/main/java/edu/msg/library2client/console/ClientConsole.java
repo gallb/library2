@@ -3,6 +3,7 @@ package edu.msg.library2client.console;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ import edu.msg.library2client.common.Clienthandler;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
+import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
@@ -141,17 +143,33 @@ public class ClientConsole implements Clienthandler {
 
 	public static void main(String[] args) throws RemoteException {
 		PublicationServiceRmi pubServiceRmi = null;
+		Registry registry = null;
 		try {
-			Registry registry = LocateRegistry.getRegistry("localhost",
+			 registry = LocateRegistry.getRegistry("localhost",
 		
 				Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			pubServiceRmi = (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-		List<Publication> list = pubServiceRmi.searchForPublicationByTitle("Pal%");
+		List<Publication> list = pubServiceRmi.searchForPublicationByTitle("Voros%");
 		for (Publication p : list){
 			System.out.println(p.getTitle());
+		}
+		
+		BorrowServiceRmi borrowServiceRmi = null;
+		try {
+			borrowServiceRmi = (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		User tempUser = new User("tst", "tst", 10, "fds", UserType.Admin);
+		tempUser.setUuid("112");
+		Date date = new Date(2012, 01, 01);
+		if (borrowServiceRmi.borrowPublication(tempUser, list.get(0),date, date)){
+			System.err.println("borrow success");
+		} else {
+			System.err.println("borrow NOT successfull");
 		}
 		new ClientConsole().start();
 		// User user = new User("Proba", "praba_user", 10, "pass",

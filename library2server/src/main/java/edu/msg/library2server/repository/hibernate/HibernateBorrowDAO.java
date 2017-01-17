@@ -5,7 +5,7 @@ import org.hibernate.Transaction;
 
 import edu.msg.library2common.model.Borrow;
 
-public class BorrowDAO {
+public class HibernateBorrowDAO {
 	public boolean addBorrow(Borrow borrow) {
         Session session = null;
         Transaction transaction = null;
