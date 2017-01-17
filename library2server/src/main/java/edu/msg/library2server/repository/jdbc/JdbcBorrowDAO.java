@@ -62,7 +62,7 @@ public class JdbcBorrowDAO implements BorrowDAO{
 		return null;
 	}
 
-	public boolean insertBorrow(User user, Publication pub) {
+	public boolean insertBorrow(User user, Publication pub, Date borrowFrom, Date borrowUntil) {
 		boolean returnStatus = false;
 	
 		try {
@@ -75,12 +75,12 @@ public class JdbcBorrowDAO implements BorrowDAO{
 			preparedStatement.setString(1, user.getUuid());
 			preparedStatement.setString(2, pub.getUuid());
 			
-			preparedStatement.setDate(3, new Date(2017, 01, 10));
-			preparedStatement.setDate(4, new Date(2017, 01, 20));
+			preparedStatement.setDate(3, borrowFrom);
+			preparedStatement.setDate(4, borrowUntil);
 			
 			preparedStatement.executeUpdate();
 
-			LOGGER.info("User inserted!");
+			LOGGER.info("Borrow object inserted!");
 			returnStatus = true;
 		} catch (SQLException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.jdbc_user_dao_insert"), e);
