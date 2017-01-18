@@ -1,0 +1,122 @@
+CREATE SCHEMA if not exists library2;
+CREATE USER if not exists 'library2_admin'@'localhost' IDENTIFIED BY 'library2_admin_pass';
+GRANT ALL privileges on library2.* to 'library_admin'@'localhost';
+#comment
+
+Drop table if exists  `library2`.`publishers`;
+CREATE TABLE `library2`.`publishers` (
+  `uuid` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`uuid`));
+  
+INSERT INTO `library2`.`publishers` (`uuid`, `name`) VALUES ('100', 'Editura');
+INSERT INTO `library2`.`publishers` (`uuid`, `name`) VALUES ('101', 'Kobak');
+INSERT INTO `library2`.`publishers` (`uuid`, `name`) VALUES ('102', 'Tasnadi');
+INSERT INTO `library2`.`publishers` (`uuid`, `name`) VALUES ('103', 'Bookline');
+
+Drop table if exists  `library2`.`publications`;
+  CREATE TABLE `library2`.`publications` (
+  `uuid` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NULL,
+  `publication_date` DATE NULL,
+  `type` ENUM('Book', 'Newspaper', 'Magazin') NULL,
+  `publisher_id` VARCHAR(45) NULL,
+  PRIMARY KEY (`uuid`));
+  
+    ALTER TABLE `library2`.`publications` 
+ADD INDEX `publisher_id_idx` (`publisher_id` ASC);
+ALTER TABLE `library2`.`publications` 
+ADD CONSTRAINT `publisher_id`
+  FOREIGN KEY (`publisher_id`)
+  REFERENCES `library2`.`publishers` (`uuid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION; 
+  
+ 
+  
+  
+  ALTER TABLE `library2`.`publications` 
+DROP FOREIGN KEY `publisher_id`;
+ALTER TABLE `library2`.`publications` 
+CHANGE COLUMN `title` `title` VARCHAR(45) NOT NULL ,
+CHANGE COLUMN `publication_date` `publication_date` DATE NOT NULL ,
+CHANGE COLUMN `type` `type` ENUM('Book', 'Newspaper', 'Magazin') NOT NULL ,
+CHANGE COLUMN `publisher_id` `publisher_id` VARCHAR(45) NOT NULL ,
+ADD COLUMN `nr_of_copys` INT NOT NULL AFTER `publisher_id`,
+ADD COLUMN `on_stock` INT NOT NULL AFTER `nr_of_copys`;
+ALTER TABLE `library2`.`publications` 
+ADD CONSTRAINT `publisher_id`
+  FOREIGN KEY (`publisher_id`)
+  REFERENCES `library2`.`publishers` (`uuid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+   INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('51', 'A bengali Tuz', '2019-01-21',  'Book', '100','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('61', 'Pal utcai fiuk', '2012-02-21',  'Newspaper', '101','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('34', 'Tizenegy karatos auto', '2121-01-20',  'Book', '102','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('87', 'Voros oroszlan', '2012-03-20',  'Magazin', '103','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('52', 'A bengali tigris', '2019-01-21',  'Book', '100','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('62', 'Pato Pal ur', '2012-02-21',  'Newspaper', '101','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('35', 'Verseny auto', '2121-01-20',  'Book', '102','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('88', 'Voros lany', '2012-03-20',  'Magazin', '103','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('53', 'Aranyecset', '2019-01-21',  'Newspaper', '100','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('63', 'Bogancs', '2012-02-21',  'Newspaper', '101','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('36', 'Beszterce ostroma autoval', '2121-01-20',  'Newspaper', '102','4','2');
+INSERT INTO `library2`.`publications` (`uuid`, `title`, `publication_date`, `type`, `publisher_id`,`nr_of_copys`,`on_stock`) VALUES ('89', 'Egymas szemeben', '2012-03-20',  'Magazin', '103','4','2');
+
+
+  
+  Drop table if exists  `library2`.`authors`;
+  CREATE TABLE `library2`.`authors` (
+  `uuid` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`uuid`));
+  
+	INSERT INTO `library2`.`authors` (`uuid`, `name`) VALUES ('1', 'Petofi');
+	INSERT INTO `library2`.`authors` (`uuid`, `name`) VALUES ('2', 'Vorosmarty');
+	INSERT INTO `library2`.`authors` (`uuid`, `name`) VALUES ('3', 'Kanyadi');
+
+  
+Drop table if exists  `library2`.`publication_authors`;
+  CREATE TABLE `library2`.`publication_authors` (
+  `publication_id` VARCHAR(50) NOT NULL,
+  `author_id` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`publication_id`, `author_id`));
+  
+  INSERT INTO `library2`.`publication_authors` (`publication_id`, `author_id`) VALUES ('51', '1');
+INSERT INTO `library2`.`publication_authors` (`publication_id`, `author_id`) VALUES ('61', '2');
+
+  Drop table if exists  `library2`.`users`;
+  CREATE TABLE `library2`.`users` (
+  `uuid` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(80) NOT NULL,
+  `user_name` VARCHAR(50) NOT NULL,
+  `user_type` ENUM('Admin', 'Reader') NOT NULL,
+  `loyalty_index` INT NOT NULL,
+  `password` VARCHAR(80) NOT NULL,
+  PRIMARY KEY (`uuid`));
+  
+  INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('112', 'Zoli', 'zoli', 'Admin', '10', 'zoli');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('23', 'Barni', 'barni', 'Reader', '10', 'barni');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('24', 'Szili', 'szili', 'Reader', '10', 'szili');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('333', 'Admin', 'admin', 'Admin', '10', '_-´ÌñL†@ngŒL^°äPSö');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('444', 'Reader', 'reader', 'Reader', '10', 'ðx`äµ¼¦ÕHUKnüó(°Õ‡æN');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('555', 'User', 'user', 'Admin', '10', 'X¹ÔˆKãã©ýÚëM°¨$Íu]');
+INSERT INTO `library2`.`users` (`uuid`, `name`, `user_name`, `user_type`, `loyalty_index`, `password`) VALUES ('666', 'Zoli', 'zolii', 'Reader', '10', 'ûÿ=}‘`9lƒ.³FZ{°žŽ* ');
+UPDATE `library2`.`users` SET `password`='ûÿ=}‘`9lƒ.³FZ{°žŽ* ' WHERE `uuid`='112';
+
+  
+    Drop table if exists  `library2`.`borrows`;
+  CREATE TABLE `library2`.`borrows` (
+  `user_id` VARCHAR(45) NOT NULL,
+  `publication_id` VARCHAR(45) NOT NULL,
+  `borrow_from` DATE NOT NULL,
+  `borrow_until` DATE NOT NULL,
+  PRIMARY KEY (`user_id`, `publication_id`));
+
+  
+  INSERT INTO `library2`.`borrows` (`user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('23', '51', '2017-01-12', '2017-02-20');
+INSERT INTO `library2`.`borrows` (`user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('24', '34', '2017-01-28', '2017-02-21');
+
+
+
