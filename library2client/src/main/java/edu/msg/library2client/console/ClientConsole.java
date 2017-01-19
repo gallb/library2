@@ -242,7 +242,7 @@ public class ClientConsole implements Clienthandler {
 
 	public void userManagment() {
 		boolean flag = true;
-		while (flag) {
+		 {
 
 			menuForUserManagement();
 			String admincmd = scanner.nextLine();

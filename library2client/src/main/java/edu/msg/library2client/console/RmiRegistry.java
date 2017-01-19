@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library2common.model.Publication;
@@ -114,7 +115,7 @@ public class RmiRegistry {
 		} catch (Exception e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
-		return null;
+		return new ArrayList<Publication>();
 	}
 
 	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {

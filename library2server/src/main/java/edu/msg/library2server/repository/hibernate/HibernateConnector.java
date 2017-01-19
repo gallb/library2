@@ -16,7 +16,7 @@ public class HibernateConnector {
 	private HibernateConnector() throws HibernateException {
 		// build the config
 		cfg = new Configuration()
-				.configure(new File("src/main/java/edu/msg/library2server/repository/hibernate/hibernate.cfg.xml"));
+				.configure("edu/msg/library2common/model/hibernate.cfg.xml");
 		sessionFactory = cfg.buildSessionFactory();
 	}
 
