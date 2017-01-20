@@ -27,5 +27,5 @@ public interface BorrowServiceRmi extends Remote{
 	 * @return true if the borrow was succesfull false if not
 	 * @throws RemoteException
 	 */
-	public boolean borrowPublication (User user, Publication pub, Date from, Date until) throws RemoteException;
+	public boolean borrowPublication (String userID, String pubID, Date from, Date until) throws RemoteException;
 }

@@ -120,7 +120,7 @@ public class RmiRegistry {
 
 	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {
 		try {
-			return borrowServiceRmi.borrowPublication(user, publication, from, until);
+			return borrowServiceRmi.borrowPublication(user.getUuid(), publication.getUuid(), from, until);
 		} catch (Exception e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
