@@ -94,21 +94,6 @@ public class RmiRegistry {
 		return null;
 	}
 
-	public boolean insertUser(String name, String userName, UserType userType, int index, String password) {
-		User user = new User();
-		user.setName(name);
-		user.setUserName(userName);
-		user.setLoyalityIndex(index);
-		user.setUserType(userType);
-		user.setPassword(password);
-		try {
-			return userServiceRmi.addNewEntity(user);
-		} catch (RemoteException e) {
-			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
-		}
-		return false;
-	}
-
 	public List<Publication> getPublicationByName(String title) {
 		try {
 			return publicationServiceRmi.searchForPublicationByTitle(title);
@@ -118,12 +103,4 @@ public class RmiRegistry {
 		return new ArrayList<Publication>();
 	}
 
-	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {
-		try {
-			return borrowServiceRmi.borrowPublication(user.getUuid(), publication.getUuid(), from, until);
-		} catch (Exception e) {
-			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
-		}
-		return false;
-	}
 }
