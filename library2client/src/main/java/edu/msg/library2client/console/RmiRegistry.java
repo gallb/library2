@@ -101,7 +101,7 @@ public class RmiRegistry {
 		user.setUserType(userType);
 		user.setPassword(password);
 		try {
-			return userServiceRmi.addNewUser(user);
+			return userServiceRmi.addNewEntity(user);
 		} catch (RemoteException e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
@@ -125,5 +125,4 @@ public class RmiRegistry {
 		}
 		return false;
 	}
-
 }

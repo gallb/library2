@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -50,9 +51,11 @@ public class Borrow extends BaseEntity{
 		return uuid;
 	}
 	
-	@ManyToMany
+	/*@ManyToMany
     @JoinColumn(name = "user_id",
-            foreignKey = @ForeignKey(name = "user_id"))	
+            foreignKey = @ForeignKey(name = "user_id"))	*/
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", nullable = false)
 	public User getReader() {
 		return reader;
 	}
@@ -60,9 +63,11 @@ public class Borrow extends BaseEntity{
 	public void setReader(User reader) {
 		this.reader = reader;
 	}
-	@ManyToMany
-    @JoinColumn(name = "publication_id",
-            foreignKey = @ForeignKey(name = "publication_id"))		
+		
+    /*@JoinColumn(name = "publication_id",
+            foreignKey = @ForeignKey(name = "publication_id"))	*/	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "publication_id", nullable = false)
 	public Publication getPublication() {
 		return publication;
 	}

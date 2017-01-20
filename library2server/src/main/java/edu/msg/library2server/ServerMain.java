@@ -38,7 +38,9 @@ public class ServerMain {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"));
 		}
-		DaoFactory.getHibernateDaoFactory().getHibernateDaoFactory().getUserDao().getAll().forEach(obj -> System.out.println(obj.getName()));
+		//DaoFactory.getHibernateDaoFactory().getHibernateDaoFactory().getUserDao().getAll().forEach(obj -> System.out.println(obj.getName()));
+		//DaoFactory.getHibernateDaoFactory().getPublicationDao().getAll().forEach(obj -> System.out.println(obj.getPublisher().getName()));
+		//DaoFactory.getHibernateDaoFactory().getBorrowDao().getAll().forEach(obj -> System.out.println(obj.getPublication().getTitle()));
 	}
 
 }

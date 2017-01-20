@@ -38,7 +38,7 @@ public class Publisher extends BaseEntity {
 	
 	@Override
 	@Id
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "publishers")*/
+	//@OneToMany(mappedBy = "publishers")
 	@Column(name = "uuid", length = 45, unique = true, nullable = false)
 	public String getUuid() {
 		if (uuid == null) {

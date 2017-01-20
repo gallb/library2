@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import edu.msg.library2common.model.BaseEntity;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2server.repository.DaoFactory;
@@ -29,14 +30,22 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 		super();
 	}
 	
-	public boolean addNewUser(User user) throws RemoteException {
+	@Override
+	public boolean addNewEntity(User entity) throws RemoteException {
 		userDao = DaoFactory.getDaoFactory().getUserDao();
-		return userDao.insert(user);
+		return userDao.insert(entity);
 	}
 
-	public boolean updateUserData(User user) throws RemoteException {
+	@Override
+	public boolean updateEntity(User entity) throws RemoteException {
 		userDao = DaoFactory.getDaoFactory().getUserDao();
-		return userDao.update(user);
+		return userDao.update(entity);
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws RemoteException {
+		userDao = DaoFactory.getDaoFactory().getUserDao();
+		return userDao.delete(entityID);
 	}
 
 	public User getByUsername(String userName) throws RemoteException {
@@ -49,14 +58,8 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 		return userDao.getById(userID);
 	}
 
-	public boolean deleteUser(String userID) throws RemoteException {
-		userDao = DaoFactory.getDaoFactory().getUserDao();
-		return userDao.delete(userID);
-	}
-
 	public List<User> searchForUser(String name) throws RemoteException {
 		userDao = DaoFactory.getDaoFactory().getUserDao();
 		return userDao.getByName(name);
-	}
-	
+	}	
 }
