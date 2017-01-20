@@ -21,7 +21,7 @@ public class HibernateDaoFactory extends DaoFactory {
 
 	@Override
 	public BorrowDAO getBorrowDao() {
-		return new JdbcBorrowDAO(); // should be hibernateBorrowDAO
+		return new HibernateBorrowDAO(); // should be hibernateBorrowDAO
 	}
 
 }

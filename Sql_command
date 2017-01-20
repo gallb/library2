@@ -1,3 +1,4 @@
+drop SCHEMA if exists library2;
 CREATE SCHEMA if not exists library2;
 CREATE USER if not exists 'library2_admin'@'localhost' IDENTIFIED BY 'library2_admin_pass';
 GRANT ALL privileges on library2.* to 'library_admin'@'localhost';
@@ -108,15 +109,24 @@ UPDATE `library2`.`users` SET `password`='ûÿ=}‘`9lƒ.³FZ{°žŽ* ' WHERE `uuid`='11
   
     Drop table if exists  `library2`.`borrows`;
   CREATE TABLE `library2`.`borrows` (
+ `uuid` VARCHAR(45) NOT NULL,
   `user_id` VARCHAR(45) NOT NULL,
   `publication_id` VARCHAR(45) NOT NULL,
   `borrow_from` DATE NOT NULL,
   `borrow_until` DATE NOT NULL,
-  PRIMARY KEY (`user_id`, `publication_id`));
+  PRIMARY KEY (`uuid`));
 
+alter table `library2`.`borrows` ADD CONSTRAINT `user_id`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `library2`.`users` (`uuid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION; 
   
-  INSERT INTO `library2`.`borrows` (`user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('23', '51', '2017-01-12', '2017-02-20');
-INSERT INTO `library2`.`borrows` (`user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('24', '34', '2017-01-28', '2017-02-21');
-
-
-
+  alter table `library2`.`borrows` ADD CONSTRAINT `publication_id`
+  FOREIGN KEY (`publication_id`)
+  REFERENCES `library2`.`publications` (`uuid`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION; 
+  
+INSERT INTO `library2`.`borrows` (`uuid`, `user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('asf', '24', '34', '2017-03-05', '2017-03-25');
+INSERT INTO `library2`.`borrows` (`uuid`, `user_id`, `publication_id`, `borrow_from`, `borrow_until`) VALUES ('986785', '23', '51', '2017-01-20', '2017-02-25');
