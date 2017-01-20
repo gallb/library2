@@ -3,10 +3,14 @@ package edu.msg.library2common.model;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * represents user
@@ -14,6 +18,9 @@ import javax.persistence.ManyToMany;
  * @author nagys
  *
  */
+
+@Entity
+@Table (name = "users", catalog = "library2")
 
 public class User extends BaseEntity {
 
@@ -41,9 +48,9 @@ public class User extends BaseEntity {
 	
 	@Override
 	@Id
-	@ManyToMany
+/*	@ManyToMany
     @JoinColumn(name = "uuid",
-            foreignKey = @ForeignKey(name = "user_id"))	
+            foreignKey = @ForeignKey(name = "user_id"))	*/
 	@Column(name = "uuid", length = 45, unique = true, nullable = false)
 	public String getUuid() {
 		if (uuid == null) {
@@ -94,6 +101,7 @@ public class User extends BaseEntity {
 	}
 
 	@Column(name = "user_type")
+	@Enumerated(EnumType.STRING)
 	public UserType getUserType() {
 		return userType;
 	}

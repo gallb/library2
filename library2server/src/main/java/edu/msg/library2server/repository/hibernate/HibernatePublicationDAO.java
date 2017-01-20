@@ -3,6 +3,8 @@ package edu.msg.library2server.repository.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
+import edu.msg.library2server.repository.DataAccessException;
 import edu.msg.library2server.repository.PublicationDao;
 
 public class HibernatePublicationDAO implements PublicationDao {
@@ -20,28 +23,13 @@ public class HibernatePublicationDAO implements PublicationDao {
 
 	public List<Publication> listPublications() {
 		Session session = null;
-		List publications = new ArrayList<Publication>();
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			Query query = session.createQuery("from Publication s");
-
-			// System.out.println(query.toString());
-			// System.out.println(query.getQueryString() + " " +
-			// query.getFetchSize());
-			// System.out.println(query.list().size());
-			List queryList = query.list();
-			/*
-			 * List <Publication> queryList = new ArrayList(); for (Object
-			 * oneObject : query.getResultList()) { queryList.add((oneObject. }
-			 */
-			if (!(queryList != null && queryList.isEmpty())) {
-				publications = (List<Publication>) queryList;
-			}
-			return publications;
+			TypedQuery<Publication> typedQuery = session.createQuery("from Publication s");
+			return typedQuery.getResultList();
 		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),
-					e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
 		} finally {
 			session.close();
 		}
@@ -68,8 +56,17 @@ public class HibernatePublicationDAO implements PublicationDao {
 	}
 
 	public List<Publication> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			TypedQuery<Publication> typedQuery = session.createQuery("from Publication s");
+			return typedQuery.getResultList();
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+		} finally {
+			session.close();
+		}
 	}
 
 	public List<Publication> getByName(String param) {

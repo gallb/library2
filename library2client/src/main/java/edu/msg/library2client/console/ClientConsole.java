@@ -112,7 +112,7 @@ public class ClientConsole implements Clienthandler {
 		publications = registry.getPublicationByName("%" + userInput() + "%");
 		if (!publications.isEmpty()) {
 			for (int i = 0; i < publications.size(); ++i) {
-				printMessage((i + 1) + "-" + publications.get(i).getTitle());
+				printMessage((i + 1) + "-" + publications.get(i).getTitle() + " Publisher: " +publications.get(i).getPublisher().getName());
 			}
 			printMessage("For publication management please input the book number!");
 		} else {

@@ -13,6 +13,7 @@ import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
+import edu.msg.library2server.repository.DaoFactory;
 import edu.msg.library2server.service.BasicBorrowService;
 import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.service.BasicPublicationService;
@@ -37,6 +38,7 @@ public class ServerMain {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"));
 		}
+		DaoFactory.getHibernateDaoFactory().getHibernateDaoFactory().getUserDao().getAll().forEach(obj -> System.out.println(obj.getName()));
 	}
 
 }

@@ -11,5 +11,6 @@
      <mapping class="edu.msg.library2common.model.Publication" />
      <mapping class="edu.msg.library2common.model.Author" />
      <mapping class="edu.msg.library2common.model.Publisher" />
+      <mapping class="edu.msg.library2common.model.User" />
   </session-factory>
 </hibernate-configuration>

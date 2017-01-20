@@ -86,7 +86,7 @@ public class Publication extends BaseEntity  implements java.io.Serializable{
 		this.date = date;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "publisher_id", nullable = false)
 	public Publisher getPublisher() {
 		return publisher;

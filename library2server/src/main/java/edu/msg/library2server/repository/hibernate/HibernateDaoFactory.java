@@ -11,7 +11,7 @@ public class HibernateDaoFactory extends DaoFactory {
 
 	@Override
 	public UserDao getUserDao() { // should be hibernateUserDAO
-		return new JdbcUserDao();
+		return new HibernateUserDAO();
 	}
 
 	@Override
