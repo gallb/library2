@@ -13,7 +13,6 @@ import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
-import edu.msg.library2common.service.rmi.LoginServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
