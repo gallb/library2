@@ -26,6 +26,7 @@ public class CommandManager{
 		commandList = new ArrayList<>();
 		commandList.add(exitCommand);
 		commandList.add( new MainCommand());
+		commandList.add(new SearchPubCommand());
 	}
 			
 	public void run() {

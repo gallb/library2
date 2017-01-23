@@ -20,12 +20,16 @@ import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
 	private Registry registry;
-	private final UserServiceRmi userServiceRmi = createUserService();
-	private final PublicationServiceRmi publicationServiceRmi = createPublicationService();
-	private final BorrowServiceRmi borrowServiceRmi = createBorrowService();
+	private UserServiceRmi userServiceRmi;// = createUserService();
+	private PublicationServiceRmi publicationServiceRmi;// = createPublicationService();
+	private BorrowServiceRmi borrowServiceRmi;// = createBorrowService();
 
 	public RmiRegistry() {
 		try {
+			userServiceRmi = createUserService();
+			publicationServiceRmi = createPublicationService();
+			borrowServiceRmi = createBorrowService();
+
 			registry = LocateRegistry.getRegistry("localhost",
 					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 		} catch (NumberFormatException e) {

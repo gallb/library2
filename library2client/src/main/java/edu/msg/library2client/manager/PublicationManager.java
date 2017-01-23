@@ -13,9 +13,10 @@ import edu.msg.library2common.service.rmi.PublicationServiceRmi;
  */
 public class PublicationManager implements RmiServiceManager<Publication>{
 	private PublicationServiceRmi publicationServiceRmi;
-
+	private RmiRegistry rmiRegistry = new RmiRegistry();
+	
 	public PublicationManager() {
-		publicationServiceRmi = new RmiRegistry().getPublicationservice();
+		publicationServiceRmi = rmiRegistry.getPublicationservice();
 	}
 
 	@Override
