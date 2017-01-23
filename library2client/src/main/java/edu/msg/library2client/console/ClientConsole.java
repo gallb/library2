@@ -29,7 +29,7 @@ public class ClientConsole implements Clienthandler {
 	List<User> users;
 	private int book;
 
-	public ClientConsole() {
+	public ClientConsole()  {
 
 	}
 
@@ -148,11 +148,11 @@ public class ClientConsole implements Clienthandler {
 		if (userType == null) {
 			System.out.println("Invalid login access!");
 		} else {
-			if (registry.insertUser(name, userName, userType, 10, password)) {
+			/*if (registry.insertUser(name, userName, userType, 10, password)) {
 				System.out.println("Create successful!");
 			} else {
 				System.out.println("Create not successful!");
-			}
+			}*/
 		}
 	}
 
@@ -168,7 +168,7 @@ public class ClientConsole implements Clienthandler {
 			printMessage("Borrow from");
 			printMessage(dtf.format(localDate));
 			boolean flag = true;
-			Date from = new Date(0, 0, 0);
+			Date from =  Date.valueOf(LocalDate.of(0, 0, 0));
 			while (flag) {
 				printMessage("(1)Accept date" + " " + "(2)Enter other date");
 				String aceptreject = userInput();
@@ -191,7 +191,7 @@ public class ClientConsole implements Clienthandler {
 			printMessage("Borrow until");
 			localDate = LocalDate.now().plusDays(20);
 			printMessage(dtf.format(localDate));
-			Date until = new Date(0, 0, 0);
+			Date until = Date.valueOf(LocalDate.of(0, 0, 0));
 			flag = true;
 			while (flag) {
 				printMessage("(1)Accept date" + " " + "(2)Enter other date");
@@ -213,11 +213,11 @@ public class ClientConsole implements Clienthandler {
 				}
 			}
 
-			if (registry.publicationBorrow(user, publication, from, until)) {
+		/*	if (registry.publicationBorrow(user, publication, from, until)) {
 				printMessage("Borrow success");
 			} else {
 				printMessage("Borrow fail");
-			}
+			}*/
 		} else {
 			addNewBorrow(book);
 		}
