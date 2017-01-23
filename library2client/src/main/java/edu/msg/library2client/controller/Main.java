@@ -16,6 +16,9 @@ public class Main {
 		//Command cmd = new Command(Login);
 		
 		//cmd.execute();
+		CommandManager commandManager = new CommandManager();
+		
+		commandManager.run();
 	}
 
 }
