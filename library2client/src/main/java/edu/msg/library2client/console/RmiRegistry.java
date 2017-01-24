@@ -26,12 +26,13 @@ public class RmiRegistry {
 
 	public RmiRegistry() {
 		try {
+			registry = LocateRegistry.getRegistry("localhost",
+					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
 			userServiceRmi = createUserService();
 			publicationServiceRmi = createPublicationService();
 			borrowServiceRmi = createBorrowService();
 
-			registry = LocateRegistry.getRegistry("localhost",
-					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
+		
 		} catch (NumberFormatException e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		} catch (RemoteException e) {
