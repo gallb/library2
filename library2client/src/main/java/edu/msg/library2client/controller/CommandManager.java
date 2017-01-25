@@ -32,6 +32,10 @@ public class CommandManager{
 		commandList.add(new SearchPubCommand());
 		commandList.add(new SettingsCommand());
 		commandList.add(new LanguageCommand());
+		commandList.add(new PublicationManagementCommand());
+		commandList.add(new AddPublicationCommand());
+		commandList.add(new DeletePublicationCommand());
+		commandList.add(new EditPublicationCommand());
 	}
 			
 	public void run() {
