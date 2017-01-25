@@ -27,7 +27,7 @@ public class SearchPubCommand extends AbstractCommand{
 		PublicationManager pubMan = new PublicationManager();
 		List<Publication> pubList = new ArrayList<>();
 		try {
-			pubList = pubMan.search("%Pal%");
+			pubList = pubMan.search("Pal");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
