@@ -12,9 +12,10 @@ import org.slf4j.LoggerFactory;
 import edu.msg.library2common.model.Author;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
+import edu.msg.library2server.repository.AuthorDAO;
 import edu.msg.library2server.repository.jdbc.JdbcUserDao;
 
-public class HibernateAuthorDAO {
+public class HibernateAuthorDAO implements AuthorDAO {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HibernateAuthorDAO.class);
 	
 	public List<Author> listAuthors() {
@@ -39,4 +40,40 @@ public class HibernateAuthorDAO {
         }
         
     }
+
+	@Override
+	public List<Author> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Author> getByName(String param) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(Author e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Author e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Author getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

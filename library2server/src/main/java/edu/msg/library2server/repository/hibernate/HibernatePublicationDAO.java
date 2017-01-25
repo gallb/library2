@@ -68,17 +68,36 @@ public class HibernatePublicationDAO implements PublicationDao {
 			session.close();
 		}
 	}
-
+	/**
+	 * 
+	 */
 	public List<Publication> getByName(String param) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<Publication> searchResult = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			List list = session.createCriteria(Publication.class).add(Restrictions.like("title", param))
+					.list();
+			if (list != null) {
+				searchResult = (List<Publication>) list;
+			}
+			return searchResult;
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),
+					e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+		} finally {
+			session.close();
+		}
 	}
 
 	public boolean insert(Publication e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+/**
+ * 
+ */
 	public boolean update(Publication pub) {
 		boolean status = false;
 		Session session = null;
@@ -91,7 +110,7 @@ public class HibernatePublicationDAO implements PublicationDao {
 			t.commit();
 			status = true;
 		} catch (Exception ex) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.update"), ex);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.update"), ex);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		} finally {
 			session.close();
