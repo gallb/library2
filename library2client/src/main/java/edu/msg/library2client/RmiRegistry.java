@@ -1,4 +1,4 @@
-package edu.msg.library2client.console;
+package edu.msg.library2client;
 
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -19,7 +19,7 @@ import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
 	private static final Registry registry = createRegistry();
-	private static final UserServiceRmi userServiceRmi = createUserService();
+	public static final UserServiceRmi userServiceRmi = createUserService();
 	private static final PublicationServiceRmi publicationServiceRmi = createPublicationService();
 	private static final BorrowServiceRmi borrowServiceRmi = createBorrowService();
 
@@ -36,7 +36,7 @@ public class RmiRegistry {
 		return null;
 	}
 	
-	private static final UserServiceRmi createUserService() {
+	public static final UserServiceRmi createUserService() {
 		try {
 			return (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 		} catch (AccessException e) {

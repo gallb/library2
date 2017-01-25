@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library2client.Connection;
+import edu.msg.library2client.RmiRegistry;
 import edu.msg.library2client.common.Clienthandler;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
