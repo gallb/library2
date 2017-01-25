@@ -1,0 +1,12 @@
+Command numerotation
+
+0 - ExitCommand
+1 - MainCommand
+2 - SearchPublicationCommand
+3 - SettingsCommand
+4 - LanguageCommand
+5 - PublicationManagementCommand
+6 - AddPublicationCommand
+7 - DeletePublicationCommand
+8 - EditPublicationCommand
+9
