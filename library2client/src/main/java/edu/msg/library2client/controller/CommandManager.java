@@ -10,7 +10,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.Element;
+import javax.swing.text.View;
 
+import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
 
 /**
@@ -38,7 +40,7 @@ public class CommandManager{
 		while (!((ExitCommand)getCommandByID(0)).isExitFlag() ) {
 			printChilds();
 			System.out.println("client.command.input");
-			String selection = ViewManager.userInput();
+			String selection = ViewManager.getViewManager("Console").userInput();
 			List<AbstractCommand> commands = new ArrayList<>();
 			commands.addAll(commandList.stream().filter(element -> element.getTriggerCharacter().equals(selection)).collect(Collectors.toList())); 
 			if (!commands.isEmpty()) {

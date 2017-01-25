@@ -11,10 +11,12 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import edu.msg.library2client.util.ClientPropertyProvider;
+import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
 
 /**
  * @author gallb
+ * @author kiska
  *
  */
 public class LanguageCommand extends AbstractCommand{
@@ -38,7 +40,7 @@ public class LanguageCommand extends AbstractCommand{
 			}
 			scanner.close();
 			System.out.println(ClientPropertyProvider.getProperty("client.command.language.chooseMessage"));
-			int chosenLanguge = ViewManager.numberChooser(i);
+			int chosenLanguge = ViewManager.getViewManager("Console").numberChooser(i);
 			ClientPropertyProvider.INSTANCE.setLocal(new Locale(langList.get(chosenLanguge - 1 )));
 			CommandManager.commandList.forEach(e -> e.updatelabels());
 		} catch (FileNotFoundException e) {

@@ -1,34 +1,34 @@
-/**
- * 
- */
 package edu.msg.library2client.util;
 
-import java.util.Scanner;
-
 /**
- * @author gallb
+ * 
+ * @author kiska
  *
+ *abstract class which defines some methods used for client side data I/O operations 
+ *which are common for console and GUI
  */
-public class ViewManager {
-	
-	private static Scanner scanner = new Scanner(System.in);
-	
-	public static String userInput() {
-		String str = "";
-		while (str.isEmpty()) {
-			str = scanner.nextLine();
+public abstract class ViewManager {
+	/**
+	 * 
+	 * @param max - the maximum value the user can input
+	 * @return - the number the user typed
+	 */
+	public abstract int numberChooser(int max);
+	/**
+	 * 
+	 * @return - a String representation of the data the user typed
+	 */
+	public abstract String userInput();
+	/**
+	 * 
+	 * @return - a ConsoleViewManager instance
+	 */
+	public static ViewManager getViewManager(String input){
+		switch(input.toLowerCase()){
+		case "console":
+			return new ConsoleViewManager();
 		}
-		return str;
+		return null;		
 	}
 	
-	public static int numberChooser(int max) {
-		int chosen;
-		
-		chosen = scanner.nextInt();
-		
-		if (chosen > 0 && chosen <= max){
-			return chosen;
-		}
-		return -1;
-	}
 }
