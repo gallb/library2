@@ -11,15 +11,16 @@ import java.util.stream.Collectors;
 
 import javax.lang.model.element.Element;
 
+import edu.msg.library2client.util.ViewManager;
+
 /**
  * @author gallb
  *
  */
 public class CommandManager{
-	private List <AbstractCommand> commandList;
+	public static List <AbstractCommand> commandList;
 	private AbstractCommand currentCommand;
 	private AbstractCommand previousCommand;
-	private Scanner scanner = new Scanner(System.in);
 	
 	public CommandManager () {
 		ExitCommand exitCommand = new ExitCommand();
@@ -27,6 +28,8 @@ public class CommandManager{
 		commandList.add(exitCommand);
 		commandList.add( new MainCommand());
 		commandList.add(new SearchPubCommand());
+		commandList.add(new SettingsCommand());
+		commandList.add(new LanguageCommand());
 	}
 			
 	public void run() {
@@ -34,8 +37,8 @@ public class CommandManager{
 		
 		while (!((ExitCommand)getCommandByID(0)).isExitFlag() ) {
 			printChilds();
-			System.out.println("Please enter command letter!");
-			String selection = userInput();
+			System.out.println("client.command.input");
+			String selection = ViewManager.userInput();
 			List<AbstractCommand> commands = new ArrayList<>();
 			commands.addAll(commandList.stream().filter(element -> element.getTriggerCharacter().equals(selection)).collect(Collectors.toList())); 
 			if (!commands.isEmpty()) {
@@ -54,7 +57,8 @@ public class CommandManager{
 		for (Integer i : childs){
 			commands.addAll(commandList.stream().filter(child -> (child.getId()==i)).collect(Collectors.toList()));
 		}
-		commands.forEach(c -> System.out.println("(" + c.getTriggerCharacter() + ")" + c.getName() + " "));
+		commands.forEach(c -> System.out.print("(" + c.getTriggerCharacter() + ")" + c.getName() + "	"));
+		System.out.println();
 	}
 	
 	private AbstractCommand getCommandByID(int id) {
@@ -73,13 +77,5 @@ public class CommandManager{
 			}
 		}
 		return null;
-	}
-	
-	public String userInput() {
-		String str = "";
-		while (str.isEmpty()) {
-			str = scanner.nextLine();
-		}
-		return str;
 	}
 }
