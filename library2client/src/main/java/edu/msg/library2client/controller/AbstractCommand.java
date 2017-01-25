@@ -97,48 +97,19 @@ public abstract class AbstractCommand {
 	private void readChildList() {
 
 		try {
-			// Scanner sc = new Scanner(new
-			// File("edu/msg/library2client/resources/CommandTreeBoolMat"));
-		/*	Scanner sc = new Scanner(new File(
-					"C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
-			String line = sc.nextLine();
-			System.out.println("line    " + line);
-			while (sc.hasNextLine()) {
-				System.out.println("before scanner");
-				Scanner splittedLineScanner = new Scanner(line);
-				System.out.println("id " + getId());
-				int temp = splittedLineScanner.nextInt();
-				System.out.println("temp " + temp);
-				if (temp == getId()) {
-					while (splittedLineScanner.hasNext()) {
-						System.out.println("after scanner");
-						if (splittedLineScanner.hasNextInt()) {
-							addChild(splittedLineScanner.nextInt());
-							return;
-						}
-					}
-				}
-				line = sc.nextLine();
-			}*/
 			Scanner sc = new Scanner(new File(
 					"C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
 			/*Scanner sc = new Scanner(new File(
 					"edu/msg/library2client/resources/CommandTreeBoolMat"));	*/
 			while(sc.hasNextLine()){
 				String  line = sc.nextLine();
-			//	System.out.print(temp + "		");
 				Scanner splitted = new Scanner(line);
 				int firstInt = splitted.nextInt();
-				System.out.println("if " + firstInt +  "==" + getId());
 				if (firstInt == getId()){
-				//	System.out.print("nr " + nr + " ");
 					while(splitted.hasNextInt()){					
-						//System.out.println(splitted.nextInt());
 						childList.add(splitted.nextInt());
 					}
 				}	
-				
-				System.out.println();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
