@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
+import edu.msg.library2client.util.ClientPropertyProvider;
 import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
 
@@ -25,9 +26,8 @@ public class CommandManager{
 	private AbstractCommand previousCommand;
 	
 	public CommandManager () {
-		ExitCommand exitCommand = new ExitCommand();
 		commandList = new ArrayList<>();
-		commandList.add(exitCommand);
+		commandList.add(new ExitCommand());
 		commandList.add( new MainCommand());
 		commandList.add(new SearchPubCommand());
 		commandList.add(new SettingsCommand());
@@ -39,9 +39,10 @@ public class CommandManager{
 		
 		while (!((ExitCommand)getCommandByID(0)).isExitFlag() ) {
 			printChilds();
-			System.out.println("client.command.input");
+			System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
 			String selection = ViewManager.getViewManager("Console").userInput();
 			List<AbstractCommand> commands = new ArrayList<>();
+			//Needs Update
 			commands.addAll(commandList.stream().filter(element -> element.getTriggerCharacter().equals(selection)).collect(Collectors.toList())); 
 			if (!commands.isEmpty()) {
 				previousCommand = currentCommand;
