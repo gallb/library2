@@ -40,7 +40,7 @@ public class LanguageCommand extends AbstractCommand{
 			}
 			scanner.close();
 			System.out.println(ClientPropertyProvider.getProperty("client.command.language.chooseMessage"));
-			int chosenLanguge = ViewManager.getConsoleViewManager().numberChooser(i);
+			int chosenLanguge = ViewManager.getViewManager("Console").numberChooser(i);
 			ClientPropertyProvider.INSTANCE.setLocal(new Locale(langList.get(chosenLanguge - 1 )));
 			CommandManager.commandList.forEach(e -> e.updatelabels());
 		} catch (FileNotFoundException e) {

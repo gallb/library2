@@ -23,8 +23,12 @@ public abstract class ViewManager {
 	 * 
 	 * @return - a ConsoleViewManager instance
 	 */
-	public static ViewManager getConsoleViewManager(){
-		return new ConsoleViewManager();
+	public static ViewManager getViewManager(String input){
+		switch(input.toLowerCase()){
+		case "console":
+			return new ConsoleViewManager();
+		}
+		return null;		
 	}
 	
 }
