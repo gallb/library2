@@ -19,7 +19,7 @@ public class SearchPubCommand extends AbstractCommand{
 	
 	public SearchPubCommand() {
 		
-		super(2, ClientPropertyProvider.getProperty("client.command.searchPub"), ClientPropertyProvider.getProperty("client.command.searchPub.button"));
+		super(2, "client.command.searchPub", "client.command.searchPub.button");
 		System.out.println("exitCommand constructor");
 	}
 
