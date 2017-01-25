@@ -24,7 +24,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>edu.msg.library2client.console.ClientConsole</mainClass>
+							<mainClass>edu.msg.library2client.controller.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

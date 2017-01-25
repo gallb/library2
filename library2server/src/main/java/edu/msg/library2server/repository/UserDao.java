@@ -4,8 +4,10 @@ import edu.msg.library2common.model.User;
 
 public interface UserDao extends DaoInterface<User> {
 	/**
-	 * Returns a User that was searched by the user_name Can return null if no
-	 * match was found
+	 * @author kiska
+	 * 
+	 *         Returns a User that was searched by the user_name Can return null
+	 *         if no match was found
 	 * 
 	 * @param user_name
 	 *            - the user_name to search for
