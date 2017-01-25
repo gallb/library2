@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
 
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
@@ -45,6 +46,24 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 				}
 			}
 		}*/
+		return false;
+	}
+
+	@Override
+	public boolean addNewEntity(Borrow entity) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateEntity(Borrow entity) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws RemoteException {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }
