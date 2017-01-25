@@ -19,25 +19,29 @@ import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 
 public class RmiRegistry {
-	private static final Registry registry = createRegistry();
-	private static final UserServiceRmi userServiceRmi = createUserService();
-	private static final PublicationServiceRmi publicationServiceRmi = createPublicationService();
-	private static final BorrowServiceRmi borrowServiceRmi = createBorrowService();
+	private Registry registry;
+	private UserServiceRmi userServiceRmi;// = createUserService();
+	private PublicationServiceRmi publicationServiceRmi;// = createPublicationService();
+	private BorrowServiceRmi borrowServiceRmi;// = createBorrowService();
 
-	private static final Registry createRegistry() {
+	public RmiRegistry() {
 		try {
-			return LocateRegistry.getRegistry("localhost",
+			registry = LocateRegistry.getRegistry("localhost",
 					Integer.parseInt((PropertyProvider.INSTANCE.getProperty("rmi_port"))));
+			userServiceRmi = createUserService();
+			publicationServiceRmi = createPublicationService();
+			borrowServiceRmi = createBorrowService();
+
+		
 		} catch (NumberFormatException e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		} catch (RemoteException e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 			e.printStackTrace();
-		}
-		return null;
+		}		
 	}
 	
-	private static final UserServiceRmi createUserService() {
+	private final UserServiceRmi createUserService() {
 		try {
 			return (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 		} catch (AccessException e) {
@@ -53,7 +57,11 @@ public class RmiRegistry {
 		return null;
 	}
 	
-	private static final PublicationServiceRmi createPublicationService() {
+	public UserServiceRmi getUserService() {
+		return createUserService();
+	}
+	
+	private final PublicationServiceRmi createPublicationService() {
 		try {
 			return (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
 		} catch (AccessException e) {
@@ -67,9 +75,13 @@ public class RmiRegistry {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}	
 	
-	private static final BorrowServiceRmi createBorrowService() {
+	public PublicationServiceRmi getPublicationservice() {
+		return createPublicationService();
+	}
+
+	private final BorrowServiceRmi createBorrowService() {
 		try {
 			return (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
 		} catch (AccessException e) {
@@ -83,6 +95,10 @@ public class RmiRegistry {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public BorrowServiceRmi getBorrowService() {
+		return createBorrowService();
 	}
 
 	public List<User> getUserByName(String userName) {
