@@ -19,10 +19,6 @@ public class ExitCommand extends AbstractCommand{
 	public ExitCommand() {
 		
 		super(0, "client.command.exit", "client.command.exit.button");
-		System.out.println("exitCommand constructor");
-		//setId(0);
-		//setName(ClientPropertyProvider.getProperty("client.command.exit"));
-		//setTriggerCharacter(ClientPropertyProvider.getProperty("client.command.exit.button"));
 		this.exitFlag = false;
 	}
 
