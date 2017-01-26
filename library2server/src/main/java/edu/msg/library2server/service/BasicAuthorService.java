@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import edu.msg.library2common.model.Author;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.AuthorServiceRmi;
 /**
  * 

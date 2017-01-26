@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.BorrowDAO;
 import edu.msg.library2server.repository.DaoFactory;
 import edu.msg.library2server.repository.PublicationDao;
 import edu.msg.library2server.repository.UserDao;
 import edu.msg.library2server.repository.jdbc.SqlHandlerException;
-import edu.msg.library2server.service.ServiceLayerException;
 /**
  * 
  * @author nagyz
