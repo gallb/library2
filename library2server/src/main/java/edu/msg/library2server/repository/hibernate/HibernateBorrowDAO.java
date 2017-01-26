@@ -130,6 +130,21 @@ public class HibernateBorrowDAO implements BorrowDAO {
 			session.close();
 		}
 	}
+	
+	public List<Borrow> getByUserId(String user_id) {
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where user_id=?");
+			typedQuery.setParameter(0, user_id);
+			return typedQuery.getResultList();
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.getById"), e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+		} finally {
+			session.close();
+		}
+	}
 
 	@Override
 	public boolean insertBorrow(User user, Publication pub, Date borrowFrom, Date borrowUntil) {

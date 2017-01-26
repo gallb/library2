@@ -1,6 +1,7 @@
 package edu.msg.library2server.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.Publication;
@@ -15,4 +16,5 @@ public interface BorrowDAO extends DaoInterface<Borrow> {
 	 * @param user
 	 */
 	boolean insertBorrow(User user, Publication pub, Date borrowFrom, Date borrowUntil);
+	public List<Borrow> getByUserId(String user_id);
 }
