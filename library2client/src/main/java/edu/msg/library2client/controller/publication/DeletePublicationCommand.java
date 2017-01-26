@@ -1,7 +1,9 @@
 /**
  * 
  */
-package edu.msg.library2client.controller;
+package edu.msg.library2client.controller.publication;
+
+import edu.msg.library2client.controller.AbstractCommand;
 
 /**
  * @author gallb

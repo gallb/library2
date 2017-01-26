@@ -17,3 +17,5 @@ Command numerotation
 14 - SearchForAllUsersCommand
 15 - SearchForUserByIDCommand
 16-  SearchForUserByUserNameCommand
+17-  AuthorManagementCommand
+18-	 SearchForAuthorCommand

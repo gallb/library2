@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.Author;
 import edu.msg.library2common.service.rmi.AuthorServiceRmi;
+import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.business.AuthorHandlerInterface;
 import edu.msg.library2server.business.BasicPublicationBusiness;
 import edu.msg.library2server.business.BusinessLayerException;
@@ -25,13 +26,13 @@ import edu.msg.library2server.service.BasicAuthorService;
  *
  */
 public class AuthorHandler implements AuthorHandlerInterface {
-	
+
 	private AuthorDAO authorDao;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicAuthorService.class);
 
 	@Override
 	public boolean addNewEntity(Author entity) {
-		
+
 		return false;
 	}
 
@@ -48,18 +49,16 @@ public class AuthorHandler implements AuthorHandlerInterface {
 	}
 
 	@Override
-	public List<Author> getByName(String name) throws BusinessLayerException{
+	public List<Author> getByName(String name) throws BusinessLayerException {
 		List<Author> authors = new ArrayList<>();
-		try{
+		try {
 			authorDao = DaoFactory.getHibernateDaoFactory().getAuthorDao();
 			authors = authorDao.getByName(name);
-			return authors;
-		}catch (SqlHandlerException e) {
-			
+		} catch (SqlHandlerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicAuthorService"));
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicAuthorService"), e);
 		}
-		return null;
+		return authors;
 	}
-	
 
-	
 }
