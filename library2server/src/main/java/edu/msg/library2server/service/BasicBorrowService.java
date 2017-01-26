@@ -135,6 +135,19 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 		}
 		return borrow;
 	}
+	
+	@Override
+	public List<Borrow> getByUserId(String user_id) {
+		List<Borrow> borrowList = new ArrayList<>();
+		try{
+			borrowList = borrowHandler.getByUserId(user_id);
+		}catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicBorrowService"), e);
+			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"));
+		}
+		return borrowList;
+	}
+	
 
 	private boolean checkEligible(String user_id, String pub_id) {
 		if (borrowHandler.hasRightToBorrow(user_id)) {

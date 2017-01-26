@@ -96,6 +96,18 @@ public class BorrowHandler implements BorrowHandlerInterface {
 	}
 
 	@Override
+	public List<Borrow> getByUserId(String user_id) {
+		List<Borrow> borrowList = new ArrayList<>();
+		try {
+			borrowList = borrowDao.getByUserId(user_id);
+		} catch (DataAccessException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
+		}
+		return borrowList;
+	}
+	
+	@Override
 	public Borrow getById(String id) {
 		Borrow borrow = new Borrow();
 		try {
