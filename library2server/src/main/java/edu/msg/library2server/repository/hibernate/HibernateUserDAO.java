@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
@@ -87,24 +88,26 @@ public class HibernateUserDAO implements UserDao {
 	}
 
 	@Override
-	public boolean delete(String id) { // nem jo
+	public boolean delete(String id) { 
 		boolean status = false;
 		Session session = null;
-		User searchResult = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			User user = (User) session.createCriteria(User.class).add(Restrictions.like("uuid", id)).list();
-			if (user != null) {
-				session.delete(user);
-				status=true;
-			}
-			return status;
+			TypedQuery<User> typedQuery = session.createQuery("from User where uuid=?");
+			typedQuery.setParameter(0, id);
+			User user = typedQuery.getSingleResult();
+			Transaction t = session.beginTransaction();
+			session.delete(user);
+			session.flush();
+			t.commit();
+			status = true;
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.getAll"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		} finally {
 			session.close();
 		}
+		return status;
 	}
 
 	@Override
@@ -114,9 +117,9 @@ public class HibernateUserDAO implements UserDao {
 		try {
 			session = HibernateConnector.getInstance().getSession();
 			User user = (User) session.createCriteria(User.class).add(Restrictions.like("uuid", id)).list();
-					
+
 			if (user != null) {
-				searchResult =  user;
+				searchResult = user;
 				System.out.println("nem irja ki a kepernyore");
 			}
 			return searchResult;
@@ -136,7 +139,7 @@ public class HibernateUserDAO implements UserDao {
 			session = HibernateConnector.getInstance().getSession();
 			User user = (User) session.createCriteria(User.class).add(Restrictions.like("user_name", user_name)).list();
 			if (user != null) {
-				searchResult =  user;
+				searchResult = user;
 			}
 			return searchResult;
 		} catch (Exception e) {
