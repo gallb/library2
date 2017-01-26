@@ -35,7 +35,7 @@ public class RmiRegistry {
 		}
 		return null;
 	}
-	
+
 	public static final UserServiceRmi createUserService() {
 		try {
 			return (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
@@ -51,7 +51,7 @@ public class RmiRegistry {
 		}
 		return null;
 	}
-	
+
 	private static final PublicationServiceRmi createPublicationService() {
 		try {
 			return (PublicationServiceRmi) registry.lookup(PublicationServiceRmi.RMI_NAME);
@@ -67,7 +67,7 @@ public class RmiRegistry {
 		}
 		return null;
 	}
-	
+
 	private static final BorrowServiceRmi createBorrowService() {
 		try {
 			return (BorrowServiceRmi) registry.lookup(BorrowServiceRmi.RMI_NAME);
@@ -117,9 +117,9 @@ public class RmiRegistry {
 		return new ArrayList<Publication>();
 	}
 
-	public boolean publicationBorrow(User user, Publication publication, Date from, Date until) {
+	public boolean publicationBorrow(User user, Publication pub, Date borrowFrom, Date borrowUntil) {
 		try {
-			return borrowServiceRmi.borrowPublication(user.getUuid(), publication.getUuid(), from, until);
+			return borrowServiceRmi.insertBorrow(user, pub, borrowFrom, borrowUntil);
 		} catch (Exception e) {
 			System.err.println((PropertyProvider.INSTANCE.getProperty("error.logger.RmiRegistry")));
 		}
