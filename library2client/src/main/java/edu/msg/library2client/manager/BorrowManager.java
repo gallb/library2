@@ -21,6 +21,24 @@ public class BorrowManager implements RmiServiceManager<Borrow>{
 	public List<Borrow> search(String searchString){
 		return borrowServiceRmi.getByUserId(searchString);
 	}
+
+	@Override
+	public boolean addNewEntity(Borrow entity) throws ManagerException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateEntity(Borrow entity) throws ManagerException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws ManagerException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	
