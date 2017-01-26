@@ -55,21 +55,7 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	}
 
 	@Override
-<<<<<<< HEAD
-	public boolean addNewEntity(Publication entity) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean updateEntity(Publication entity) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteEntity(String entityID) throws RemoteException {
-=======
 	public boolean addNewEntity(Publication entity) throws RemoteException, ServiceException {
 		// TODO Auto-generated method stub
 		return false;
@@ -83,7 +69,6 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 
 	@Override
 	public boolean deleteEntity(String entityID) throws RemoteException, ServiceException {
->>>>>>> branch 'develop29jan' of https://github.com/gallb/library2.git
 		// TODO Auto-generated method stub
 		return false;
 	}
