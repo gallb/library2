@@ -16,7 +16,6 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 
 	public BasicPublicationService() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -25,8 +24,22 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	private static final long serialVersionUID = 1L;
 
 	public List<Publication> searchForPublicationByTitle(String serchString) throws RemoteException {
-
 		PublicationDao pubDAO  = DaoFactory.getHibernateDaoFactory().getPublicationDao();
 		return pubDAO.searchPublications(serchString);
+	}
+
+	@Override
+	public boolean addNewEntity(Publication entity) throws RemoteException {
+		return false;
+	}
+
+	@Override
+	public boolean updateEntity(Publication entity) throws RemoteException {
+		return false;
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws RemoteException {
+		return false;
 	}
 }

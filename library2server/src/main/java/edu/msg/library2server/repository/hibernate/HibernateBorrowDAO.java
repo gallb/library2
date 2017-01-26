@@ -21,30 +21,12 @@ import edu.msg.library2server.repository.DataAccessException;
 public class HibernateBorrowDAO implements BorrowDAO{
 	private static final Logger LOGGER = LoggerFactory.getLogger(HibernateAuthorDAO.class);
 
-	public boolean addBorrow(Borrow borrow) {
-		Session session = null;
-		boolean status = false;
-		Transaction transaction = null;
-		try {
-			session = HibernateConnector.getInstance().getSession();
-			System.out.println("session : " + session);
-			transaction = session.beginTransaction();
-			session.save(borrow);
-			transaction.commit();
-			status = true;
-		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.addBorrow"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
-		}
-		return status;
-	}
-
 	@Override
 	public List<Borrow> getAll() {
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow s");
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow");
 			return typedQuery.getResultList();
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
@@ -56,32 +38,79 @@ public class HibernateBorrowDAO implements BorrowDAO{
 
 	@Override
 	public List<Borrow> getByName(String param) {
-		// TODO Auto-generated method stub
-		return null;
+		return null;		
 	}
 
 	@Override
 	public boolean insert(Borrow e) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session = null;
+		boolean status = false;
+		Transaction transaction = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			System.out.println("session : " + session);
+			transaction = session.beginTransaction();
+			session.save(e);
+			transaction.commit();
+			status = true;
+		} catch (Exception ex) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.addBorrow"), ex);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+		}
+		return status;
 	}
 
 	@Override
 	public boolean update(Borrow e) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();		
+			Transaction t = session.beginTransaction();
+			session.saveOrUpdate(e);
+			session.flush();
+			t.commit();
+			status = true;
+		} catch (Exception ex) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateBorrowDAO.update"), ex);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+		} finally {
+			session.close();
+		}
+		return status;
 	}
 
 	@Override
 	public boolean delete(String id) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where user_id=?");
+			typedQuery.setParameter(0, id);
+			//typedQuery.de
+			return false;
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+		} finally {
+			session.close();
+		}
 	}
 
 	@Override
 	public Borrow getById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where user_id=?");
+			typedQuery.setParameter(0, id);
+			return typedQuery.getSingleResult();
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+		} finally {
+			session.close();
+		}
 	}
 
 	@Override

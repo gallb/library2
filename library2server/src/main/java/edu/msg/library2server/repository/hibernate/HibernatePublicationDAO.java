@@ -35,17 +35,13 @@ public class HibernatePublicationDAO implements PublicationDao {
 		}
 	}
 
-	public List<Publication> searchPublications(String regularExpression) {
+	public List<Publication> searchPublications(String serachString) {
 		Session session = null;
-		List<Publication> searchResult = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			List list = session.createCriteria(Publication.class).add(Restrictions.like("title", regularExpression))
-					.list();
-			if (list != null) {
-				searchResult = (List<Publication>) list;
-			}
-			return searchResult;
+			TypedQuery<Publication> typedQuery = session.createQuery("from Publication where title LIKE ?");
+			typedQuery.setParameter(0, '%' + serachString + '%');
+			return typedQuery.getResultList();
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),
 					e);

@@ -16,17 +16,15 @@ import edu.msg.library2common.model.User;
  * @author gallb
  *
  */
-public interface PublicationServiceRmi extends Remote{
+public interface PublicationServiceRmi extends EntityServiceInterface<Publication>{
 	public static final String RMI_NAME = "Publication";
-	//public static final int RMI_PORT = 1099;
-
 	
 	/**
-	 * Searches for publications by title - regex
+	 * Searches for publications by title
 	 * Returns list of publication objects found or empty list if nothing found.
 	 * 
-	 * @param serchString - regex to search for 
-	 * @return List of publication objects found by the given regex
+	 * @param serchString - string to search for 
+	 * @return List of publication objects found by the given string
 	 * @throws RemoteException
 	 */
 	public List<Publication> searchForPublicationByTitle (String serchString) throws RemoteException;
