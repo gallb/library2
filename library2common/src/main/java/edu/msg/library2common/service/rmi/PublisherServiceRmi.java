@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import edu.msg.library2common.model.Publisher;
+import edu.msg.library2common.service.ServiceException;
 
 /**
  * 
@@ -21,5 +22,5 @@ public interface PublisherServiceRmi extends EntityServiceInterface<Publisher> {
 	 * @return Publisher object list belonging to Publisher name
 	 * @throws RemoteException
 	 */
-	public List<Publisher> serchByName(String name) throws RemoteException;
+	public List<Publisher> serchByName(String name) throws RemoteException, ServiceException;
 }

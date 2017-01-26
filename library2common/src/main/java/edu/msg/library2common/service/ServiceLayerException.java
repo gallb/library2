@@ -1,4 +1,4 @@
-package edu.msg.library2server.service;
+package edu.msg.library2common.service;
 
 public class ServiceLayerException extends RuntimeException {
 	private static final long serialVersionUID = 2341687053488658570L;

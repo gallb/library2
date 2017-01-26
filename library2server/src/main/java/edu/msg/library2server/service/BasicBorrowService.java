@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;

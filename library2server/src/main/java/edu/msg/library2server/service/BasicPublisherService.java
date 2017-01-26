@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.Publisher;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.PublisherServiceRmi;
 /**
  * 
@@ -17,31 +18,31 @@ import edu.msg.library2common.service.rmi.PublisherServiceRmi;
 public class BasicPublisherService extends UnicastRemoteObject implements PublisherServiceRmi {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicPublisherService.class);
 
-	protected BasicPublisherService() throws ServiceLayerException,RemoteException {
+	protected BasicPublisherService() throws ServiceException,RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean addNewEntity(Publisher entity) throws ServiceLayerException,RemoteException {
+	public boolean addNewEntity(Publisher entity) throws ServiceException,RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean updateEntity(Publisher entity) throws ServiceLayerException,RemoteException {
+	public boolean updateEntity(Publisher entity) throws ServiceException,RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean deleteEntity(String entityID) throws ServiceLayerException,RemoteException {
+	public boolean deleteEntity(String entityID) throws ServiceException,RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Publisher> serchByName(String name) throws ServiceLayerException,RemoteException {
+	public List<Publisher> serchByName(String name) throws ServiceException,RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}

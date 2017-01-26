@@ -4,6 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import edu.msg.library2common.model.BaseEntity;
+import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.service.ServiceLayerException;
 
 public interface EntityServiceInterface<X extends BaseEntity> extends Remote{
 	
@@ -14,7 +16,7 @@ public interface EntityServiceInterface<X extends BaseEntity> extends Remote{
 	 * @return True if saved, false if not.
 	 * @throws RemoteException
 	 */
-	public boolean addNewEntity (X entity) throws RemoteException;
+	public boolean addNewEntity (X entity) throws RemoteException, ServiceException;
 	
 	/**
 	 * Updates data of an Entity.
@@ -23,7 +25,7 @@ public interface EntityServiceInterface<X extends BaseEntity> extends Remote{
 	 * @return True if the changes were saved, false if not.
 	 * @throws RemoteException
 	 */
-	public boolean updateEntity (X entity) throws RemoteException;
+	public boolean updateEntity (X entity) throws RemoteException, ServiceException;
 			
 	/**
 	 * Delete entity.
@@ -32,5 +34,5 @@ public interface EntityServiceInterface<X extends BaseEntity> extends Remote{
 	 * @return true if deleted, false if not
 	 * @throws RemoteException
 	 */
-	public boolean deleteEntity(String entityID) throws RemoteException;
+	public boolean deleteEntity(String entityID) throws RemoteException, ServiceException;
 }
