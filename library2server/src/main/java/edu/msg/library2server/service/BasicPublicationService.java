@@ -59,6 +59,7 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	}
 
 	@Override
+
 	public boolean addNewEntity(Publication entity) throws RemoteException, ServiceException {
 		// TODO Auto-generated method stub
 		return false;

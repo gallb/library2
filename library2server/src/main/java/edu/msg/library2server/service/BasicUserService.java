@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.User;
-import edu.msg.library2common.service.ServiceLayerException;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.business.BasicUserBusiness;
@@ -30,7 +30,7 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	private BasicUserBusiness basicUser;
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicUserService.class);
 
-	public BasicUserService() throws RemoteException {
+	public BasicUserService() throws RemoteException,ServiceException {
 		super();
 	}
 
@@ -42,14 +42,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return false -if insert operation didn't executed
 	 */
 	@Override
-	public boolean addNewEntity(User entity) throws ServiceLayerException, RemoteException {
+	public boolean addNewEntity(User entity) throws ServiceException, RemoteException {
 		boolean flag = false;
 		try {
 			basicUser = new BasicUserBusiness();
 			flag = basicUser.addNewEntity(entity);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return flag;
 	}
@@ -62,14 +62,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return false -if update operation didn't executed
 	 */
 	@Override
-	public boolean updateEntity(User entity) throws ServiceLayerException, RemoteException {
+	public boolean updateEntity(User entity) throws ServiceException, RemoteException {
 		boolean flag = false;
 		try {
 			basicUser = new BasicUserBusiness();
 			flag = basicUser.updateEntity(entity);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return flag;
 	}
@@ -82,14 +82,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return false -if delete operation didn't executed
 	 */
 	@Override
-	public boolean deleteEntity(String entityID) throws ServiceLayerException, RemoteException {
+	public boolean deleteEntity(String entityID) throws ServiceException, RemoteException {
 		boolean flag = false;
 		try {
 			basicUser = new BasicUserBusiness();
 			flag = basicUser.deleteEntity(entityID);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return flag;
 	}
@@ -101,14 +101,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return User -if user search operation was successful
 	 * @return false -if user search operation didn't executed
 	 */
-	public User getByUsername(String userName) throws ServiceLayerException, RemoteException {
+	public User getByUsername(String userName) throws ServiceException, RemoteException {
 		User user;
 		try {
 			basicUser = new BasicUserBusiness();
-			user = basicUser.getByUsername(userName);
+			user = basicUser.getUserByUserName(userName);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return user;
 	}
@@ -120,14 +120,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return User -if user search operation by id was successful
 	 * @return false -if user search operation by id didn't executed
 	 */
-	public User getByUserID(String userID) throws ServiceLayerException, RemoteException {
+	public User getByUserID(String userID) throws ServiceException, RemoteException {
 		User user;
 		try {
 			basicUser = new BasicUserBusiness();
-			user = basicUser.getByUserID(userID);
+			user = basicUser.getById(userID);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return user;
 	}
@@ -138,14 +138,14 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @param name-String
 	 * @return List<User> -if user search operation by name was successful
 	 */
-	public List<User> searchForUser(String name) throws ServiceLayerException, RemoteException {
+	public List<User> searchForUser(String name) throws ServiceException, RemoteException {
 		List<User> user;
 		try {
 			basicUser = new BasicUserBusiness();
-			user = basicUser.searchForUser(name);
+			user = basicUser.searchForUsers(name);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
-			throw new ServiceLayerException("error_BasicUserBusiness");
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return user;
 	}

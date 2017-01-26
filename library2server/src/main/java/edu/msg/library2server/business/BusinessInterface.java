@@ -17,7 +17,7 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * 
 	 * @param entity - Contains the data of the new entity which will be saved.
 	 * @return True if saved, false if not.
-	 * @throws 
+	 * @throws BusinessLayerException
 	 */
 	public boolean addNewEntity (X entity) throws BusinessLayerException;
 	
@@ -26,7 +26,7 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * 
 	 * @param entity - Contains the data of the object that  will be updated
 	 * @return True if the changes were saved, false if not.
-	 * @throws 
+	 * @throws BusinessLayerException
 	 */
 	public boolean updateEntity (X entity) throws BusinessLayerException;
 			
@@ -35,7 +35,7 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * 
 	 * @param entity
 	 * @return true if deleted, false if not
-	 * @throws 
+	 * @throws BusinessLayerException
 	 */
 	public boolean deleteEntity(String entityID) throws BusinessLayerException;
 }
