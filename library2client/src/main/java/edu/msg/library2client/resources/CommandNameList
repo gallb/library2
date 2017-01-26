@@ -9,4 +9,11 @@ Command numerotation
 6 - AddPublicationCommand
 7 - DeletePublicationCommand
 8 - EditPublicationCommand
-9
+9 - UserManagementCommand
+10- AddUserCommand
+11 - DeleteUserCommand
+12 - EditUserCommand
+13 - SearchForUserByNameCommand
+14 - SearchForAllUsersCommand
+15 - SearchForUserByIDCommand
+16-  SearchForUserByUserNameCommand

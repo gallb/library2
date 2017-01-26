@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
@@ -40,11 +41,11 @@ public class HibernatePublicationDAO implements PublicationDao {
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Publication> typedQuery = session.createQuery("from Publication s");
+			TypedQuery<Publication> typedQuery = session.createQuery("from Publication");
 			return typedQuery.getResultList();
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
-			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), e);
 		} finally {
 			session.close();
 		}
@@ -73,8 +74,22 @@ public class HibernatePublicationDAO implements PublicationDao {
 	}
 
 	public boolean insert(Publication e) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session = null;
+		boolean status = false;
+		Transaction transaction = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			transaction = session.beginTransaction();
+			session.save(e);
+			transaction.commit();
+			status = true;
+		} catch (Exception ex) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), ex);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"));
+		} finally {
+			session.close();
+		}
+		return status;
 	}
 /**
  * 
@@ -90,8 +105,8 @@ public class HibernatePublicationDAO implements PublicationDao {
 			t.commit();
 			status = true;
 		} catch (Exception ex) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.update"), ex);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), ex);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"));
 		} finally {
 			session.close();
 		}
@@ -99,12 +114,37 @@ public class HibernatePublicationDAO implements PublicationDao {
 	}
 
 	public boolean delete(String id) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			Publication pub = getById(id);
+			Transaction t = session.beginTransaction();
+			session.delete(pub);
+			session.flush();
+			t.commit();
+			status = true;
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), e);
+		} finally {
+			session.close();
+		}
+		return status;
 	}
 
 	public Publication getById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			TypedQuery<Publication> typedQuery = session.createQuery("from Publication where uuid=?");
+			typedQuery.setParameter(0, id);
+			return typedQuery.getSingleResult();
+		} catch (Exception e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), e);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO"), e);
+		} finally {
+			session.close();
+		}
 	}
 }

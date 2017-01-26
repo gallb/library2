@@ -28,7 +28,7 @@ public class CommandManager{
 	public CommandManager () {
 		commandList = new ArrayList<>();
 		commandList.add(new ExitCommand());
-		commandList.add( new MainCommand());
+		commandList.add(new MainCommand());
 		commandList.add(new SearchPubCommand());
 		commandList.add(new SettingsCommand());
 		commandList.add(new LanguageCommand());
