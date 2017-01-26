@@ -41,12 +41,12 @@ public class ServerMain {
 			BasicLoginService basicLoginService = new BasicLoginService();
 			BasicUserService basicUserService = new BasicUserService();
 			BasicPublicationService basicPublicationService = new BasicPublicationService();
-			BasicBorrowService basicBorrowService = new BasicBorrowService();
+			//BasicBorrowService basicBorrowService = new BasicBorrowService();
 			BasicAuthorService basicAuthorService = new BasicAuthorService();
 			registry.rebind(LoginServiceRmi.RMI_NAME, basicLoginService);
 			registry.rebind(UserServiceRmi.RMI_NAME, basicUserService);
 			registry.rebind(PublicationServiceRmi.RMI_NAME, basicPublicationService);
-			registry.rebind(BorrowServiceRmi.RMI_NAME, basicBorrowService);
+			//registry.rebind(BorrowServiceRmi.RMI_NAME, basicBorrowService);
 			registry.rebind(AuthorServiceRmi.RMI_NAME, basicAuthorService);
 		} catch (RemoteException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"), e);

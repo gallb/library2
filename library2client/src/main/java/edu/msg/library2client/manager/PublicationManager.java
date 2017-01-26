@@ -20,7 +20,24 @@ public class PublicationManager implements RmiServiceManager<Publication>{
 	}
 
 	@Override
-	public List<Publication> search(String serchString) throws RemoteException {
+	public List<Publication> search(String serchString) throws ManagerException {
 		return publicationServiceRmi.searchForPublicationByTitle(serchString);	
 	}
+
+	@Override
+	public boolean addNewEntity(Publication entity) throws ManagerException {
+		return publicationServiceRmi.addNewEntity(entity);
+	}
+
+	@Override
+	public boolean updateEntity(Publication entity) throws ManagerException {
+		return publicationServiceRmi.updateEntity(entity);
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws ManagerException {
+		return publicationServiceRmi.deleteEntity(entityID);
+	}
+	
+	
 }

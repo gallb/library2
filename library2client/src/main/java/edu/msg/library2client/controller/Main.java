@@ -25,7 +25,7 @@ public class Main {
 		
 		//cmd.execute();
 		try {
-			Scanner scanner = new Scanner(new File("C:\\Users\\nagys\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
+			Scanner scanner = new Scanner(new File("C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
 			String line = scanner.nextLine();
 			scanner.close();
 			ClientPropertyProvider.INSTANCE.setLocal(new Locale(line));
