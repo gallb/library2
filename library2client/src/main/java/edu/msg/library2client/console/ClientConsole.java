@@ -143,11 +143,13 @@ public class ClientConsole implements Clienthandler {
 		if (userType == null) {
 			System.out.println("Invalid login access!");
 		} else {
+
 			/*if (registry.insertUser(name, userName, userType, 10, password)) {
 				System.out.println("Create successful!");
 			} else {
 				System.out.println("Create not successful!");
 			}*/
+
 		}
 	}
 
@@ -208,11 +210,13 @@ public class ClientConsole implements Clienthandler {
 				}
 			}
 
+
 		/*	if (registry.publicationBorrow(user, publication, from, until)) {
 				printMessage("Borrow success");
 			} else {
 				printMessage("Borrow fail");
 			}*/
+
 		} else {
 			addNewBorrow(book);
 		}

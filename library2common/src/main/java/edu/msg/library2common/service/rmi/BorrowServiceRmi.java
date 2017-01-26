@@ -28,5 +28,5 @@ public interface BorrowServiceRmi  extends EntityServiceInterface<Borrow>{
 	 * @return true if the borrow was succesfull false if not
 	 * @throws RemoteException
 	 */
-	public boolean borrowPublication (String userID, String pubID, Date from, Date until) throws RemoteException;
+	public boolean borrowPublication(String userID, String pubID, Date from, Date until) throws RemoteException;
 }

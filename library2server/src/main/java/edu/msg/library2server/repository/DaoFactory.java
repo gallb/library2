@@ -17,4 +17,8 @@ public abstract UserDao getUserDao();
 public abstract PublicationDao getPublicationDao();
 
 public abstract BorrowDAO getBorrowDao();
+
+public abstract AuthorDAO getAuthorDao();
+
+public abstract PublisherDAO getpublisherDao();
 }
