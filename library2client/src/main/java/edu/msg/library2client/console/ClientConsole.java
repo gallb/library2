@@ -148,19 +148,13 @@ public class ClientConsole implements Clienthandler {
 		if (userType == null) {
 			System.out.println("Invalid login access!");
 		} else {
-<<<<<<< HEAD
-//			if (registry.insertUser(name, userName, userType, 10, password)) {
-//				System.out.println("Create successful!");
-//			} else {
-//				System.out.println("Create not successful!");
-//			}
-=======
+
 			/*if (registry.insertUser(name, userName, userType, 10, password)) {
 				System.out.println("Create successful!");
 			} else {
 				System.out.println("Create not successful!");
 			}*/
->>>>>>> branch 'develop29jan' of https://github.com/gallb/library2.git
+
 		}
 	}
 
@@ -221,19 +215,13 @@ public class ClientConsole implements Clienthandler {
 				}
 			}
 
-<<<<<<< HEAD
-//			if (registry.publicationBorrow(user, publication, from, until)) {
-//				printMessage("Borrow success");
-//			} else {
-//				printMessage("Borrow fail");
-//			}
-=======
+
 		/*	if (registry.publicationBorrow(user, publication, from, until)) {
 				printMessage("Borrow success");
 			} else {
 				printMessage("Borrow fail");
 			}*/
->>>>>>> branch 'develop29jan' of https://github.com/gallb/library2.git
+
 		} else {
 			addNewBorrow(book);
 		}
