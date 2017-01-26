@@ -43,9 +43,8 @@ public class HibernatePublicationDAO implements PublicationDao {
 			typedQuery.setParameter(0, '%' + serachString + '%');
 			return typedQuery.getResultList();
 		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),
-					e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
 		} finally {
 			session.close();
 		}
