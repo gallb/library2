@@ -36,6 +36,8 @@ public class CommandManager{
 		commandList.add(new AddPublicationCommand());
 		commandList.add(new DeletePublicationCommand());
 		commandList.add(new EditPublicationCommand());
+		commandList.add(new AuthorManagementCommand());
+		commandList.add(new SearchAuthorCommand());
 	}
 			
 	public void run() {
