@@ -7,14 +7,19 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import edu.msg.library2common.model.Author;
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.service.rmi.AuthorServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
+import edu.msg.library2server.repository.AuthorDAO;
+import edu.msg.library2server.repository.DaoFactory;
+import edu.msg.library2server.repository.PublicationDao;
 
 /**
  * @author nagys
  *
  */
-public class BasicAuthorService extends UnicastRemoteObject implements UserServiceRmi {
+public class BasicAuthorService extends UnicastRemoteObject implements AuthorServiceRmi {
 
 	/**
 	 * 
@@ -26,13 +31,13 @@ public class BasicAuthorService extends UnicastRemoteObject implements UserServi
 	}
 
 	@Override
-	public boolean addNewEntity(User entity) throws RemoteException {
+	public boolean addNewEntity(Author entity) throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean updateEntity(User entity) throws RemoteException {
+	public boolean updateEntity(Author entity) throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -44,14 +49,7 @@ public class BasicAuthorService extends UnicastRemoteObject implements UserServi
 	}
 
 	@Override
-	public User getByUsername(String userName) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<User> searchForUser(String name) throws RemoteException {
-		// TODO Auto-generated method stub
+	public List<Author> searchForAuthor(String name) throws RemoteException {
 		return null;
 	}
 

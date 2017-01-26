@@ -48,9 +48,15 @@ public class ServerMain {
 		// DaoFactory.getHibernateDaoFactory().getBorrowDao().getAll().forEach(obj
 		// -> System.out.println(obj.getPublication().getTitle()));
 		HibernateAuthorDAO authorDAO = new HibernateAuthorDAO();
-		List<Author> authors = authorDAO.getByName("Pe");
+		List<Author> authors = authorDAO.getByName("pet");
+		System.out.println(authors.size());
 		for (Author author : authors) {
-			System.out.println(author.getName());
+			if (authors == null) {
+				System.out.println("null");
+			} else {
+
+				System.out.println(author.getName());
+			}
 		}
 	}
 

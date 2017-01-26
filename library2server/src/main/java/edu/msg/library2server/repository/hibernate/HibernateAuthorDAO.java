@@ -40,7 +40,6 @@ public class HibernateAuthorDAO implements AuthorDAO {
 	@Override
 	public List<Author> getByName(String param) {
 		Session session = null;
-		List<Author> authors = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
 			TypedQuery<Author> typedQuery = session.createQuery("from Author where name LIKE ?");

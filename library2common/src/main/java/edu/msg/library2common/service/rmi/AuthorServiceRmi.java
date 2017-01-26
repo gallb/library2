@@ -16,7 +16,7 @@ import edu.msg.library2common.model.User;
 public interface AuthorServiceRmi extends EntityServiceInterface<Author>{
 	public static final String RMI_NAME = "Author";
 	
-	public List<Author> searchForUser (String name) throws RemoteException;
+	public List<Author> searchForAuthor (String name) throws RemoteException;
 	
 	
 
