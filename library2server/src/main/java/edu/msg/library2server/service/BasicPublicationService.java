@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.Publication;
+import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
@@ -41,7 +43,7 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	 * @throws ServiceLayerException
 	 * @throws RemoteException
 	 */
-	public List<Publication> searchForPublicationByTitle(String serchString) throws ServiceLayerException, RemoteException {
+	public List<Publication> searchForPublicationByTitle(String serchString) throws ServiceException, RemoteException {
 		List<Publication> listPub;
 		try {
 			listPub = basicPubBis.searchForPublicationByTitle(serchString);
@@ -53,6 +55,7 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	}
 
 	@Override
+<<<<<<< HEAD
 	public boolean addNewEntity(Publication entity) throws RemoteException {
 		// TODO Auto-generated method stub
 		return false;
@@ -66,6 +69,21 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 
 	@Override
 	public boolean deleteEntity(String entityID) throws RemoteException {
+=======
+	public boolean addNewEntity(Publication entity) throws RemoteException, ServiceException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateEntity(Publication entity) throws RemoteException, ServiceException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws RemoteException, ServiceException {
+>>>>>>> branch 'develop29jan' of https://github.com/gallb/library2.git
 		// TODO Auto-generated method stub
 		return false;
 	}

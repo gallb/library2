@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.business.BasicUserBusiness;

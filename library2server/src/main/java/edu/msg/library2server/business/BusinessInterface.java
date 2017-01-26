@@ -19,7 +19,7 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * @return True if saved, false if not.
 	 * @throws 
 	 */
-	public boolean addNewEntity (X entity);
+	public boolean addNewEntity (X entity) throws BusinessLayerException;
 	
 	/**
 	 * Updates data of an Entity.
@@ -28,7 +28,7 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * @return True if the changes were saved, false if not.
 	 * @throws 
 	 */
-	public boolean updateEntity (X entity);
+	public boolean updateEntity (X entity) throws BusinessLayerException;
 			
 	/**
 	 * Delete entity.
@@ -37,5 +37,5 @@ public interface BusinessInterface<X extends BaseEntity> {
 	 * @return true if deleted, false if not
 	 * @throws 
 	 */
-	public boolean deleteEntity(String entityID);
+	public boolean deleteEntity(String entityID) throws BusinessLayerException;
 }

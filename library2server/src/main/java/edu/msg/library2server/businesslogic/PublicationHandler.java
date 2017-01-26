@@ -3,7 +3,10 @@
  */
 package edu.msg.library2server.businesslogic;
 
+import java.util.List;
+
 import edu.msg.library2common.model.Publication;
+import edu.msg.library2server.business.BusinessLayerException;
 import edu.msg.library2server.business.PublicationHandlerInterface;
 
 /**
@@ -28,6 +31,12 @@ public class PublicationHandler implements PublicationHandlerInterface{
 	public boolean deleteEntity(String entityID) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Publication> searchForPublicationByTitle(String serchString) throws BusinessLayerException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
