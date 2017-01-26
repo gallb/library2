@@ -11,6 +11,6 @@ import edu.msg.library2common.model.Publication;
  * @author gallb
  *
  */
-public interface PublicationHandler extends BusinessInterface<Publication>{
+public interface PublicationHandlerInterface extends BusinessInterface<Publication>{
 	//public List<Publication> searchForPublicationByTitle(String serchString)
 }
