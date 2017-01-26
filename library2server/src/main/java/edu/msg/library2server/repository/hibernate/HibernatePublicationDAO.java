@@ -21,20 +21,6 @@ import edu.msg.library2server.repository.PublicationDao;
 public class HibernatePublicationDAO implements PublicationDao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HibernatePublicationDAO.class);
 
-	public List<Publication> listPublications() {
-		Session session = null;
-		try {
-			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Publication> typedQuery = session.createQuery("from Publication s");
-			return typedQuery.getResultList();
-		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
-			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
-		} finally {
-			session.close();
-		}
-	}
-
 	public List<Publication> searchPublications(String serachString) {
 		Session session = null;
 		try {
@@ -98,7 +84,6 @@ public class HibernatePublicationDAO implements PublicationDao {
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			System.out.println(pub.getTitle() + " " + pub.getOnStock());
 			Transaction t = session.beginTransaction();
 			session.saveOrUpdate(pub);
 			session.flush();
@@ -119,11 +104,6 @@ public class HibernatePublicationDAO implements PublicationDao {
 	}
 
 	public Publication getById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Publication getPublicationByTitleAndType(String publication_title, Publication pub_type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

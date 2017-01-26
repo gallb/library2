@@ -6,7 +6,7 @@ import edu.msg.library2common.model.Publication;
 
 public interface PublicationDao extends DaoInterface<Publication> {
 	/**
-	 * @author kiska
+	 * @author gallb
 	 * 
 	 * @param publication_title
 	 *            - the title of the publication
