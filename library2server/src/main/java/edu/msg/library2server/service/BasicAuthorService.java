@@ -15,6 +15,8 @@ import edu.msg.library2common.service.rmi.AuthorServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.business.AuthorHandlerInterface;
 import edu.msg.library2server.business.BusinessLayerException;
+import edu.msg.library2server.businesslogic.AuthorHandler;
+
 /**
  * 
  * @author nagyz
@@ -24,35 +26,36 @@ public class BasicAuthorService extends UnicastRemoteObject implements AuthorSer
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BasicAuthorService.class);
 	private AuthorHandlerInterface authorHandlerInterface;
-	
-	protected BasicAuthorService() throws  ServiceLayerException,RemoteException {
+
+	public BasicAuthorService() throws RemoteException {
 		super();
+		authorHandlerInterface = new AuthorHandler();
 	}
 
 	@Override
-	public boolean addNewEntity(Author entity) throws ServiceLayerException,RemoteException {
+	public boolean addNewEntity(Author entity) throws ServiceException, RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean updateEntity(Author entity) throws  ServiceLayerException,RemoteException {
+	public boolean updateEntity(Author entity) throws ServiceException, RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean deleteEntity(String entityID) throws  ServiceLayerException,RemoteException {
+	public boolean deleteEntity(String entityID) throws ServiceException, RemoteException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Author> serchByName(String name) throws  ServiceException,RemoteException {
+	public List<Author> serchByName(String name) throws ServiceException, RemoteException {
 		List<Author> authors = new ArrayList<>();
-		try{
+		try {
 			authors = authorHandlerInterface.getByName(name);
-		}catch (BusinessLayerException e) {
+		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicAuthorService"));
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicAuthorService"));
 		}
