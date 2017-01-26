@@ -3,14 +3,19 @@ package edu.msg.library2server.repository;
 import java.util.List;
 
 import edu.msg.library2common.model.BaseEntity;
-
+/**
+ * 
+ * @author kiska
+ *
+ * @param <X> - any subclass of BaseEntity
+ */
 public interface DaoInterface<X extends BaseEntity> {
 	/**
 	 * 
 	 * @return a list containing all elements Can return null if no elements
 	 *         were found
 	 */
-	List<X> getAll();
+	List<X> getAll() throws DataAccessException;
 
 	/**
 	 * Returns a list of BaseEntity sub-type objects, that match the name or
@@ -22,7 +27,7 @@ public interface DaoInterface<X extends BaseEntity> {
 	 *            for
 	 * @return - an actual object that extends the BaseEntity
 	 */
-	List<X> getByName(String param);
+	List<X> getByName(String param) throws DataAccessException;
 
 	/**
 	 * Inserts the element given by {@link e}} Returns the object that was
@@ -34,7 +39,7 @@ public interface DaoInterface<X extends BaseEntity> {
 	 *            the BaseEntity class)
 	 * @return - true if successful, false otherwise
 	 */
-	boolean insert(X e);
+	boolean insert(X e) throws DataAccessException;
 
 	/**
 	 * Updates the element given by {@link e}}
@@ -44,7 +49,7 @@ public interface DaoInterface<X extends BaseEntity> {
 	 *            BaseEntity class)
 	 * @return - true if successful, false otherwise
 	 */
-	boolean update(X e);
+	boolean update(X e) throws DataAccessException;
 
 	/**
 	 * Deletes the element given by {@link e}}
@@ -54,7 +59,7 @@ public interface DaoInterface<X extends BaseEntity> {
 	 *            BaseEntity class)
 	 * @return - true if successful, false otherwise
 	 */
-	boolean delete(String id);
+	boolean delete(String id) throws DataAccessException;
 
 	/**
 	 * Returns an object searched by {@link id}
@@ -63,6 +68,6 @@ public interface DaoInterface<X extends BaseEntity> {
 	 *            - the id that represents the object to search for
 	 * @return - an actual object that extends the BaseEntity
 	 */
-	X getById(String id);
+	X getById(String id) throws DataAccessException;
 
 }
