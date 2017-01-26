@@ -19,8 +19,7 @@ public class SearchPubCommand extends AbstractCommand{
 	
 	public SearchPubCommand() {
 		
-		super(2, ClientPropertyProvider.getProperty("client.command.searchPub"), ClientPropertyProvider.getProperty("client.command.searchPub.button"));
-		System.out.println("exitCommand constructor");
+		super(2, "client.command.pub.search", "client.command.pub.search.button");
 	}
 
 	@Override
@@ -28,7 +27,7 @@ public class SearchPubCommand extends AbstractCommand{
 		PublicationManager pubMan = new PublicationManager();
 		List<Publication> pubList = new ArrayList<>();
 		try {
-			pubList = pubMan.search("%Pal%");
+			pubList = pubMan.search("Pal");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

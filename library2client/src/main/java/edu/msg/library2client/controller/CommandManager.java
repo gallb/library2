@@ -10,23 +10,32 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.Element;
+import javax.swing.text.View;
+
+import edu.msg.library2client.util.ClientPropertyProvider;
+import edu.msg.library2client.util.ConsoleViewManager;
+import edu.msg.library2client.util.ViewManager;
 
 /**
  * @author gallb
  *
  */
 public class CommandManager{
-	private List <AbstractCommand> commandList;
+	public static List <AbstractCommand> commandList;
 	private AbstractCommand currentCommand;
 	private AbstractCommand previousCommand;
-	private Scanner scanner = new Scanner(System.in);
 	
 	public CommandManager () {
-		ExitCommand exitCommand = new ExitCommand();
 		commandList = new ArrayList<>();
-		commandList.add(exitCommand);
+		commandList.add(new ExitCommand());
 		commandList.add( new MainCommand());
 		commandList.add(new SearchPubCommand());
+		commandList.add(new SettingsCommand());
+		commandList.add(new LanguageCommand());
+		commandList.add(new PublicationManagementCommand());
+		commandList.add(new AddPublicationCommand());
+		commandList.add(new DeletePublicationCommand());
+		commandList.add(new EditPublicationCommand());
 	}
 			
 	public void run() {
@@ -34,9 +43,10 @@ public class CommandManager{
 		
 		while (!((ExitCommand)getCommandByID(0)).isExitFlag() ) {
 			printChilds();
-			System.out.println("Please enter command letter!");
-			String selection = userInput();
+			System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
+			String selection = ViewManager.getViewManager("Console").userInput();
 			List<AbstractCommand> commands = new ArrayList<>();
+			//Needs Update
 			commands.addAll(commandList.stream().filter(element -> element.getTriggerCharacter().equals(selection)).collect(Collectors.toList())); 
 			if (!commands.isEmpty()) {
 				previousCommand = currentCommand;
@@ -54,7 +64,8 @@ public class CommandManager{
 		for (Integer i : childs){
 			commands.addAll(commandList.stream().filter(child -> (child.getId()==i)).collect(Collectors.toList()));
 		}
-		commands.forEach(c -> System.out.println("(" + c.getTriggerCharacter() + ")" + c.getName() + " "));
+		commands.forEach(c -> System.out.print("(" + c.getTriggerCharacter() + ")" + c.getName() + "	"));
+		System.out.println();
 	}
 	
 	private AbstractCommand getCommandByID(int id) {
@@ -73,13 +84,5 @@ public class CommandManager{
 			}
 		}
 		return null;
-	}
-	
-	public String userInput() {
-		String str = "";
-		while (str.isEmpty()) {
-			str = scanner.nextLine();
-		}
-		return str;
 	}
 }

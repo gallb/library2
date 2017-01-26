@@ -3,10 +3,12 @@ package edu.msg.library2server;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.model.Author;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
@@ -14,6 +16,7 @@ import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.DaoFactory;
+import edu.msg.library2server.repository.hibernate.HibernateAuthorDAO;
 import edu.msg.library2server.service.BasicBorrowService;
 import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.service.BasicPublicationService;
@@ -38,9 +41,23 @@ public class ServerMain {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.logger.ServerMain"));
 		}
-		//DaoFactory.getHibernateDaoFactory().getHibernateDaoFactory().getUserDao().getAll().forEach(obj -> System.out.println(obj.getName()));
-		//DaoFactory.getHibernateDaoFactory().getPublicationDao().getAll().forEach(obj -> System.out.println(obj.getPublisher().getName()));
-		//DaoFactory.getHibernateDaoFactory().getBorrowDao().getAll().forEach(obj -> System.out.println(obj.getPublication().getTitle()));
+		// DaoFactory.getHibernateDaoFactory().getHibernateDaoFactory().getUserDao().getAll().forEach(obj
+		// -> System.out.println(obj.getName()));
+		// DaoFactory.getHibernateDaoFactory().getPublicationDao().getAll().forEach(obj
+		// -> System.out.println(obj.getPublisher().getName()));
+		// DaoFactory.getHibernateDaoFactory().getBorrowDao().getAll().forEach(obj
+		// -> System.out.println(obj.getPublication().getTitle()));
+		HibernateAuthorDAO authorDAO = new HibernateAuthorDAO();
+		List<Author> authors = authorDAO.getByName("pet");
+		System.out.println(authors.size());
+		for (Author author : authors) {
+			if (authors == null) {
+				System.out.println("null");
+			} else {
+
+				System.out.println(author.getName());
+			}
+		}
 	}
 
 }

@@ -1,23 +1,18 @@
 package edu.msg.library2client.console;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library2client.Connection;
+import edu.msg.library2client.RmiRegistry;
 import edu.msg.library2client.common.Clienthandler;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.model.UserType;
-import edu.msg.library2common.service.rmi.BorrowServiceRmi;
-import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 
 public class ClientConsole implements Clienthandler {
