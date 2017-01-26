@@ -8,7 +8,7 @@ import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 /**
  * 
- * @author kiska
+ * @author gallb
  *
  */
 public class PublicationManager implements RmiServiceManager<Publication>{

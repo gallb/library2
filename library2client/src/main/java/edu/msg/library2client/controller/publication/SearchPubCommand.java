@@ -1,12 +1,13 @@
 /**
  * 
  */
-package edu.msg.library2client.controller;
+package edu.msg.library2client.controller.publication;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library2client.controller.AbstractCommand;
 import edu.msg.library2client.manager.PublicationManager;
 import edu.msg.library2client.util.ClientPropertyProvider;
 import edu.msg.library2common.model.Publication;

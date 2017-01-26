@@ -50,6 +50,11 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	public List<Publication> searchForPublicationByTitle(String serchString) throws ServiceException, RemoteException {
 		List<Publication> listPub = new ArrayList<>();
 		try {
+			// authenticate
+
+			// validate
+
+			// call
 			listPub = pubHandler.searchForPublicationByTitle(serchString);
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicPublicationService"));
@@ -61,19 +66,46 @@ public class BasicPublicationService extends UnicastRemoteObject implements Publ
 	@Override
 
 	public boolean addNewEntity(Publication entity) throws RemoteException, ServiceException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			// authenticate
+
+			// validate
+
+			// call
+			return pubHandler.addNewEntity(entity);
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.businesslayer"));
+			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"), e);
+		}
 	}
 
 	@Override
 	public boolean updateEntity(Publication entity) throws RemoteException, ServiceException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			// authenticate
+
+			// validate
+
+			// call
+			return pubHandler.updateEntity(entity);
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.businesslayer"));
+			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"), e);
+		}
 	}
 
 	@Override
 	public boolean deleteEntity(String entityID) throws RemoteException, ServiceException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			// authenticate
+
+			// validate
+
+			// call
+			return pubHandler.deleteEntity(entityID);
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.businesslayer"));
+			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"), e);
+		}
 	}
 }
