@@ -1,6 +1,10 @@
 package edu.msg.library2server.repository.hibernate;
 
 import java.sql.Date;
+/**
+ * @author kiska
+ * CRUDE methods for Borrow object, using Hibernate
+ */
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -38,6 +42,7 @@ public class HibernateBorrowDAO implements BorrowDAO{
 
 	@Override
 	public List<Borrow> getByName(String param) {
+		//no need to implement this one
 		return null;		
 	}
 
@@ -49,13 +54,13 @@ public class HibernateBorrowDAO implements BorrowDAO{
 		try {
 			session = HibernateConnector.getInstance().getSession();
 			System.out.println("session : " + session);
-			transaction = session.beginTransaction();
+			transaction = session.beginTransaction();		
 			session.save(e);
 			transaction.commit();
 			status = true;
 		} catch (Exception ex) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.addBorrow"), ex);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.insert"), ex);
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return status;
 	}
@@ -73,7 +78,7 @@ public class HibernateBorrowDAO implements BorrowDAO{
 			status = true;
 		} catch (Exception ex) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateBorrowDAO.update"), ex);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		} finally {
 			session.close();
 		}
@@ -82,19 +87,27 @@ public class HibernateBorrowDAO implements BorrowDAO{
 
 	@Override
 	public boolean delete(String id) {
+		boolean status = false;
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where user_id=?");
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where uuid=?");
 			typedQuery.setParameter(0, id);
+			Borrow borrow = typedQuery.getSingleResult();
 			//typedQuery.de
-			return false;
+			Transaction t = session.beginTransaction();
+		
+			session.delete(borrow);
+			session.flush();
+			t.commit();
+			status = true;
 		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.delete"),e);
 			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
 		} finally {
 			session.close();
 		}
+		return status;
 	}
 
 	@Override
@@ -102,11 +115,11 @@ public class HibernateBorrowDAO implements BorrowDAO{
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where user_id=?");
+			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where uuid=?");
 			typedQuery.setParameter(0, id);
 			return typedQuery.getSingleResult();
 		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.listPublication"),e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernatePublicationDAO.getById"),e);
 			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
 		} finally {
 			session.close();
@@ -129,7 +142,7 @@ public class HibernateBorrowDAO implements BorrowDAO{
 			status = true;
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.addBorrow"), e);
-			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		}
 		return status;	
 	}

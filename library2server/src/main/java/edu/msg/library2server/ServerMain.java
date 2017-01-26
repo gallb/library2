@@ -3,12 +3,18 @@ package edu.msg.library2server;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.msg.library2common.model.Author;
+import edu.msg.library2common.model.Borrow;
+import edu.msg.library2common.model.Publication;
+import edu.msg.library2common.model.Publisher;
+import edu.msg.library2common.model.User;
+import edu.msg.library2common.model.UserType;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.LoginServiceRmi;
@@ -17,6 +23,7 @@ import edu.msg.library2common.service.rmi.UserServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.DaoFactory;
 import edu.msg.library2server.repository.hibernate.HibernateAuthorDAO;
+import edu.msg.library2server.repository.hibernate.HibernateBorrowDAO;
 import edu.msg.library2server.service.BasicBorrowService;
 import edu.msg.library2server.service.BasicLoginService;
 import edu.msg.library2server.service.BasicPublicationService;
@@ -58,6 +65,32 @@ public class ServerMain {
 				System.out.println(author.getName());
 			}
 		}
+
+		//getAll, getById working
+		
+//		HibernateBorrowDAO hbBorrowDAO = new HibernateBorrowDAO();
+//		
+//		User user = new User();
+//		user.setUuid("112");
+//		Publisher publ = new Publisher();
+//		publ.setName("Editura");
+//		publ.setUuid("100");
+//		Publication pub = new Publication();
+//		pub.setUuid("34");
+//		Borrow br = new Borrow(user, pub, new Date(2017, 01, 01), new Date(2017, 10, 20));
+//		
+//		System.out.println(hbBorrowDAO.insertBorrow(user, pub, new Date(2017, 01, 01), new Date(2017, 10, 20)));
+////		System.out.println(hbBorrowDAO.insert(br));
+//		br.setBorrowUntil(new Date(2030, 10, 10));
+////		
+//		System.out.println(hbBorrowDAO.update(br));
+//		List<Borrow> borrwList= hbBorrowDAO.getAll();
+//		borrwList.forEach(b -> System.out.println(b.getUuid() + " " + b.getBorrowFrom()));
+//		Borrow b=hbBorrowDAO.getById("e6db5d1e-0a91-4ecb-8393-a8c04a158699");
+//		System.out.println("getByid ----------- "  + b.getBorrowFrom());
+//	
+//	
+//		System.out.println("delete " + hbBorrowDAO.delete("e6db5d1e-0a91-4ecb-8393-a8c04a158699"));
 	}
 
 }
