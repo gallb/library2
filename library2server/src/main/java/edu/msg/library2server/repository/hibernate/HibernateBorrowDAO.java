@@ -20,7 +20,10 @@ import edu.msg.library2common.model.User;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.BorrowDAO;
 import edu.msg.library2server.repository.DataAccessException;
-
+/**
+ * @author kiska
+ *
+ */
 public class HibernateBorrowDAO implements BorrowDAO {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HibernateAuthorDAO.class);
 
@@ -93,9 +96,7 @@ public class HibernateBorrowDAO implements BorrowDAO {
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			TypedQuery<Borrow> typedQuery = session.createQuery("from Borrow where uuid=?");
-			typedQuery.setParameter(0, id);
-			Borrow borrow = typedQuery.getSingleResult();
+			Borrow borrow = getById(id);
 
 			Transaction t = session.beginTransaction();
 
@@ -142,7 +143,7 @@ public class HibernateBorrowDAO implements BorrowDAO {
 			transaction.commit();
 			status = true;
 		} catch (Exception e) {
-			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.addBorrow"), e);
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.HibernateBorrowDAO.insert"), e);
 			throw new DataAccessException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		} finally {
 			session.close();
