@@ -80,4 +80,10 @@ public class JdbcBorrowDAO implements BorrowDAO {
 		return returnStatus;
 	}
 
+	@Override
+	public List<Borrow> getByUserId(String user_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

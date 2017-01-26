@@ -141,4 +141,25 @@ public class BorrowHandler implements BorrowHandlerInterface {
 		return false;
 	}
 
+	public boolean isLate(String user_id) {
+
+		boolean isLate = false;
+		List<Borrow> borrowList = new ArrayList<>();
+		try {
+			borrowList = borrowDao.getByUserId(user_id);
+			java.util.Date today = new java.util.Date();
+			java.sql.Date sqlToday = new java.sql.Date(today.getTime());
+
+			for (Borrow b : borrowList) {
+				// if borrowUntil is newer date than today
+				if (b.getBorrowUntil().compareTo(sqlToday) > 0) {
+					isLate = true;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
+		}
+		return isLate;
+	}
 }
