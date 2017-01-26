@@ -3,15 +3,18 @@ package edu.msg.library2common.service.rmi;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.util.List;
 
 import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.Publication;
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.service.ServiceLayerException;
 
 /**
  * Provides publication borrowing related services
+/**
  * 
- * @author gallb
+ * @author kiska
  *
  */
 
@@ -21,12 +24,33 @@ public interface BorrowServiceRmi  extends EntityServiceInterface<Borrow>{
 	
 	/**
 	 * 
-	 * @param user - User object representing the person who borrows the book
-	 * @param pub - publication object to be borrowed
-	 * @param from - sql date containing the value when the book is borrowed
-	 * @param until - sql date containing the value until the book must be returned
-	 * @return true if the borrow was succesfull false if not
-	 * @throws RemoteException
+	 * @param user
+	 *            - a User object containing a user's information
+	 * @param pub
+	 *            - a Publication object containing a publication's information
+	 * @param borrowFrom
+	 *            - the date from which the user wants to borrow the publication
+	 * @param borrowUntil
+	 *            - the date on which the user needs to return the publication
+	 * @return - true if insertion was successful, false otherwise
+	 * @throws ServiceLayerException 
+	 * @throws RemoteException 
 	 */
-	public boolean borrowPublication(String userID, String pubID, Date from, Date until) throws RemoteException;
+	boolean insertBorrow(User user, Publication pub, Date borrowFrom, Date borrowUntil) throws RemoteException, ServiceLayerException;
+
+	/**
+	 * queries all borrowing from the database
+	 * 
+	 * @return
+	 */
+	List<Borrow> getAll();
+
+	/**
+	 * 
+	 * @param id
+	 *            - the id of the borrowing to query
+	 * @return - the borrow object obtained through search by id
+	 */
+	Borrow getById(String id);
+
 }
