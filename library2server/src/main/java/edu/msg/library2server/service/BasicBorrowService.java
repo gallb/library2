@@ -7,7 +7,9 @@ import java.sql.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.service.ServiceException;
+import edu.msg.library2common.service.ServiceLayerException;
 import edu.msg.library2common.service.rmi.BorrowServiceRmi;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 import edu.msg.library2common.util.PropertyProvider;
@@ -57,4 +59,19 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 		return flag;
 
 	}
+@Override
+public boolean addNewEntity(Borrow entity) throws RemoteException {
+	// TODO Auto-generated method stub
+	return false;
+}
+@Override
+public boolean updateEntity(Borrow entity) throws RemoteException {
+	// TODO Auto-generated method stub
+	return false;
+}
+@Override
+public boolean deleteEntity(String entityID) throws RemoteException {
+	// TODO Auto-generated method stub
+	return false;
+}
 }

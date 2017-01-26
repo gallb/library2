@@ -10,17 +10,27 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.msg.library2common.model.Borrow;
 import edu.msg.library2common.model.User;
 import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.util.PropertyProvider;
 import edu.msg.library2server.repository.DataAccessException;
 import edu.msg.library2server.repository.UserDao;
-
+/**
+ * 
+ * @author nagyz
+ *
+ */
 public class HibernateUserDAO implements UserDao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HibernateUserDAO.class);
 
+	/**
+	 * Get's a List<User>
+	 * 
+	 * @return List<User> if query succeed
+	 */
 	@Override
-	public List<User> getAll() {
+	public List<User> getAll() throws DataAccessException {
 		Session session = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
@@ -37,11 +47,11 @@ public class HibernateUserDAO implements UserDao {
 	/**
 	 * Get's a List<User> searched by user's name
 	 * 
-	 * @param param-String
+	 * @param param-String as name
 	 * @return List<User> if query succeed
 	 */
 	@Override
-	public List<User> getByName(String param) {
+	public List<User> getByName(String param) throws DataAccessException { //nem bizotos h jo
 		Session session = null;
 		List<User> searchResult = null;
 		try {
@@ -59,14 +69,43 @@ public class HibernateUserDAO implements UserDao {
 		}
 	}
 
+	/**
+	 * Inserts a User object to database
+	 * 
+	 * @param u-User
+	 * @return true-if insert query succeed
+	 * @return false-if insert query didn't succeeded
+	 */
 	@Override
-	public boolean insert(User e) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insert(User u) throws DataAccessException {
+		Session session = null;
+		boolean status = false;
+		Transaction transaction = null;
+		try {
+			session = HibernateConnector.getInstance().getSession();
+			System.out.println("session : " + session);
+			transaction = session.beginTransaction();
+			session.save(u);
+			transaction.commit();
+			status = true;
+		} catch (Exception ex) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.update"), ex);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
+		} finally {
+			session.close();
+		}
+		return status;
 	}
 
+	/**
+	 * Updates a User object in database
+	 * 
+	 * @param user-User
+	 * @return true-if update query succeed
+	 * @return false-if update query didn't succeeded
+	 */
 	@Override
-	public boolean update(User user) {
+	public boolean update(User user) throws DataAccessException {
 		boolean status = false;
 		Session session = null;
 		try {
@@ -86,40 +125,50 @@ public class HibernateUserDAO implements UserDao {
 		return status;
 	}
 
+	/**
+	 * Deletes a User object from database
+	 * 
+	 * @param user-User
+	 * @return true-if delete query succeed
+	 * @return false-if delete query didn't succeeded
+	 */
 	@Override
-	public boolean delete(String id) { // nem jo
+	public boolean delete(String id) throws DataAccessException {
 		boolean status = false;
 		Session session = null;
-		User searchResult = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			User user = (User) session.createCriteria(User.class).add(Restrictions.like("uuid", id)).list();
-			if (user != null) {
-				session.delete(user);
-				status=true;
-			}
-			return status;
+			TypedQuery<User> typedQuery = session.createQuery("from User where uuid=?");
+			typedQuery.setParameter(0, id);
+			User user = typedQuery.getSingleResult();
+			Transaction t = session.beginTransaction();
+			session.delete(user);
+			session.flush();
+			t.commit();
+			status = true;
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.getAll"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
 		} finally {
 			session.close();
 		}
+		return status;
 	}
 
+	/**
+	 * Searches for a User object by id in the database
+	 * 
+	 * @param id-String
+	 * @return User-if search query by id succeed
+	 */
 	@Override
-	public User getById(String id) { // neeem megy meg
+	public User getById(String id) throws DataAccessException {
 		Session session = null;
-		User searchResult = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			User user = (User) session.createCriteria(User.class).add(Restrictions.like("uuid", id)).list();
-					
-			if (user != null) {
-				searchResult =  user;
-				System.out.println("nem irja ki a kepernyore");
-			}
-			return searchResult;
+			TypedQuery<User> typedQuery = session.createQuery("from User where uuid=?");
+			typedQuery.setParameter(0, id);
+			return typedQuery.getSingleResult();
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.getAll"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
@@ -128,17 +177,20 @@ public class HibernateUserDAO implements UserDao {
 		}
 	}
 
+	/**
+	 * Searches for a User object by userName in the database
+	 * 
+	 * @param user_name-String
+	 * @return User-if search query by userName succeed
+	 */
 	@Override
-	public User getUserByUserName(String user_name) {
+	public User getUserByUserName(String user_name) throws DataAccessException {
 		Session session = null;
-		User searchResult = null;
 		try {
 			session = HibernateConnector.getInstance().getSession();
-			User user = (User) session.createCriteria(User.class).add(Restrictions.like("user_name", user_name)).list();
-			if (user != null) {
-				searchResult =  user;
-			}
-			return searchResult;
+			TypedQuery<User> typedQuery = session.createQuery("from User where uuid=?");
+			typedQuery.setParameter(0, user_name);
+			return typedQuery.getSingleResult();
 		} catch (Exception e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.logger.HibernateUserDAO.getAll"), e);
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error.internal_server"));
@@ -146,5 +198,4 @@ public class HibernateUserDAO implements UserDao {
 			session.close();
 		}
 	}
-
 }
