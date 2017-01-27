@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.msg.library2client.controller.author.AddAuthorCommand;
 import edu.msg.library2client.controller.author.AuthorManagementCommand;
 import edu.msg.library2client.controller.author.SearchAuthorCommand;
 import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
@@ -61,6 +62,7 @@ public class CommandManager{
 		commandList.add(new SearchForUserByUserNameCommand());
 		commandList.add(new BorrowPublicationCommand());
 		commandList.add(new SearchAuthorCommand());
+		commandList.add(new AddAuthorCommand());
 	}
 			
 	public void run() {
