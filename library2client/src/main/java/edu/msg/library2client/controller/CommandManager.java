@@ -89,7 +89,7 @@ public class CommandManager {
 				currentCommand = selectedCommands.get(0);
 				currentCommand.execute();
 			} else {
-				System.out.println("client.command.input.invalid");
+				System.out.println("Invalid command");
 			}
 		}
 	}
