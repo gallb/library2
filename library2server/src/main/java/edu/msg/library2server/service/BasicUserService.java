@@ -149,4 +149,34 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 		}
 		return user;
 	}
+
+	@Override
+	public List<User> searchByName(String serchString) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(User u) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(User user) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(String id) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public User searchById(String id) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

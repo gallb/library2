@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
+import edu.msg.library2client.controller.author.AddAuthorCommand;
 import edu.msg.library2client.controller.author.AuthorManagementCommand;
 import edu.msg.library2client.controller.author.SearchAuthorCommand;
 import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
@@ -22,6 +23,14 @@ import edu.msg.library2client.controller.publication.DeletePublicationCommand;
 import edu.msg.library2client.controller.publication.EditPublicationCommand;
 import edu.msg.library2client.controller.publication.PublicationManagementCommand;
 import edu.msg.library2client.controller.publication.SearchPubCommand;
+import edu.msg.library2client.controller.user.AddUserCommand;
+import edu.msg.library2client.controller.user.DeleteUserCommand;
+import edu.msg.library2client.controller.user.EditUserCommand;
+import edu.msg.library2client.controller.user.SearchForAllUsersCommand;
+import edu.msg.library2client.controller.user.SearchForUserByIDCommand;
+import edu.msg.library2client.controller.user.SearchForUserByNameCommand;
+import edu.msg.library2client.controller.user.SearchForUserByUserNameCommand;
+import edu.msg.library2client.controller.user.UserManagementCommand;
 import edu.msg.library2client.util.ClientPropertyProvider;
 import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
@@ -59,6 +68,7 @@ public class CommandManager{
 		commandList.add(new SearchForUserByUserNameCommand());
 		commandList.add(new BorrowPublicationCommand());
 		commandList.add(new SearchAuthorCommand());
+		commandList.add(new AddAuthorCommand());
 	}
 			
 	public void run() {
