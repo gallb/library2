@@ -32,10 +32,9 @@ public class BorrowManager implements RmiServiceManager<Borrow> {
 	}
 
 	@Override
-	public boolean addNewEntity(Borrow entity) throws ManagerException {
-		System.out.println(entity.getReader().getUuid() + " " + entity.getPublication().getUuid());
+	public boolean addNewEntity(Borrow entity) throws ManagerException {	
 		boolean flag = false;
-		try {
+		try {		
 			borrowServiceRmi.addNewEntity(entity);
 			flag = true;
 		} catch (ServiceException e) {

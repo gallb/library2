@@ -1,6 +1,7 @@
 package edu.msg.library2client.controller.borrow;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import edu.msg.library2client.controller.AbstractCommand;
 import edu.msg.library2client.manager.BorrowManager;
@@ -24,17 +25,21 @@ public class BorrowPublicationCommand  extends AbstractCommand{
 		User user = new User();
 		user.setUuid(userID);
 		System.out.println(ClientPropertyProvider.getProperty("client.command.borrow.input.publication"));
-		System.out.println("test");
 		String pubID = ViewManager.getViewManager("Console").userInput();
 		Publication pub = new Publication();
 		pub.setUuid(pubID);
-		Borrow borrow = new Borrow(user, pub, new Date(2000, 12, 20), new Date(2001, 01, 10));
+				
+		LocalDate locald = LocalDate.now();
+		Date dateFrom = Date.valueOf(locald);
+		
+		LocalDate local = locald.plusDays(20);
+		Date dateUntil = Date.valueOf(local);
+		Borrow borrow = new Borrow(user, pub, dateFrom, dateUntil);
 		try {
 			borrowManager.addNewEntity(borrow);
-			System.out.println("client.command.borrow.success");
-		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			System.out.println("client.command.borrow.notSuccess");
+			System.out.println(ClientPropertyProvider.getProperty("client.command.borrow.success"));
+		} catch (ManagerException e) {			
+			System.out.println(ClientPropertyProvider.getProperty("client.command.borrow.notSuccess"));
 		}		
 	}
 
