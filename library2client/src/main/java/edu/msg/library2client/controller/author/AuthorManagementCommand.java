@@ -1,4 +1,6 @@
-package edu.msg.library2client.controller;
+package edu.msg.library2client.controller.author;
+
+import edu.msg.library2client.controller.AbstractCommand;
 
 public class AuthorManagementCommand extends AbstractCommand {
 

@@ -29,14 +29,16 @@ public class SearchPubCommand extends AbstractCommand{
 	public void execute() {
 		PublicationManager pubMan = new PublicationManager();
 		List<Publication> pubList = new ArrayList<>();
-		System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
+		System.out.println(ClientPropertyProvider.getProperty("client.command.searchText"));
 		String selection = ViewManager.getViewManager("Console").userInput();
+		System.out.println(selection);
 		try {
 			pubList = pubMan.search("Pal");
 		} catch (ManagerException e) {
 			System.err.print(e.getMessage());
 		}
 		pubList.forEach(element -> System.out.println(element.getTitle() + " "+element.getPublisher()));
+		System.out.println(ClientPropertyProvider.getProperty("client.command.publication.input.selelectPub"));
 	}
 	
 }
