@@ -13,6 +13,7 @@ import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
 import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
+import edu.msg.library2client.controller.borrow.BorrowPublicationCommand;
 import edu.msg.library2client.controller.borrow.SearchBorrowCommand;
 import edu.msg.library2client.controller.publication.AddPublicationCommand;
 import edu.msg.library2client.controller.publication.DeletePublicationCommand;
@@ -46,6 +47,7 @@ public class CommandManager{
 		commandList.add(new AuthorManagementCommand());
 		commandList.add(new BorrowManagementCommand());
 		commandList.add(new SearchBorrowCommand());
+		commandList.add(new BorrowPublicationCommand());
 		//commandList.add(new SearchAuthorCommand());
 	}
 			
