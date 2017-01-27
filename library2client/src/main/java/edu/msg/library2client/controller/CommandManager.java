@@ -5,7 +5,12 @@ package edu.msg.library2client.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.lang.model.element.Element;
+import javax.swing.text.View;
 
 import edu.msg.library2client.controller.author.AddAuthorCommand;
 import edu.msg.library2client.controller.author.AuthorManagementCommand;
@@ -27,6 +32,7 @@ import edu.msg.library2client.controller.user.SearchForUserByNameCommand;
 import edu.msg.library2client.controller.user.SearchForUserByUserNameCommand;
 import edu.msg.library2client.controller.user.UserManagementCommand;
 import edu.msg.library2client.util.ClientPropertyProvider;
+import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
 
 /**
