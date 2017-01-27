@@ -120,7 +120,7 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @return User -if user search operation by id was successful
 	 * @return false -if user search operation by id didn't executed
 	 */
-	public User getByUserID(String userID) throws ServiceException, RemoteException {
+	public User searchById(String userID) throws ServiceException, RemoteException {
 		User user;
 		try {
 			basicUser = new BasicUserBusiness();
@@ -138,6 +138,27 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @param name-String
 	 * @return List<User> -if user search operation by name was successful
 	 */
+	public List<User> searchByName(String name) throws ServiceException, RemoteException {
+		List<User> user;
+		try {
+			basicUser = new BasicUserBusiness();
+			user = basicUser.searchForUsers(name);
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicUserBusiness"),e);
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
+		}
+		return user;
+	}
+
+	
+
+	/**
+	 * Get's a List<User> in database by name
+	 * 
+	 * @param name-String
+	 * @return List<User> -if user search operation by name was successful
+	 */
+	@Override
 	public List<User> searchForUser(String name) throws ServiceException, RemoteException {
 		List<User> user;
 		try {
