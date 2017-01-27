@@ -19,3 +19,5 @@ Command numerotation
 16-  SearchForUserByUserNameCommand
 17-  AuthorManagementCommand
 18-	 SearchForAuthorCommand
+19 - BorrowManagerCommand
+20 - SearchBorrowCommand

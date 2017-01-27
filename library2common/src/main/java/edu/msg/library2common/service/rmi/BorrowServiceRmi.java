@@ -43,20 +43,20 @@ public interface BorrowServiceRmi  extends EntityServiceInterface<Borrow>{
 	 * 
 	 * @return
 	 */
-	List<Borrow> getAll();
+	List<Borrow> getAll() throws RemoteException, ServiceLayerException;
 
 	/**
 	 * Returns a Borrow object that was searched for by an id
 	 * @param id - the id of the borrowing to query
 	 * @return - the borrow object obtained through search by id, if not found returns an empty borrow object
 	 */
-	Borrow getById(String id);
+	Borrow getById(String id) throws RemoteException, ServiceLayerException;
 
 	/**
 	 * Returns a Borrow object that was searched for by an user_id
 	 * @param user_id - the id of the user whom borrowings we want to get
 	 * @return - returns a list of borrowings if user is found, otherwise an empty list
 	 */
-	List<Borrow> getByUserId(String user_id);
+	List<Borrow> getByUserId(String user_id) throws RemoteException, ServiceLayerException;
 
 }
