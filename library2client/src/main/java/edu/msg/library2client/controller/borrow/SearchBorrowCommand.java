@@ -19,9 +19,10 @@ public class SearchBorrowCommand extends AbstractCommand {
 	public void execute() {
 		BorrowManager borrowManager = new BorrowManager();
 		List<Borrow> borrows = new ArrayList<>();
-		System.out.println(ClientPropertyProvider.getProperty("client.command.input"));	
+		System.out.println(ClientPropertyProvider.getProperty("client.command.borrow.input.user"));
+		String selection = ViewManager.getViewManager("Console").userInput();
 		try {
-			borrows = borrowManager.search("112");
+			borrows = borrowManager.search(selection);
 		} catch (ManagerException e) {
 			System.err.print(e.getMessage());
 		}
