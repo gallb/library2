@@ -21,3 +21,4 @@ Command numerotation
 18-	 SearchForAuthorCommand
 19 - BorrowManagerCommand
 20 - SearchBorrowCommand
+21 - BorrowPublicationCommand
