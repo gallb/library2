@@ -138,6 +138,7 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 	 * @param name-String
 	 * @return List<User> -if user search operation by name was successful
 	 */
+	@Override
 	public List<User> searchByName(String name) throws ServiceException, RemoteException {
 		List<User> user;
 		try {
@@ -148,9 +149,7 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return user;
-	}
-
-	
+	}	
 
 	/**
 	 * Get's a List<User> in database by name
@@ -169,35 +168,5 @@ public class BasicUserService extends UnicastRemoteObject implements UserService
 			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicUserBusiness"));
 		}
 		return user;
-	}
-
-	@Override
-	public List<User> searchByName(String serchString) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean insert(User u) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean update(User user) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(String id) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public User searchById(String id) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
