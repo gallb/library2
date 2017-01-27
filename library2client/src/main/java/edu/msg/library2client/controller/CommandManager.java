@@ -12,6 +12,13 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
+import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
+import edu.msg.library2client.controller.borrow.SearchBorrowCommand;
+import edu.msg.library2client.controller.publication.AddPublicationCommand;
+import edu.msg.library2client.controller.publication.DeletePublicationCommand;
+import edu.msg.library2client.controller.publication.EditPublicationCommand;
+import edu.msg.library2client.controller.publication.PublicationManagementCommand;
+import edu.msg.library2client.controller.publication.SearchPubCommand;
 import edu.msg.library2client.util.ClientPropertyProvider;
 import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
@@ -36,6 +43,10 @@ public class CommandManager{
 		commandList.add(new AddPublicationCommand());
 		commandList.add(new DeletePublicationCommand());
 		commandList.add(new EditPublicationCommand());
+		commandList.add(new AuthorManagementCommand());
+		commandList.add(new BorrowManagementCommand());
+		commandList.add(new SearchBorrowCommand());
+		//commandList.add(new SearchAuthorCommand());
 	}
 			
 	public void run() {

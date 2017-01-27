@@ -71,4 +71,21 @@ public interface BorrowHandlerInterface extends BusinessInterface<Borrow> {
 	 *         false
 	 */
 	public boolean hasRightToBorrow(String user_id);
+
+	/**
+	 * 
+	 * @param user_id
+	 *            - the id of the user for which to check if has borrowing not
+	 *            returned until due date
+	 * @return - true if user is late with one or more publications, otherwise
+	 *         returns false
+	 */
+	public boolean isLate(String user_id);
+
+	/**
+	 * 
+	 * @param user_id - the user id for which the borrowings will be listed
+	 * @return - a list if the there are any borrowing for specified user, otherwise empty list
+	 */
+	List<Borrow> getByUserId(String user_id);
 }

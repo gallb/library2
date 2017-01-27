@@ -5,10 +5,11 @@ import java.util.List;
 
 import edu.msg.library2client.console.RmiRegistry;
 import edu.msg.library2common.model.Publication;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.PublicationServiceRmi;
 /**
  * 
- * @author kiska
+ * @author gallb
  *
  */
 public class PublicationManager implements RmiServiceManager<Publication>{
@@ -20,7 +21,46 @@ public class PublicationManager implements RmiServiceManager<Publication>{
 	}
 
 	@Override
-	public List<Publication> search(String serchString) throws RemoteException {
-		return publicationServiceRmi.searchForPublicationByTitle(serchString);	
+	public List<Publication> search(String serchString) throws ManagerException {
+		try {
+			return publicationServiceRmi.searchForPublicationByTitle(serchString);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
+
+	@Override
+	public boolean addNewEntity(Publication entity) throws ManagerException {
+		try {
+			return publicationServiceRmi.addNewEntity(entity);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
+	}
+
+	@Override
+	public boolean updateEntity(Publication entity) throws ManagerException {
+		try {
+			return publicationServiceRmi.updateEntity(entity);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
+	}
+
+	@Override
+	public boolean deleteEntity(String entityID) throws ManagerException {
+		try {
+			return publicationServiceRmi.deleteEntity(entityID);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
+	}	
 }

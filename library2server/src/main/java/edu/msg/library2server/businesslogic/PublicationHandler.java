@@ -15,6 +15,7 @@ import edu.msg.library2server.business.BasicPublicationBusiness;
 import edu.msg.library2server.business.BusinessLayerException;
 import edu.msg.library2server.business.PublicationHandlerInterface;
 import edu.msg.library2server.repository.DaoFactory;
+import edu.msg.library2server.repository.DataAccessException;
 import edu.msg.library2server.repository.PublicationDao;
 import edu.msg.library2server.repository.jdbc.SqlHandlerException;
 
@@ -29,19 +30,35 @@ public class PublicationHandler implements PublicationHandlerInterface{
 	
 	@Override
 	public boolean addNewEntity(Publication entity) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			pubDAO = DaoFactory.getHibernateDaoFactory().getPublicationDao();
+			return pubDAO.insert(entity);
+		} catch (DataAccessException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
+		}
 	}
 
 	@Override
 	public boolean updateEntity(Publication entity) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			pubDAO = DaoFactory.getHibernateDaoFactory().getPublicationDao();
+			return pubDAO.update(entity);
+		} catch (DataAccessException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
+		}
 	}
 
 	@Override
 	public boolean deleteEntity(String entityID) {
-		// TODO Auto-generated method stub
+		try {
+			pubDAO = DaoFactory.getHibernateDaoFactory().getPublicationDao();
+			pubDAO.delete(entityID);
+		} catch (DataAccessException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
+			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
+		}
 		return false;
 	}
 
