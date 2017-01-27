@@ -49,6 +49,14 @@ public class CommandManager{
 		commandList.add(new AuthorManagementCommand());
 		commandList.add(new BorrowManagementCommand());
 		commandList.add(new SearchBorrowCommand());
+		commandList.add(new UserManagementCommand());
+		commandList.add(new AddUserCommand());
+		commandList.add(new DeleteUserCommand());
+		commandList.add(new EditUserCommand());
+		commandList.add(new SearchForAllUsersCommand());
+		commandList.add(new SearchForUserByIDCommand());
+		commandList.add(new SearchForUserByNameCommand());
+		commandList.add(new SearchForUserByUserNameCommand());
 		commandList.add(new BorrowPublicationCommand());
 		commandList.add(new SearchAuthorCommand());
 	}

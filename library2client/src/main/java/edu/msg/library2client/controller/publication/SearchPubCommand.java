@@ -31,14 +31,20 @@ public class SearchPubCommand extends AbstractCommand{
 		List<Publication> pubList = new ArrayList<>();
 		System.out.println(ClientPropertyProvider.getProperty("client.command.searchText"));
 		String selection = ViewManager.getViewManager("Console").userInput();
-		System.out.println(selection);
+		//System.out.println(selection);
 		try {
-			pubList = pubMan.search("Pal");
+			pubList = pubMan.search(selection);
 		} catch (ManagerException e) {
 			System.err.print(e.getMessage());
 		}
-		pubList.forEach(element -> System.out.println(element.getTitle() + " "+element.getPublisher()));
+	
+		//pubList.forEach(element -> System.out.println(element.getTitle() + " "+element.getPublisher()));
+		for (int i = 0; i < pubList.size(); ++i) {
+			System.out.println("(" + i + ")  " + pubList.get(i).getTitle() + "    " + pubList.get(i).getOnStock() + 
+							   "/" + pubList.get(i).getNrOfCopies());
+		}
 		System.out.println(ClientPropertyProvider.getProperty("client.command.publication.input.selelectPub"));
+		selection = ViewManager.getViewManager("Console").userInput();
 	}
 	
 }
