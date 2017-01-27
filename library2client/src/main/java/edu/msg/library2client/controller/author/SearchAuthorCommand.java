@@ -1,10 +1,14 @@
-package edu.msg.library2client.controller;
+package edu.msg.library2client.controller.author;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library2client.controller.AbstractCommand;
 import edu.msg.library2client.manager.AuthorManager;
+import edu.msg.library2client.manager.ManagerException;
+import edu.msg.library2client.util.ClientPropertyProvider;
+import edu.msg.library2client.util.ViewManager;
 import edu.msg.library2common.model.Author;
 
 public class SearchAuthorCommand extends AbstractCommand {
@@ -17,11 +21,13 @@ public class SearchAuthorCommand extends AbstractCommand {
 	public void execute() {
 		AuthorManager authorManager = new AuthorManager();
 		List<Author> authors = new ArrayList<>();
+		System.out.println(ClientPropertyProvider.getProperty("client.command.author.input.user"));
+		String selection = ViewManager.getViewManager("Console").userInput();
 		try {
-			authors = authorManager.search("P");
+			authors = authorManager.search(selection);
 
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		} catch (ManagerException e) {
+			System.err.println(e.getMessage());
 		}
 		authors.forEach(element -> System.out.println(element.getName()));
 

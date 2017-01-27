@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
+import edu.msg.library2client.controller.author.AuthorManagementCommand;
 import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
 import edu.msg.library2client.controller.borrow.SearchBorrowCommand;
 import edu.msg.library2client.controller.publication.AddPublicationCommand;
