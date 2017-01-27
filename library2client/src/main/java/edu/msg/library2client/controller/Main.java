@@ -26,11 +26,11 @@ public class Main {
 		
 		//cmd.execute();
 		try {
-<<<<<<< HEAD
+
 			Scanner scanner = new Scanner(new File("C:\\Users\\nagys\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
-=======
-			Scanner scanner = new Scanner(new File("C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
->>>>>>> branch 'develop29jan' of https://github.com/gallb/library2.git
+
+			//Scanner scanner = new Scanner(new File("C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
+
 			//Scanner scanner = new Scanner("edu/msg/library2client/resources/languages.cfg");
 			//Scanner scanner = new Scanner(new File("C:\\Users\\barni\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\languages.cfg"));
 			String line = scanner.nextLine();
