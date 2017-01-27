@@ -31,6 +31,7 @@ public class SearchPubCommand extends AbstractCommand{
 		List<Publication> pubList = new ArrayList<>();
 		System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
 		String selection = ViewManager.getViewManager("Console").userInput();
+		System.out.println(selection);
 		try {
 			pubList = pubMan.search("Pal");
 		} catch (ManagerException e) {
