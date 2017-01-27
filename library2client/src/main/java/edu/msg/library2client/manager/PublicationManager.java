@@ -25,9 +25,9 @@ public class PublicationManager implements RmiServiceManager<Publication>{
 		try {
 			return publicationServiceRmi.searchForPublicationByTitle(serchString);
 		} catch (RemoteException e) {
-			throw new ManagerException("Error! Communication with server faild.");
+			throw new ManagerException("client.service.error");
 		} catch (ServiceException e) {
-			throw new ManagerException("Error! Server internal error.");
+			throw new ManagerException("client.error");
 		}
 	}
 
@@ -36,9 +36,9 @@ public class PublicationManager implements RmiServiceManager<Publication>{
 		try {
 			return publicationServiceRmi.addNewEntity(entity);
 		} catch (RemoteException e) {
-			throw new ManagerException("Error! Communication with server faild.");
+			throw new ManagerException("client.service.error");
 		} catch (ServiceException e) {
-			throw new ManagerException("Error! Server internal error.");
+			throw new ManagerException("client.error");
 		}
 	}
 
@@ -47,20 +47,20 @@ public class PublicationManager implements RmiServiceManager<Publication>{
 		try {
 			return publicationServiceRmi.updateEntity(entity);
 		} catch (RemoteException e) {
-			throw new ManagerException("Error! Communication with server faild.");
+			throw new ManagerException("client.service.error");
 		} catch (ServiceException e) {
-			throw new ManagerException("Error! Server internal error.");
+			throw new ManagerException("client.error");
 		}
 	}
 
 	@Override
-	public boolean deleteEntity(String entityID) throws ManagerException {
-		try {
-			return publicationServiceRmi.deleteEntity(entityID);
-		} catch (RemoteException e) {
-			throw new ManagerException("Error! Communication with server faild.");
-		} catch (ServiceException e) {
-			throw new ManagerException("Error! Server internal error.");
+		public boolean deleteEntity(String entityID) throws ManagerException {
+			try {
+				return publicationServiceRmi.deleteEntity(entityID);
+			} catch (RemoteException e) {
+				throw new ManagerException("client.service.error");
+			} catch (ServiceException e) {
+				throw new ManagerException("client.error");
 		}
 	}	
 }
