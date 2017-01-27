@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library2client.controller.AbstractCommand;
+import edu.msg.library2client.controller.CommandManager;
 import edu.msg.library2client.manager.ManagerException;
 import edu.msg.library2client.manager.PublicationManager;
 import edu.msg.library2client.util.ClientPropertyProvider;
@@ -39,12 +40,16 @@ public class SearchPubCommand extends AbstractCommand{
 		}
 	
 		//pubList.forEach(element -> System.out.println(element.getTitle() + " "+element.getPublisher()));
-		for (int i = 0; i < pubList.size(); ++i) {
-			System.out.println("(" + i + ")  " + pubList.get(i).getTitle() + "    " + pubList.get(i).getOnStock() + 
+		int i;
+		for (i = 0; i < pubList.size(); ++i) {
+			int ii = i+1;
+			System.out.println("(" + ii + ")  " + pubList.get(i).getTitle() + "    " + pubList.get(i).getOnStock() + 
 							   "/" + pubList.get(i).getNrOfCopies());
 		}
 		System.out.println(ClientPropertyProvider.getProperty("client.command.publication.input.selelectPub"));
-		selection = ViewManager.getViewManager("Console").userInput();
+		int choose = ViewManager.getViewManager("Console").numberChooser(i);
+		System.out.println("Choice:" + choose);
+		CommandManager.pub = pubList.get(choose - 1);
 	}
 	
 }

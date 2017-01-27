@@ -22,9 +22,19 @@ import edu.msg.library2client.controller.publication.DeletePublicationCommand;
 import edu.msg.library2client.controller.publication.EditPublicationCommand;
 import edu.msg.library2client.controller.publication.PublicationManagementCommand;
 import edu.msg.library2client.controller.publication.SearchPubCommand;
+import edu.msg.library2client.controller.user.AddUserCommand;
+import edu.msg.library2client.controller.user.DeleteUserCommand;
+import edu.msg.library2client.controller.user.EditUserCommand;
+import edu.msg.library2client.controller.user.SearchForAllUsersCommand;
+import edu.msg.library2client.controller.user.SearchForUserByIDCommand;
+import edu.msg.library2client.controller.user.SearchForUserByNameCommand;
+import edu.msg.library2client.controller.user.SearchForUserByUserNameCommand;
+import edu.msg.library2client.controller.user.UserManagementCommand;
 import edu.msg.library2client.util.ClientPropertyProvider;
 import edu.msg.library2client.util.ConsoleViewManager;
 import edu.msg.library2client.util.ViewManager;
+import edu.msg.library2common.model.Publication;
+import edu.msg.library2common.model.User;
 
 /**
  * @author gallb
@@ -32,6 +42,8 @@ import edu.msg.library2client.util.ViewManager;
  */
 public class CommandManager{
 	public static List <AbstractCommand> commandList;
+	public static User usr;
+	public static Publication pub;
 	private AbstractCommand currentCommand;
 	private AbstractCommand previousCommand;
 	

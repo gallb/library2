@@ -54,12 +54,11 @@ public class PublicationHandler implements PublicationHandlerInterface{
 	public boolean deleteEntity(String entityID) {
 		try {
 			pubDAO = DaoFactory.getHibernateDaoFactory().getPublicationDao();
-			pubDAO.delete(entityID);
+			return pubDAO.delete(entityID);
 		} catch (DataAccessException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error.data_access"), e);
 			throw new BusinessLayerException(PropertyProvider.INSTANCE.getProperty("error.businnes_layer"));
 		}
-		return false;
 	}
 
 	@Override
