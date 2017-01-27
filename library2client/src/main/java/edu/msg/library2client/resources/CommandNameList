@@ -22,3 +22,4 @@ Command numerotation
 19 - BorrowManagerCommand
 20 - SearchBorrowCommand
 21 - BorrowPublicationCommand
+22 - AddNewAuthor

@@ -34,20 +34,41 @@ public class BasicAuthorService extends UnicastRemoteObject implements AuthorSer
 
 	@Override
 	public boolean addNewEntity(Author entity) throws ServiceException, RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		try {
+			authorHandlerInterface.addNewEntity(entity);
+			flag = true;
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicAuthorService"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicAuthorService"));
+		}
+		return flag;
 	}
 
 	@Override
 	public boolean updateEntity(Author entity) throws ServiceException, RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		try {
+			authorHandlerInterface.updateEntity(entity);
+			flag = true;
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicAuthorService"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicAuthorService"));
+		}
+		return flag;
 	}
 
 	@Override
 	public boolean deleteEntity(String entityID) throws ServiceException, RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		try {
+			authorHandlerInterface.deleteEntity(entityID);
+			flag = true;
+		} catch (BusinessLayerException e) {
+			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicAuthorService"));
+			throw new ServiceException(PropertyProvider.INSTANCE.getProperty("error_BasicAuthorService"));
+		}
+		return flag;
 	}
 
 	@Override

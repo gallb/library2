@@ -63,7 +63,7 @@ public class UserManager implements RmiServiceManager<User> {
 	@Override
 	public boolean addNewEntity(User entity) throws ManagerException {
 		try {
-			return userServiceRmi.insert(entity);
+			return userServiceRmi.addNewEntity(entity);
 		} catch (RemoteException e) {
 			throw new ManagerException("Error! Communication with server faild.");
 		} catch (ServiceException e) {
@@ -83,7 +83,7 @@ public class UserManager implements RmiServiceManager<User> {
 	@Override
 	public boolean updateEntity(User entity) throws ManagerException {
 		try {
-			return userServiceRmi.update(entity);
+			return userServiceRmi.updateEntity(entity);
 		} catch (RemoteException e) {
 			throw new ManagerException("Error! Communication with server faild.");
 		} catch (ServiceException e) {
@@ -103,7 +103,7 @@ public class UserManager implements RmiServiceManager<User> {
 	@Override
 	public boolean deleteEntity(String entityID) throws ManagerException {
 		try {
-			return userServiceRmi.delete(entityID);
+			return userServiceRmi.deleteEntity(entityID);
 		} catch (RemoteException e) {
 			throw new ManagerException("Error! Communication with server faild.");
 		} catch (ServiceException e) {

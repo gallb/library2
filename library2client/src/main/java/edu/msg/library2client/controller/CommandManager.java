@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
 import javax.swing.text.View;
 
+import edu.msg.library2client.controller.author.AddAuthorCommand;
 import edu.msg.library2client.controller.author.AuthorManagementCommand;
 import edu.msg.library2client.controller.author.SearchAuthorCommand;
 import edu.msg.library2client.controller.borrow.BorrowManagementCommand;
@@ -40,8 +41,9 @@ import edu.msg.library2common.model.User;
  * @author gallb
  *
  */
-public class CommandManager{
-	public static List <AbstractCommand> commandList;
+public class CommandManager {
+	public static List<AbstractCommand> commandList;
+	public static List<AbstractCommand> commands;
 	public static User usr;
 	public static Publication pub;
 	private AbstractCommand currentCommand;
@@ -71,38 +73,41 @@ public class CommandManager{
 		commandList.add(new SearchForUserByUserNameCommand());
 		commandList.add(new BorrowPublicationCommand());
 		commandList.add(new SearchAuthorCommand());
+		commandList.add(new AddAuthorCommand());
 	}
 			
 	public void run() {
 		currentCommand = commandList.get(1);
-		
-		while (!((ExitCommand)getCommandByID(0)).isExitFlag() ) {
+
+		while (!((ExitCommand) getCommandByID(0)).isExitFlag()) {
 			printChilds();
 			System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
 			String selection = ViewManager.getViewManager("Console").userInput();
-			List<AbstractCommand> commands = new ArrayList<>();
-			//Needs Update
-			commands.addAll(commandList.stream().filter(element -> element.getTriggerCharacter().equals(selection)).collect(Collectors.toList())); 
-			if (!commands.isEmpty()) {
+			List<AbstractCommand> selectedCommands = new ArrayList<>();
+			// Needs Update
+			selectedCommands = new ArrayList<>();
+			selectedCommands.addAll(commands.stream().filter(element -> element.getTriggerCharacter().equals(selection))
+					.collect(Collectors.toList()));
+			if (!selectedCommands.isEmpty()) {
 				previousCommand = currentCommand;
-				currentCommand = commands.get(0);
+				currentCommand = selectedCommands.get(0);
 				currentCommand.execute();
 			} else {
 				System.out.println("Invalid command.");
 			}
 		}
 	}
-	
-	private void printChilds(){
-		List<AbstractCommand> commands = new ArrayList<>();
+
+	private void printChilds() {
+		commands = new ArrayList<>();
 		List<Integer> childs = currentCommand.getChildList();
-		for (Integer i : childs){
-			commands.addAll(commandList.stream().filter(child -> (child.getId()==i)).collect(Collectors.toList()));
+		for (Integer i : childs) {
+			commands.addAll(commandList.stream().filter(child -> (child.getId() == i)).collect(Collectors.toList()));
 		}
 		commands.forEach(c -> System.out.print("(" + c.getTriggerCharacter() + ")" + c.getName() + "	"));
 		System.out.println();
 	}
-	
+
 	private AbstractCommand getCommandByID(int id) {
 		for (int i = 0; i < commandList.size(); i++) {
 			if (commandList.get(i).getId() == id) {
@@ -111,7 +116,7 @@ public class CommandManager{
 		}
 		return null;
 	}
-	
+
 	private AbstractCommand getCommandByTrigger(String character) {
 		for (int i = 0; i < commandList.size(); i++) {
 			if (commandList.get(i).getTriggerCharacter().equals(character)) {

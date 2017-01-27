@@ -163,7 +163,8 @@ public class BorrowHandler implements BorrowHandlerInterface {
 			java.sql.Date sqlToday = new java.sql.Date(today.getTime());
 
 			for (Borrow b : borrowList) {
-				// if borrowUntil is newer date than today
+				// if borrowUntil is newer date than today+
+				System.out.println(b.getBorrowUntil());
 				if (b.getBorrowUntil().compareTo(sqlToday) > 0) {
 					isLate = true;
 				}

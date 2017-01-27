@@ -36,6 +36,7 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 	 */
 	public BasicBorrowService() throws RemoteException, ServiceLayerException {
 		super();
+		System.out.println("basicborrowCosntructor");
 		borrowHandler = new BorrowHandler();
 	}
 
@@ -51,14 +52,11 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 
 	@Override
 	public boolean addNewEntity(Borrow entity) throws RemoteException, ServiceLayerException {
-		boolean flag = false;
-
-		try {
-			if (checkEligible(entity.getReader().getUuid(), entity.getPublication().getUuid())) {
+		boolean flag = false;			
+		try {			
+			if (checkEligible(entity.getReader().getUuid(), entity.getPublication().getUuid())) {			
 				borrowHandler.addNewEntity(entity);
 				flag = true;
-			} else {
-				throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"));
 			}
 		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicBorrowService"), e);
@@ -127,33 +125,37 @@ public class BasicBorrowService extends UnicastRemoteObject implements BorrowSer
 	@Override
 	public Borrow getById(String id) {
 		Borrow borrow = new Borrow();
-		try{
+		try {
 			borrow = borrowHandler.getById(id);
-		}catch (BusinessLayerException e) {
+		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicBorrowService"), e);
 			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"));
 		}
 		return borrow;
 	}
-	
+
 	@Override
 	public List<Borrow> getByUserId(String user_id) {
 		List<Borrow> borrowList = new ArrayList<>();
-		try{
+		try {
 			borrowList = borrowHandler.getByUserId(user_id);
-		}catch (BusinessLayerException e) {
+		} catch (BusinessLayerException e) {
 			LOGGER.error(PropertyProvider.INSTANCE.getProperty("error_logger_BasicBorrowService"), e);
 			throw new ServiceLayerException(PropertyProvider.INSTANCE.getProperty("error_BasicBorrowService"));
 		}
 		return borrowList;
 	}
-	
 
 	private boolean checkEligible(String user_id, String pub_id) {
 		if (borrowHandler.hasRightToBorrow(user_id)) {
-			if (borrowHandler.isLoyal(user_id) && borrowHandler.isOnStock(pub_id) && !borrowHandler.isLate(user_id)) {
-				return true;
-			}
+			System.out.println("has right true");
+			if (borrowHandler.isLoyal(user_id) && borrowHandler.isOnStock(pub_id)) {
+				System.out.println("isloyal and stock true");
+				if (!borrowHandler.isLate(user_id)){
+					System.out.println("is not late");
+					return true;
+				}
+			}		
 		}
 		return false;
 	}
