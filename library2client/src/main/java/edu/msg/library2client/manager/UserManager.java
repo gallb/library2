@@ -5,62 +5,90 @@ import java.util.List;
 
 import edu.msg.library2client.console.RmiRegistry;
 import edu.msg.library2common.model.User;
+import edu.msg.library2common.service.ServiceException;
 import edu.msg.library2common.service.rmi.UserServiceRmi;
 
-public class UserManager implements RmiServiceManager<User>{
+public class UserManager implements RmiServiceManager<User> {
 	private UserServiceRmi userServiceRmi;
 	private RmiRegistry rmiRegistry = new RmiRegistry();
-	
+
 	public UserManager() {
 		userServiceRmi = rmiRegistry.getUserService();
 	}
 
 	/**
-	 * Get's List<User> searched by user's name
+	 * Get's User searched by user's name
 	 * 
-	 * @param serchString-String as name
-	 * @return List<User> if query succeed
-	 * @throws RemoteException
+	 * @param serchString-String
+	 *            as name
+	 * @return User if query succeed
+	 * @throws ManagerException
 	 */
-	public List<User> searchByName(String serchString) throws RemoteException {
-		return userServiceRmi.searchForUser(serchString);
+	public User searchByName(String serchString) throws ManagerException {
+		try {
+			return userServiceRmi.getByUsername(serchString);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
-	
+
 	/**
 	 * Get's a List<User>
 	 * 
 	 * @return List<User> if query succeed
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
 	@Override
-	public List<User> search(String serchString) throws RemoteException {
-		
-		return userServiceRmi.searchByName(serchString);
+	public List<User> search(String serchString) throws ManagerException {
+		try {
+			return userServiceRmi.searchByName(serchString);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
-	
+
 	/**
 	 * Inserts a User object to database
 	 * 
 	 * @param u-User
 	 * @return true-if insert query succeed
 	 * @return false-if insert query didn't succeeded
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
-	
-	public boolean insert(User u) throws RemoteException {
-		return userServiceRmi.insert(u);
+
+	@Override
+	public boolean addNewEntity(User entity) throws ManagerException {
+		try {
+			return userServiceRmi.insert(entity);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
+
 	/**
 	 * Updates a User object in database
 	 * 
 	 * @param user-User
 	 * @return true-if update query succeed
 	 * @return false-if update query didn't succeeded
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
-	
-	public boolean update(User user) throws RemoteException {
-		return userServiceRmi.update(user);
+
+	@Override
+	public boolean updateEntity(User entity) throws ManagerException {
+		try {
+			return userServiceRmi.update(entity);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
 
 	/**
@@ -69,11 +97,18 @@ public class UserManager implements RmiServiceManager<User>{
 	 * @param user-User
 	 * @return true-if delete query succeed
 	 * @return false-if delete query didn't succeeded
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
-	
-	public boolean delete(String id) throws RemoteException {
-		return userServiceRmi.delete(id);
+
+	@Override
+	public boolean deleteEntity(String entityID) throws ManagerException {
+		try {
+			return userServiceRmi.delete(entityID);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
 
 	/**
@@ -81,11 +116,19 @@ public class UserManager implements RmiServiceManager<User>{
 	 * 
 	 * @param id-String
 	 * @return User-if search query by id succeed
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
 
-	public User searchById(String id) throws RemoteException {
-	return userServiceRmi.searchById(id);
+	public User searchById(String id) throws ManagerException {
+
+		try {
+			return userServiceRmi.searchById(id);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
+
 	}
 
 	/**
@@ -93,10 +136,18 @@ public class UserManager implements RmiServiceManager<User>{
 	 * 
 	 * @param user_name-String
 	 * @return User-if search query by userName succeed
-	 * @throws RemoteException
+	 * @throws ManagerException
 	 */
-	
-	public User searchByUserName(String user_name) throws RemoteException {
-		return userServiceRmi.getByUsername(user_name);
+
+	public User searchByUserName(String user_name) throws ManagerException {
+
+		try {
+			return userServiceRmi.getByUsername(user_name);
+		} catch (RemoteException e) {
+			throw new ManagerException("Error! Communication with server faild.");
+		} catch (ServiceException e) {
+			throw new ManagerException("Error! Server internal error.");
+		}
 	}
+
 }

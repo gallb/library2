@@ -1,12 +1,11 @@
 package edu.msg.library2client.controller.user;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.msg.library2client.controller.AbstractCommand;
-import edu.msg.library2client.manager.PublicationManager;
-import edu.msg.library2common.model.Publication;
+import edu.msg.library2client.manager.ManagerException;
+import edu.msg.library2client.manager.UserManager;
+import edu.msg.library2client.util.ClientPropertyProvider;
+import edu.msg.library2client.util.ViewManager;
+import edu.msg.library2common.model.User;
 
 public class SearchForUserByNameCommand extends AbstractCommand {
 	public SearchForUserByNameCommand() {
@@ -16,14 +15,15 @@ public class SearchForUserByNameCommand extends AbstractCommand {
 
 	@Override
 	public void execute() {
-		PublicationManager pubMan = new PublicationManager();
-		List<Publication> pubList = new ArrayList<>();
+		UserManager userMan = new UserManager();
+		User oneUser = new User();
+		System.out.println(ClientPropertyProvider.getProperty("client.command.input"));
+		String selection = ViewManager.getViewManager("Console").userInput();
 		try {
-			pubList = pubMan.search("Pal");
-		} catch (RemoteException e) {
-			e.printStackTrace();
+			oneUser = userMan.searchByName(selection);
+		} catch (ManagerException e) {
+			System.err.print(e.getMessage());
 		}
-		pubList.forEach(element -> System.out.println(element.getTitle() + " " + element.getPublisher()));
+		System.out.println(oneUser.getName() + " " + oneUser.getLoyalityIndex());
 	}
-
 }
