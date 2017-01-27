@@ -102,8 +102,8 @@ public abstract class AbstractCommand {
 			//Scanner sc = new Scanner("edu/msg/library2client/resources/CommandTreeBoolMat");
 			/*Scanner sc = new Scanner(new File(
 					"edu/msg/library2client/resources/CommandTreeBoolMat"));	*/
-			Scanner sc = new Scanner(new File("C:\\Users\\kiska\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
-
+//			Scanner sc = new Scanner(new File("C:\\Users\\kiska\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
+			Scanner sc = new Scanner(new File("C:\\Users\\nagyz\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
 			//Scanner sc = new Scanner(new File("C:\\Users\\gallb\\git\\library2\\library2client\\src\\main\\java\\edu\\msg\\library2client\\resources\\CommandTreeBoolMat"));
 
 			while(sc.hasNextLine()){
